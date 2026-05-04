@@ -22,6 +22,12 @@ This runtime repo may:
 - emit synthetic audit records
 - derive non-canonical pressure-vector candidates in memory
 
+Contract loading policy is manifest-first:
+
+- the runtime consumes `registry/exceptions-lake-contract-export.json` first when present
+- if that manifest is present but malformed, missing required fields, or referencing invalid paths, loading fails closed
+- fallback loading is allowed only when the export manifest is absent
+
 This runtime repo may not:
 
 - redefine canonical semantics
@@ -30,6 +36,7 @@ This runtime repo may not:
 - redefine promotion authority
 - mutate canon
 - write into the contract repo path
+- redefine ontology or governance semantics in local runtime docs or code
 
 ## Governed learning posture
 

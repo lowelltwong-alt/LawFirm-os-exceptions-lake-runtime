@@ -86,17 +86,12 @@ class ContractLoader:
         required_doc_paths = list(FALLBACK_REQUIRED_DOC_RELATIVE_PATHS)
 
         if export_manifest_present and export_manifest is not None:
+            manifest_schema_keys = self._validate_manifest_schema_keys(export_manifest)
+            manifest_docs = self._validate_manifest_required_docs(export_manifest)
             required_schema_keys = list(
-                dict.fromkeys(
-                    export_manifest.get("canonical_schema_keys", []) + required_schema_keys
-                )
+                dict.fromkeys(manifest_schema_keys + required_schema_keys)
             )
-            manifest_docs = [
-                Path(doc_path) for doc_path in export_manifest.get("required_docs", [])
-            ]
-            required_doc_paths = list(
-                dict.fromkeys(manifest_docs + required_doc_paths)
-            )
+            required_doc_paths = list(dict.fromkeys(manifest_docs + required_doc_paths))
 
         schema_paths: dict[str, Path] = {}
         for schema_key in required_schema_keys:
@@ -182,6 +177,58 @@ class ContractLoader:
                 if isinstance(schema_id, str) and schema_id and schema_id not in indexed:
                     indexed[schema_id] = entry
         return indexed
+
+    @staticmethod
+    def _validate_manifest_schema_keys(export_manifest: dict[str, Any]) -> list[str]:
+        schema_keys = export_manifest.get("canonical_schema_keys")
+        if schema_keys is None:
+            raise ContractLoadError(
+                "Invalid export manifest field 'canonical_schema_keys': field is required."
+            )
+        if not isinstance(schema_keys, list):
+            raise ContractLoadError(
+                "Invalid export manifest field 'canonical_schema_keys': expected a list of schema IDs."
+            )
+        if not schema_keys:
+            raise ContractLoadError(
+                "Invalid export manifest field 'canonical_schema_keys': list must not be empty."
+            )
+
+        validated: list[str] = []
+        for idx, schema_key in enumerate(schema_keys):
+            if not isinstance(schema_key, str) or not schema_key.strip():
+                raise ContractLoadError(
+                    "Invalid export manifest field "
+                    f"'canonical_schema_keys[{idx}]': expected a non-empty string schema ID."
+                )
+            validated.append(schema_key)
+        return validated
+
+    @staticmethod
+    def _validate_manifest_required_docs(export_manifest: dict[str, Any]) -> list[Path]:
+        required_docs = export_manifest.get("required_docs")
+        if required_docs is None:
+            raise ContractLoadError(
+                "Invalid export manifest field 'required_docs': field is required."
+            )
+        if not isinstance(required_docs, list):
+            raise ContractLoadError(
+                "Invalid export manifest field 'required_docs': expected a list of relative contract paths."
+            )
+        if not required_docs:
+            raise ContractLoadError(
+                "Invalid export manifest field 'required_docs': list must not be empty."
+            )
+
+        validated: list[Path] = []
+        for idx, doc_path in enumerate(required_docs):
+            if not isinstance(doc_path, str) or not doc_path.strip():
+                raise ContractLoadError(
+                    "Invalid export manifest field "
+                    f"'required_docs[{idx}]': expected a non-empty relative path string."
+                )
+            validated.append(Path(doc_path))
+        return validated
 
     @staticmethod
     def _resolve_git_sha(contract_repo_root: Path) -> str:

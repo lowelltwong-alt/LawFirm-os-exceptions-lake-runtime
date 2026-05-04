@@ -2,9 +2,23 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SRC_ROOT = REPO_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+# Ensure tests load the local in-repo package, not an older installed checkout.
+for module_name in (
+    "exceptions_lake_runtime",
+    "exceptions_lake_runtime.config",
+    "exceptions_lake_runtime.contract_loader",
+):
+    sys.modules.pop(module_name, None)
 
 from exceptions_lake_runtime.config import RuntimeConfig
 from exceptions_lake_runtime.contract_loader import ContractLoadError, ContractLoader
@@ -19,6 +33,9 @@ def test_loads_contracts_from_env_var(runtime_config: RuntimeConfig) -> None:
     assert bundle.schema_paths["pressure-vector-v1"].name == "pressure-vector.schema.json"
     assert "exceptions_lake_boundary" in bundle.boundary_doc_paths
     assert "ai_control_plane_boundary" in bundle.boundary_doc_paths
+    assert bundle.export_manifest_present is True
+    assert bundle.export_manifest is not None
+    assert "evaluation-run-schema-v1" in bundle.schema_paths
 
 
 def test_falls_back_when_export_manifest_absent(runtime_config: RuntimeConfig) -> None:
@@ -36,6 +53,68 @@ def test_falls_back_when_export_manifest_absent(runtime_config: RuntimeConfig) -
     assert bundle.export_manifest is None
     assert "adaptation-proposal-v1" in bundle.schema_paths
     assert "access-decision-schema-v1" in bundle.schema_paths
+    assert "exceptions_lake_boundary" in bundle.boundary_doc_paths
+    assert "ai_control_plane_boundary" in bundle.boundary_doc_paths
+
+
+def test_fails_closed_when_export_manifest_is_malformed_json(
+    runtime_config: RuntimeConfig,
+) -> None:
+    export_manifest_path = (
+        runtime_config.contract_repo_root
+        / "registry"
+        / "exceptions-lake-contract-export.json"
+    )
+    export_manifest_path.write_text("{ malformed", encoding="utf-8")
+
+    with pytest.raises(ContractLoadError, match="Invalid JSON"):
+        ContractLoader().load(runtime_config)
+
+
+def test_fails_closed_when_export_manifest_missing_required_fields(
+    runtime_config: RuntimeConfig,
+) -> None:
+    export_manifest_path = (
+        runtime_config.contract_repo_root
+        / "registry"
+        / "exceptions-lake-contract-export.json"
+    )
+    manifest = json.loads(export_manifest_path.read_text(encoding="utf-8"))
+    manifest.pop("canonical_schema_keys", None)
+    export_manifest_path.write_text(
+        json.dumps(manifest, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(
+        ContractLoadError, match="Invalid export manifest field 'canonical_schema_keys'"
+    ):
+        ContractLoader().load(runtime_config)
+
+
+def test_fails_closed_when_export_manifest_contains_invalid_required_doc_path(
+    runtime_config: RuntimeConfig,
+) -> None:
+    export_manifest_path = (
+        runtime_config.contract_repo_root
+        / "registry"
+        / "exceptions-lake-contract-export.json"
+    )
+    manifest = json.loads(export_manifest_path.read_text(encoding="utf-8"))
+    manifest["required_docs"] = [
+        "governance/EXCEPTIONS_LAKE_BOUNDARY.md",
+        "governance/THIS_PATH_DOES_NOT_EXIST.md",
+    ]
+    export_manifest_path.write_text(
+        json.dumps(manifest, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(
+        ContractLoadError,
+        match="Required contract path is missing: governance/THIS_PATH_DOES_NOT_EXIST.md",
+    ):
+        ContractLoader().load(runtime_config)
 
 
 def test_fails_closed_when_required_schema_path_missing(
