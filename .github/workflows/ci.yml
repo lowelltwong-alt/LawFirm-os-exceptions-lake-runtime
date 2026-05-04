@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout runtime repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Contract lock sanity check (read-only)
+        run: python scripts/ci_check_contract_lock.py
+
+      - name: Read pinned contract SHA from lock file
+        id: contract_pin
+        run: |
+          SHA=$(python -c "import json; print(json.load(open('contracts.lock.json'))['contract_sha'].strip())")
+          echo "contract_sha=${SHA}" >> "${GITHUB_OUTPUT}"
+
+      - name: Checkout FMG contract repo at pinned SHA (public, no firm data)
+        uses: actions/checkout@v4
+        with:
+          repository: lowelltwong-alt/fmg-fractal-capability-ontology
+          ref: ${{ steps.contract_pin.outputs.contract_sha }}
+          path: fmg-fractal-capability-ontology
+
+      - name: Run tests
+        env:
+          EXCEPTIONS_LAKE_CONTRACT_REPO_PATH: ${{ github.workspace }}/fmg-fractal-capability-ontology
+        run: python -m pytest

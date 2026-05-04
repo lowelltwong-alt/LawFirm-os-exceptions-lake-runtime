@@ -69,13 +69,22 @@ It does not include:
 
 HTTP is intentionally out of scope for this first implementation so we can keep the MVP small, library-first, and easy to validate locally.
 
+## Pre-PR checklist (local-first, mirrors CI)
+
+1. `python -m pip install -e ".[dev]"`
+2. `python scripts/ci_check_contract_lock.py`
+3. Point `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` at the pinned checkout under `..\.ci-contracts\fmg-fractal-capability-ontology-pinned` — **not** the live FMG repo, unless its HEAD exactly matches `contract_sha` in `contracts.lock.json`. See `docs/LOCAL_DEV.md` for exact PowerShell commands to create this checkout.
+4. `python -m pytest`
+
+GitHub Actions runs the same sequence: lock check, shallow checkout of the public FMG ontology at the pinned SHA, then `pytest`. No production services and no firm data.
+
 ## Local setup
 
-1. Clone or otherwise obtain a local checkout of `lowelltwong-alt/fmg-fractal-capability-ontology` on the branch or SHA you want the runtime to consume.
-2. Set the contract repo path:
+1. Create the local pinned checkout at the SHA recorded in `contracts.lock.json`. See `docs/LOCAL_DEV.md` for exact commands. The pinned path is `..\.ci-contracts\fmg-fractal-capability-ontology-pinned`.
+2. Set the contract repo path to the pinned checkout:
 
 ```powershell
-$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\fmg-fractal-capability-ontology'
+$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = (Resolve-Path '..\.ci-contracts\fmg-fractal-capability-ontology-pinned').Path
 ```
 
 3. Install the runtime repo in editable mode:
