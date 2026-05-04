@@ -1,6 +1,21 @@
 from __future__ import annotations
 
 import copy
+import sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SRC_ROOT = REPO_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+# Ensure tests load local in-repo modules.
+for module_name in (
+    "exceptions_lake_runtime",
+    "exceptions_lake_runtime.contract_loader",
+    "exceptions_lake_runtime.validation_gateway",
+):
+    sys.modules.pop(module_name, None)
 
 from exceptions_lake_runtime.contract_loader import ContractLoader
 from exceptions_lake_runtime.validation_gateway import ValidationGateway
@@ -50,7 +65,22 @@ def test_rejects_route_event_class_mismatch(
     result = ValidationGateway(bundle).validate_exception_event(invalid_payload)
 
     assert result.valid is False
-    assert any("event_class does not match" in error for error in result.errors)
+    assert any(
+        "event_class does not match canonical route registry" in error
+        for error in result.errors
+    )
+
+
+def test_rejects_unknown_event_class(runtime_config, synthetic_event: dict) -> None:
+    invalid_payload = copy.deepcopy(synthetic_event)
+    invalid_payload["event_class"] = "unknown_event_class"
+
+    bundle = ContractLoader().load(runtime_config)
+    result = ValidationGateway(bundle).validate_exception_event(invalid_payload)
+
+    assert result.valid is False
+    assert result.schema_id == "exception-event-v1"
+    assert any("unknown event_class" in error for error in result.errors)
 
 
 def test_rejects_direct_mutation_attempts(

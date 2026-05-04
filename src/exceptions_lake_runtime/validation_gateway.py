@@ -55,14 +55,16 @@ class ValidationGateway:
             for route in contract_bundle.route_registry.get("routes", [])
             if isinstance(route, dict) and "route_id" in route
         }
+        self.known_event_classes = {
+            str(route.get("event_class"))
+            for route in self.route_map.values()
+            if isinstance(route.get("event_class"), str) and route.get("event_class")
+        }
 
     def validate_exception_event(self, payload: dict[str, Any]) -> ValidationResult:
         errors = self._collect_schema_errors(payload)
-        route_registry_checked = False
-
-        if not errors:
-            route_registry_checked = True
-            errors.extend(self._collect_route_errors(payload))
+        route_registry_checked = True
+        errors.extend(self._collect_route_errors(payload))
 
         return ValidationResult(
             valid=not errors,
@@ -91,14 +93,26 @@ class ValidationGateway:
         mutation = payload.get("canonical_mutation_control", {})
 
         route_id = route.get("route_id")
+        event_class = payload.get("event_class")
+        if (
+            isinstance(event_class, str)
+            and event_class
+            and event_class not in self.known_event_classes
+        ):
+            errors.append(
+                f"event_class: unknown event_class '{event_class}' in canonical route registry."
+            )
+
         route_entry = self.route_map.get(route_id)
         if route_entry is None:
-            return [f"route.route_id: unknown route_id '{route_id}'."]
+            errors.append(f"route.route_id: unknown route_id '{route_id}'.")
+            return errors
 
-        event_class = payload.get("event_class")
-        if event_class != route_entry.get("event_class"):
+        expected_event_class = route_entry.get("event_class")
+        if event_class != expected_event_class:
             errors.append(
-                "event_class does not match the configured route registry event_class."
+                "event_class does not match canonical route registry: "
+                f"route '{route_id}' requires '{expected_event_class}', got '{event_class}'."
             )
 
         if route.get("destination_loop") != route_entry.get("destination_loop"):

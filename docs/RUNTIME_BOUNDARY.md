@@ -35,6 +35,13 @@ Contract loading policy is manifest-first:
   - `generated_by`
 - missing or invalid lock fields fail closed and require `python scripts/update_contract_lock.py`
 
+Exception validation policy is fail-closed against canonical route authority:
+
+- unknown `event_class` values are rejected against the FMG canonical route registry
+- `route.route_id` and `event_class` mismatches are rejected with explicit validation reasons
+- validation metadata (including `schema_id` and validation errors) is preserved in runtime audit/evidence records
+- runtime records remain observational evidence only and do not mutate canon
+
 This runtime repo may not:
 
 - redefine canonical semantics
