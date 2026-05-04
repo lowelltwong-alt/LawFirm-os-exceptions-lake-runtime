@@ -27,17 +27,21 @@ def resolve_contract_sha(contract_repo_root: Path) -> str:
         )
     except (OSError, subprocess.CalledProcessError) as exc:
         raise RuntimeConfigError(
-            "EXCEPTIONS_LAKE_CONTRACT_REPO_PATH must point to a git repository."
+            "EXCEPTIONS_LAKE_CONTRACT_REPO_PATH must point to a git repository. "
+            "Confirm the path is a valid repo with a readable HEAD commit."
         ) from exc
     return result.stdout.strip()
 
 
-def build_lock_document(contract_sha: str) -> dict[str, object]:
+def build_lock_document(
+    contract_sha: str, generated_at: str | None = None
+) -> dict[str, object]:
+    timestamp = generated_at or datetime.now(tz=UTC).isoformat().replace("+00:00", "Z")
     return {
         "contract_repo": "lowelltwong-alt/fmg-fractal-capability-ontology",
         "contract_ref_type": "git_sha",
         "contract_sha": contract_sha,
-        "generated_at": datetime.now(tz=UTC).isoformat().replace("+00:00", "Z"),
+        "generated_at": timestamp,
         "generated_by": "exceptions-lake-runtime",
         "non_claims": [
             "no production runtime",
@@ -52,8 +56,9 @@ def build_lock_document(contract_sha: str) -> dict[str, object]:
 def main() -> int:
     config = RuntimeConfig.from_env()
     contract_sha = resolve_contract_sha(config.contract_repo_root)
+    lock_document = build_lock_document(contract_sha)
     LOCK_PATH.write_text(
-        json.dumps(build_lock_document(contract_sha), indent=2) + "\n",
+        json.dumps(lock_document, indent=2, sort_keys=False) + "\n",
         encoding="utf-8",
     )
     print(f"Updated contracts.lock.json to {contract_sha}")

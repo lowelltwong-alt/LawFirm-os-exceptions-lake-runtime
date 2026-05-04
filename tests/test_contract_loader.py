@@ -4,6 +4,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+import importlib.util
 
 import pytest
 
@@ -22,6 +23,16 @@ for module_name in (
 
 from exceptions_lake_runtime.config import RuntimeConfig
 from exceptions_lake_runtime.contract_loader import ContractLoadError, ContractLoader
+
+
+def _load_update_contract_lock_module():
+    module_path = REPO_ROOT / "scripts" / "update_contract_lock.py"
+    spec = importlib.util.spec_from_file_location("update_contract_lock", module_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("Unable to load scripts/update_contract_lock.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_loads_contracts_from_env_var(runtime_config: RuntimeConfig) -> None:
@@ -161,3 +172,64 @@ def test_fails_closed_when_live_contract_sha_mismatches_lock(
             json.dumps(original_lock, indent=2) + "\n",
             encoding="utf-8",
         )
+
+
+def test_fails_closed_when_lock_missing_required_field(
+    runtime_config: RuntimeConfig, contract_lock_path: Path
+) -> None:
+    original_lock = json.loads(contract_lock_path.read_text(encoding="utf-8"))
+    invalid_lock = dict(original_lock)
+    invalid_lock.pop("generated_by", None)
+    contract_lock_path.write_text(
+        json.dumps(invalid_lock, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    try:
+        with pytest.raises(
+            ContractLoadError,
+            match="contracts.lock.json is missing required field\\(s\\): generated_by",
+        ):
+            ContractLoader().load(runtime_config)
+    finally:
+        contract_lock_path.write_text(
+            json.dumps(original_lock, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+
+def test_fails_closed_when_lock_shape_is_invalid(
+    runtime_config: RuntimeConfig, contract_lock_path: Path
+) -> None:
+    original_lock = contract_lock_path.read_text(encoding="utf-8")
+    contract_lock_path.write_text('["invalid", "shape"]\n', encoding="utf-8")
+
+    try:
+        with pytest.raises(
+            ContractLoadError,
+            match="contracts.lock.json is invalid: expected a JSON object",
+        ):
+            ContractLoader().load(runtime_config)
+    finally:
+        contract_lock_path.write_text(original_lock, encoding="utf-8")
+
+
+def test_update_contract_lock_build_document_is_deterministic() -> None:
+    module = _load_update_contract_lock_module()
+    fixed_timestamp = "2026-05-04T14:00:00Z"
+
+    lock_a = module.build_lock_document(
+        "abc123", generated_at=fixed_timestamp
+    )
+    lock_b = module.build_lock_document(
+        "abc123", generated_at=fixed_timestamp
+    )
+
+    assert lock_a == lock_b
+    assert list(lock_a.keys())[:5] == [
+        "contract_repo",
+        "contract_ref_type",
+        "contract_sha",
+        "generated_at",
+        "generated_by",
+    ]

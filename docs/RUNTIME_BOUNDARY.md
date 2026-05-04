@@ -27,6 +27,13 @@ Contract loading policy is manifest-first:
 - the runtime consumes `registry/exceptions-lake-contract-export.json` first when present
 - if that manifest is present but malformed, missing required fields, or referencing invalid paths, loading fails closed
 - fallback loading is allowed only when the export manifest is absent
+- when `contracts.lock.json` is present, it is validated as a strict lock contract and must include:
+  - `contract_repo`
+  - `contract_ref_type`
+  - `contract_sha`
+  - `generated_at`
+  - `generated_by`
+- missing or invalid lock fields fail closed and require `python scripts/update_contract_lock.py`
 
 This runtime repo may not:
 

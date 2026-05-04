@@ -10,6 +10,13 @@ from .config import RuntimeConfig
 
 EXPORT_MANIFEST_RELATIVE_PATH = Path("registry/exceptions-lake-contract-export.json")
 CONTRACT_LOCK_RELATIVE_PATH = Path("contracts.lock.json")
+REQUIRED_CONTRACT_LOCK_FIELDS = (
+    "contract_repo",
+    "contract_ref_type",
+    "contract_sha",
+    "generated_at",
+    "generated_by",
+)
 
 REQUIRED_REGISTRY_RELATIVE_PATHS = (
     Path("registry/schema-registry.json"),
@@ -120,7 +127,9 @@ class ContractLoader:
         contract_version = self._resolve_git_sha(contract_repo_root)
         locked_contract_sha = None
         if contract_lock is not None:
-            locked_contract_sha = self._resolve_locked_contract_sha(contract_lock)
+            locked_contract_sha = self._validate_and_resolve_locked_contract_sha(
+                contract_lock
+            )
             if contract_version != locked_contract_sha:
                 raise ContractLoadError(
                     "Live contract repo SHA does not match contracts.lock.json. "
@@ -158,11 +167,56 @@ class ContractLoader:
         return resolved_path
 
     @staticmethod
-    def _resolve_locked_contract_sha(contract_lock: dict[str, Any]) -> str:
-        locked_sha = contract_lock.get("contract_sha")
-        if not isinstance(locked_sha, str) or not locked_sha:
+    def _validate_and_resolve_locked_contract_sha(contract_lock: dict[str, Any]) -> str:
+        if not isinstance(contract_lock, dict):
             raise ContractLoadError(
-                "contracts.lock.json is present but contract_sha is missing or invalid."
+                "contracts.lock.json is invalid: expected a JSON object. "
+                "Run scripts/update_contract_lock.py to regenerate the lock file."
+            )
+
+        missing_fields = [
+            field for field in REQUIRED_CONTRACT_LOCK_FIELDS if field not in contract_lock
+        ]
+        if missing_fields:
+            missing = ", ".join(missing_fields)
+            raise ContractLoadError(
+                "contracts.lock.json is missing required field(s): "
+                f"{missing}. Run scripts/update_contract_lock.py to regenerate the lock file."
+            )
+
+        contract_repo = contract_lock.get("contract_repo")
+        if not isinstance(contract_repo, str) or not contract_repo.strip():
+            raise ContractLoadError(
+                "contracts.lock.json field 'contract_repo' is missing or invalid. "
+                "Run scripts/update_contract_lock.py to regenerate the lock file."
+            )
+
+        contract_ref_type = contract_lock.get("contract_ref_type")
+        if contract_ref_type != "git_sha":
+            raise ContractLoadError(
+                "contracts.lock.json field 'contract_ref_type' is invalid. "
+                "Expected 'git_sha'. Run scripts/update_contract_lock.py to regenerate the lock file."
+            )
+
+        generated_at = contract_lock.get("generated_at")
+        if not isinstance(generated_at, str) or not generated_at.strip():
+            raise ContractLoadError(
+                "contracts.lock.json field 'generated_at' is missing or invalid. "
+                "Run scripts/update_contract_lock.py to regenerate the lock file."
+            )
+
+        generated_by = contract_lock.get("generated_by")
+        if not isinstance(generated_by, str) or not generated_by.strip():
+            raise ContractLoadError(
+                "contracts.lock.json field 'generated_by' is missing or invalid. "
+                "Run scripts/update_contract_lock.py to regenerate the lock file."
+            )
+
+        locked_sha = contract_lock.get("contract_sha")
+        if not isinstance(locked_sha, str) or not locked_sha.strip():
+            raise ContractLoadError(
+                "contracts.lock.json field 'contract_sha' is missing or invalid. "
+                "Run scripts/update_contract_lock.py to regenerate the lock file."
             )
         return locked_sha
 
