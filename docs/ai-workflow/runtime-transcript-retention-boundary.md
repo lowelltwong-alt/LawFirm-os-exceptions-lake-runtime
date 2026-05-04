@@ -17,7 +17,7 @@ Not allowed in this repo:
 
 - production conversation text
 - sealed transcript contents
-- real FMG records
+- real firm records
 - privileged matter content
 - credentials, secrets, or tokens
 - production audit lake storage
@@ -35,4 +35,4 @@ If production AI interaction audit capture is approved later, the runtime should
 
 ## Default retention posture
 
-Synthetic and dry-run artifacts may use short retention. Production retention classes must be defined by FMG governance before production capture is enabled.
+Synthetic and dry-run artifacts may use short retention. Production retention classes must be defined by Law Firm governance before production capture is enabled.

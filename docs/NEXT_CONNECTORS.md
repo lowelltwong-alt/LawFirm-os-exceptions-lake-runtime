@@ -18,6 +18,6 @@ Future connector work must remain outside this MVP unless it preserves the same 
 - no schema redefinition
 - no lifecycle redefinition
 - no promotion-authority redefinition
-- no real FMG data in synthetic test fixtures
+- no real firm operational data in synthetic test fixtures
 
 This MVP intentionally ships with zero connector code.

@@ -126,7 +126,7 @@ TRIGGER_ORDER = (
 NON_CLAIMS = [
     "synthetic test-only budget draft",
     "no production budget accuracy claimed",
-    "no real FMG data or real matters",
+    "no real client data or real matters",
     "no canonical mutation",
 ]
 

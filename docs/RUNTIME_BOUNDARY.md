@@ -1,6 +1,6 @@
 # Runtime Boundary
 
-`exceptions-lake-runtime` is a separate runtime repository that consumes contracts from `lowelltwong-alt/fmg-fractal-capability-ontology`.
+`exceptions-lake-runtime` is a separate runtime repository that consumes contracts from the **Law Firm ontology** contract repository (clone source configured locally or via `CONTRACT_ONTOLOGY_REPOSITORY` in CI).
 
 ## Contract repo vs runtime repo
 
@@ -37,7 +37,7 @@ Contract loading policy is manifest-first:
 
 Exception validation policy is fail-closed against canonical route authority:
 
-- unknown `event_class` values are rejected against the FMG canonical route registry
+- unknown `event_class` values are rejected against the Law Firm canonical route registry
 - `route.route_id` and `event_class` mismatches are rejected with explicit validation reasons
 - validation metadata (including `schema_id` and validation errors) is preserved in runtime audit/evidence records
 - runtime records remain observational evidence only and do not mutate canon
@@ -74,4 +74,4 @@ This repo does not implement:
 - deployment infrastructure
 - live access enforcement
 - production telemetry
-- real FMG data handling
+- real firm operational data handling

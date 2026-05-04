@@ -2,9 +2,10 @@
 
 `exceptions-lake-runtime` is a library-first, non-production MVP runtime skeleton for governed Exceptions Lake processing.
 
-It consumes versioned contracts from the authoritative contract repository:
+It consumes versioned contracts from the authoritative **Law Firm ontology** (contract) repository.
 
-- `lowelltwong-alt/fmg-fractal-capability-ontology`
+- **CI default:** the clone source is the `CONTRACT_ONTOLOGY_REPOSITORY` environment variable in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (set to a public ontology slug for reproducible builds).
+- **Local development:** set `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` to your checkout of that contract repository (any path; see `docs/LOCAL_DEV.md`).
 
 This repo does not redefine schema meaning, lifecycle states, mutation authority, or promotion authority. Runtime observations may become exception candidates only. Canonical change still requires the governed path:
 
@@ -60,7 +61,7 @@ This repo is not:
 
 It does not include:
 
-- real FMG data
+- real firm operational data
 - real clients, matters, employees, policies, or incidents
 - Litify, BillBlast, iManage, portal, AR, SharePoint, or Excel connectors
 - deployment secrets or cloud configuration
@@ -73,18 +74,18 @@ HTTP is intentionally out of scope for this first implementation so we can keep 
 
 1. `python -m pip install -e ".[dev]"`
 2. `python scripts/ci_check_contract_lock.py`
-3. Point `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` at the pinned checkout under `..\.ci-contracts\fmg-fractal-capability-ontology-pinned` — **not** the live FMG repo, unless its HEAD exactly matches `contract_sha` in `contracts.lock.json`. See `docs/LOCAL_DEV.md` for exact PowerShell commands to create this checkout.
+3. Point `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` at a local git checkout of the Law Firm ontology contract repository (tests copy contract surfaces into a temporary fixture and temporarily align the lock to that fixture’s SHA; see `docs/LOCAL_DEV.md`).
 4. `python -m pytest`
 
-GitHub Actions runs the same sequence: lock check, shallow checkout of the public FMG ontology at the pinned SHA, then `pytest`. No production services and no firm data.
+GitHub Actions runs the same sequence: lock check, shallow checkout of the public Law Firm ontology contract repository at the pinned SHA, then `pytest`. No production services and no firm data.
 
 ## Local setup
 
-1. Create the local pinned checkout at the SHA recorded in `contracts.lock.json`. See `docs/LOCAL_DEV.md` for exact commands. The pinned path is `..\.ci-contracts\fmg-fractal-capability-ontology-pinned`.
-2. Set the contract repo path to the pinned checkout:
+1. Clone or otherwise obtain a local checkout of your Law Firm ontology contract repository (example slug: `your-org/law-firm-ontology`) on the branch or SHA you want the runtime to consume.
+2. Set the contract repo path:
 
 ```powershell
-$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = (Resolve-Path '..\.ci-contracts\fmg-fractal-capability-ontology-pinned').Path
+$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\law-firm-ontology-contracts'
 ```
 
 3. Install the runtime repo in editable mode:
@@ -140,7 +141,7 @@ The loader prefers `registry/exceptions-lake-contract-export.json` when it exist
 
 The runtime also reads `contracts.lock.json` when present and fail-closes if the live contract repo SHA does not match the pinned SHA. This pins the synthetic MVP to one reviewed contract version and makes contract drift explicit for local development.
 
-Runtime route/action labels are mapped to FMG canonical route authority in:
+Runtime route/action labels are mapped to Law Firm canonical route authority in:
 
 - `docs/CANONICAL_ROUTE_MAPPING.md`
 
@@ -166,13 +167,12 @@ See:
 
 ---
 
-## Relationship to FMG Ontology Repo
+## Relationship to Law Firm ontology repository
 
-This repo should be understood as a runtime/application layer connected to:
+This repo should be understood as a runtime/application layer connected to the **Law Firm ontology** contract repository (for example a checkout named `law-firm-ontology-contracts` on disk).
 
-- `fmg-fractal-capability-ontology`
+The Law Firm ontology repository is the governing source of truth for:
 
-The FMG ontology repo is the governing source of truth for:
 - terminology
 - governance concepts
 - exception categories

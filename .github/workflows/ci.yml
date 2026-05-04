@@ -7,6 +7,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # Default contract repository for CI. Forks may override via repository variables
+    # or by changing this single env default (see README).
+    env:
+      CONTRACT_ONTOLOGY_REPOSITORY: your-org/law-firm-ontology
     steps:
       - name: Checkout runtime repo
         uses: actions/checkout@v4
@@ -30,14 +34,14 @@ jobs:
           SHA=$(python -c "import json; print(json.load(open('contracts.lock.json'))['contract_sha'].strip())")
           echo "contract_sha=${SHA}" >> "${GITHUB_OUTPUT}"
 
-      - name: Checkout FMG contract repo at pinned SHA (public, no firm data)
+      - name: Checkout Law Firm ontology contract repo at pinned SHA (public, no firm data)
         uses: actions/checkout@v4
         with:
-          repository: lowelltwong-alt/fmg-fractal-capability-ontology
+          repository: ${{ env.CONTRACT_ONTOLOGY_REPOSITORY }}
           ref: ${{ steps.contract_pin.outputs.contract_sha }}
-          path: fmg-fractal-capability-ontology
+          path: law-firm-ontology-contracts
 
       - name: Run tests
         env:
-          EXCEPTIONS_LAKE_CONTRACT_REPO_PATH: ${{ github.workspace }}/fmg-fractal-capability-ontology
+          EXCEPTIONS_LAKE_CONTRACT_REPO_PATH: ${{ github.workspace }}/law-firm-ontology-contracts
         run: python -m pytest

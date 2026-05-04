@@ -1,26 +1,28 @@
 # Canonical Route Mapping Contract
 
-This document maps runtime-local route and action labels in this repository to FMG canonical route authority.
+This document maps runtime-local route and action labels in this repository to Law Firm canonical route authority.
 
-Authoritative FMG sources:
-- `fmg-fractal-capability-ontology/registry/exception-route-registry.json`
-- `fmg-fractal-capability-ontology/registry/exceptions-lake-contract-export.json`
-- `fmg-fractal-capability-ontology/governance/EXCEPTIONS_LAKE_BOUNDARY.md`
-- `fmg-fractal-capability-ontology/governance/EXCEPTIONS_LAKE_ARCHITECTURE.md`
+Authoritative Law Firm ontology sources (paths relative to your contract checkout, e.g. `law-firm-ontology-contracts/`):
+
+- `law-firm-ontology-contracts/registry/exception-route-registry.json`
+- `law-firm-ontology-contracts/registry/exceptions-lake-contract-export.json`
+- `law-firm-ontology-contracts/governance/EXCEPTIONS_LAKE_BOUNDARY.md`
+- `law-firm-ontology-contracts/governance/EXCEPTIONS_LAKE_ARCHITECTURE.md`
 
 ## Boundary rule
 
 Runtime route labels in this repo are operational workflow labels for local development and planning. They are not canonical truth.
 
-Canonical route meaning is defined only by FMG `route_id` + `event_class` values. Runtime observations remain evidence and may become exception candidates only; they do not directly mutate canon.
+Canonical route meaning is defined only by Law Firm ontology `route_id` + `event_class` values. Runtime observations remain evidence and may become exception candidates only; they do not directly mutate canon.
 
-## FMG Canonical Route Authority (Current)
+## Law Firm canonical route authority (current)
 
 - `route.retrieval_miss.v1` -> `event_class: retrieval_miss`
 - `route.workflow_escalation.v1` -> `event_class: workflow_escalation`
 - `route.authority_conflict_override.v1` -> `event_class: authority_conflict_override`
 
-Canonical raw actions (from FMG route registry):
+Canonical raw actions (from the Law Firm route registry):
+
 - allowed raw actions: `route_for_review`, `aggregate_pressure`, `attach_evidence_only`
 - prohibited direct actions: `canonical_ontology_write`, `taxonomy_rewrite`, `schema_mutation`, `policy_overwrite`, `address_system_mutation`
 
@@ -42,9 +44,9 @@ All route labels currently defined in `docs/ai-workflow/runtime-route-table.yaml
 
 ## Runtime Action Label Mapping
 
-This section maps route/action labels used in runtime workflow docs to FMG canonical action authority where applicable.
+This section maps route/action labels used in runtime workflow docs to Law Firm canonical action authority where applicable.
 
-| Runtime action label | Canonical mapping status | FMG canonical action | Notes |
+| Runtime action label | Canonical mapping status | Law Firm canonical action | Notes |
 |---|---|---|---|
 | `synthetic_exception_ingest` | Partially mapped | `route_for_review` | Canonical when a valid exception event is routed for review. |
 | `pressure_candidate_build` | Partially mapped | `aggregate_pressure` | Canonical only if built from governed exception evidence. |
@@ -59,6 +61,6 @@ This section maps route/action labels used in runtime workflow docs to FMG canon
 ## Required Runtime Interpretation
 
 1. Runtime routes are implementation labels.
-2. FMG `route_id` and `event_class` are canonical authority.
-3. If runtime emits/handles exception events, the payload must use one of the FMG canonical `event_class` values and be validated against FMG route registry.
+2. Law Firm ontology `route_id` and `event_class` are canonical authority.
+3. If runtime emits/handles exception events, the payload must use one of the Law Firm canonical `event_class` values and be validated against the Law Firm route registry.
 4. Unmapped/TBD entries here are intentionally non-canonical runtime operations and must not be treated as canonical route IDs.

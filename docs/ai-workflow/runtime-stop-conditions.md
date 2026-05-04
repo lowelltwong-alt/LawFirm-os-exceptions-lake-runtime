@@ -4,13 +4,13 @@ AI-assisted work in this runtime repo must stop and report when any condition be
 
 ## Contract authority
 
-- FMG contract SHA is missing, ambiguous, or mismatched.
+- Law Firm contract SHA is missing, ambiguous, or mismatched.
 - Runtime code would redefine schema meaning, lifecycle states, mutation authority, or promotion authority.
-- FMG contract drift would need to be bypassed instead of surfaced.
+- Law Firm contract drift would need to be bypassed instead of surfaced.
 
 ## Data and persistence
 
-- The task requires real FMG client, matter, employee, policy, incident, or operational data.
+- The task requires real client, matter, employee, policy, incident, or operational data for the firm.
 - The task would persist non-synthetic events outside approved dry-run behavior.
 - The task would store raw production conversation content, sealed transcripts, credentials, secrets, or tokens in this repo.
 

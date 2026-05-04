@@ -38,7 +38,7 @@ def build_lock_document(
 ) -> dict[str, object]:
     timestamp = generated_at or datetime.now(tz=UTC).isoformat().replace("+00:00", "Z")
     return {
-        "contract_repo": "lowelltwong-alt/fmg-fractal-capability-ontology",
+        "contract_repo": "your-org/law-firm-ontology",
         "contract_ref_type": "git_sha",
         "contract_sha": contract_sha,
         "generated_at": timestamp,

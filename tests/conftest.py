@@ -12,6 +12,10 @@ import pytest
 from exceptions_lake_runtime.config import CONTRACT_REPO_ENV_VAR, RuntimeConfig
 from exceptions_lake_runtime.contract_loader import CONTRACT_LOCK_RELATIVE_PATH
 
+_PYTEST_DEBUG_TEMPROOT = (Path(__file__).resolve().parents[1] / ".pytest-tmp-root").resolve()
+_PYTEST_DEBUG_TEMPROOT.mkdir(parents=True, exist_ok=True)
+os.environ.setdefault("PYTEST_DEBUG_TEMPROOT", str(_PYTEST_DEBUG_TEMPROOT))
+
 
 def _source_contract_repo_path() -> Path:
     contract_path = os.getenv(CONTRACT_REPO_ENV_VAR)

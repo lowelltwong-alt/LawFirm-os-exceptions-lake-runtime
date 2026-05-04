@@ -4,7 +4,7 @@
 
 This runtime repo currently implements:
 
-- contract loading from `lowelltwong-alt/fmg-fractal-capability-ontology`
+- contract loading from the Law Firm ontology contract repository (local path via `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH`)
 - contract version pinning through `contracts.lock.json`
 - synthetic `exception-event` validation
 - deny-by-default runtime policy enforcement
@@ -32,7 +32,7 @@ This runtime repo currently implements:
 Set the contract repo path before local validation:
 
 ```powershell
-$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\fmg-fractal-capability-ontology'
+$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\law-firm-ontology-contracts'
 ```
 
 Refresh the lock file when intentionally moving to a new reviewed contract SHA:
@@ -43,7 +43,7 @@ python scripts/update_contract_lock.py
 
 ## What is forbidden
 
-- real FMG data ingestion
+- real firm operational data ingestion
 - live connectors
 - dashboards
 - deployment secrets or production configuration

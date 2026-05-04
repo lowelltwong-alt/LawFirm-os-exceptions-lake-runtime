@@ -1,16 +1,16 @@
 # Runtime Audit Capture Roadmap
 
-This roadmap defines the runtime path for AI interaction audit metadata while preserving the FMG contract-authority boundary.
+This roadmap defines the runtime path for AI interaction audit metadata while preserving the Law Firm contract-authority boundary.
 
 ## Current posture
 
-This repo may support synthetic and dry-run audit metadata. It must not store production conversation text, real FMG records, credentials, secrets, or sealed transcript contents.
+This repo may support synthetic and dry-run audit metadata. It must not store production conversation text, real firm records, credentials, secrets, or sealed transcript contents.
 
 ## Phase 0 — Docs-only boundary
 
 - Define runtime audit routes.
 - Define transcript and retention boundaries.
-- State that FMG owns canonical audit contracts.
+- State that the Law Firm ontology repository owns canonical audit contracts.
 - Keep all changes docs-only.
 
 ## Phase 1 — Synthetic audit envelope
@@ -19,7 +19,7 @@ Future runtime work may capture synthetic or dry-run audit envelopes with:
 
 - runtime route
 - mode
-- FMG contract SHA
+- Law Firm contract SHA
 - content hashes
 - policy decision
 - tool-call metadata
@@ -29,7 +29,7 @@ No production conversation text is allowed in this repo.
 
 ## Phase 2 — Contract-aligned audit schema consumption
 
-After FMG publishes audit-event schemas, this runtime may validate synthetic audit envelopes against pinned FMG contracts.
+After the Law Firm ontology repository publishes audit-event schemas, this runtime may validate synthetic audit envelopes against pinned Law Firm contracts.
 
 ## Phase 3 — Secure transcript-store integration planning
 
@@ -39,7 +39,7 @@ Plan, but do not implement, integration with an approved external secure audit s
 
 Production AI interaction audit capture requires:
 
-- approved FMG audit contracts
+- approved Law Firm audit contracts
 - secure external transcript store
 - retention classification
 - legal-hold workflow

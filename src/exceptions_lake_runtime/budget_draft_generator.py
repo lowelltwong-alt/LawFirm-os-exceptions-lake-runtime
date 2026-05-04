@@ -72,7 +72,7 @@ PHASE_BILLED_PROGRESS_DEFAULTS = {
 NON_CLAIMS = [
     "synthetic placeholder amounts only",
     "no production budget accuracy claimed",
-    "no real FMG data or real matters",
+    "no real client data or real matters",
     "no canonical mutation from this draft",
 ]
 ROW_TRIGGER_MAP = {

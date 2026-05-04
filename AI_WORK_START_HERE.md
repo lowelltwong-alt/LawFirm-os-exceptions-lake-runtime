@@ -16,9 +16,9 @@ Before AI-assisted edits, read:
 
 ## Runtime boundary
 
-This repo consumes versioned contracts from `lowelltwong-alt/fmg-fractal-capability-ontology`.
+This repo consumes versioned contracts from the Law Firm ontology contract repository.
 
-It does not redefine schema meaning, lifecycle states, mutation authority, or promotion authority. Runtime observations may become exception candidates only. Canonical change still requires the FMG governed path:
+It does not redefine schema meaning, lifecycle states, mutation authority, or promotion authority. Runtime observations may become exception candidates only. Canonical change still requires the governed ontology path:
 
 ```text
 exception-event -> pressure-vector -> adaptation-proposal -> promotion-decision
@@ -39,7 +39,7 @@ exception-event -> pressure-vector -> adaptation-proposal -> promotion-decision
 
 ## AI interaction audit principle
 
-This repo may plan or implement synthetic/dry-run audit events. It must not store raw production conversation content. Production audit capture requires approved FMG contracts and an external secure audit store.
+This repo may plan or implement synthetic/dry-run audit events. It must not store raw production conversation content. Production audit capture requires approved governed contracts and an external secure audit store.
 
 ## Hard stop
 

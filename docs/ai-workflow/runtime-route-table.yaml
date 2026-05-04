@@ -2,11 +2,11 @@ router_version: 0.1.0
 last_updated: "2026-05-01"
 owner_surface: docs/ai-workflow/
 contract_authority:
-  repository: lowelltwong-alt/fmg-fractal-capability-ontology
+  repository: law-firm-ontology-contracts
   boundary: consume_contracts_only
   canonical_mapping_doc: docs/CANONICAL_ROUTE_MAPPING.md
   canonical_route_registry: registry/exception-route-registry.json
-  canonical_route_note: runtime route labels are local operational labels; FMG route_id and event_class remain canonical authority.
+  canonical_route_note: runtime route labels are local operational labels; canonical route_id and event_class remain authoritative.
 
 routes:
   health_check:
@@ -31,14 +31,14 @@ routes:
       - examples/**
       - docs/**
     forbidden:
-      - real_fmg_data
+      - real_contract_data
       - production_connectors
       - canon_mutation
     validation:
       - pytest
 
   contract_lock_refresh:
-    description: Refresh or document contract lock behavior against FMG contract repo SHA.
+    description: Refresh or document contract lock behavior against the pinned contract repo SHA.
     default_mode: Edit
     allowed_paths:
       - contracts.lock.json
@@ -47,7 +47,7 @@ routes:
       - docs/**
     forbidden:
       - bypassing_contract_drift
-      - redefining_fmg_contracts
+      - redefining_contract_authority
     validation:
       - pytest
 
@@ -88,7 +88,7 @@ routes:
       - docs/**
     forbidden:
       - production_storage_claims
-      - real_fmg_data
+      - real_contract_data
     validation:
       - pytest
 

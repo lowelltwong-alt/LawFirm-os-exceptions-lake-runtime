@@ -1,11 +1,11 @@
 ---
-description: Keep Exception Lake runtime aligned with the FMG ontology repo.
+description: Keep Exception Lake runtime aligned with the governing ontology repo.
 alwaysApply: true
 ---
 
-This repo is the runtime/application layer for the FMG exception lake concept.
+This repo is the runtime/application layer for the exception lake concept.
 
-It should align with the fmg-fractal-capability-ontology repo.
+It should align with the governing ontology contract repo.
 
 When working in this repo:
 1. Treat exceptions as structured learning signals.
@@ -19,7 +19,7 @@ When working in this repo:
    - pilot
    - measurement
    - scale decision
-3. Do not invent ontology terms if equivalent terms exist in the FMG ontology repo.
+3. Do not invent ontology terms if equivalent terms exist in the governing ontology repo.
 4. Use the ontology repo as the source of truth for governance language.
 5. Keep runtime code cheap, local-first, auditable, and model-agnostic where possible.
 6. Prefer simple files, JSONL, SQLite, Markdown, and lightweight Python before heavy infrastructure.

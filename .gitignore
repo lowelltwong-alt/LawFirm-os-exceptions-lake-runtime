@@ -1,6 +1,15 @@
 .pytest-tmp/
+.pytest-tmp-*/
+.pytest-tmp-root/
 .pytest_cache/
 runtime_data/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Python / test generated files
+.pytest-tmp/
+.pytest_cache/
 __pycache__/
 *.py[cod]
 *.egg-info/

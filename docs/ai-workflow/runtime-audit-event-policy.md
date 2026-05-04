@@ -4,7 +4,7 @@ This policy defines how runtime audit metadata should be handled in this MVP rep
 
 ## Current rule
 
-Only synthetic and dry-run audit metadata belongs in this repo. Production conversation text, sealed transcripts, real FMG records, credentials, secrets, and tokens do not belong here.
+Only synthetic and dry-run audit metadata belongs in this repo. Production conversation text, sealed transcripts, real firm records, credentials, secrets, and tokens do not belong here.
 
 ## Runtime audit envelope
 
@@ -33,8 +33,8 @@ Runtime work must fail closed when:
 - the contract SHA is ambiguous
 - audit persistence behavior is unclear
 - the task would store production conversation content
-- the task would bypass FMG contract authority
+- the task would bypass Law Firm contract authority
 
 ## Authority
 
-FMG contract repository owns canonical audit contracts. This runtime may consume those contracts after they are published and pinned.
+The Law Firm ontology contract repository owns canonical audit contracts. This runtime may consume those contracts after they are published and pinned.
