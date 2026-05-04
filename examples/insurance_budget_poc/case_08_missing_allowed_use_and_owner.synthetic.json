@@ -1,0 +1,122 @@
+{
+  "case_id": "case_08_missing_allowed_use_and_owner",
+  "synthetic_case_family": "insurance_defense_budget_template_poc",
+  "flow_mode": "non_synthetic_dry_run_preflight",
+  "non_production": true,
+  "synthetic_time": "2026-04-27T21:00:00Z",
+  "matter_profile": {
+    "matter_label_placeholder": "Synthetic Auto BI Defense Matter 008",
+    "client_name_placeholder": "Synthetic Carrier Theta",
+    "client_matter_number_placeholder": "SYN-MAT-000008",
+    "matter_name_placeholder": "Synthetic Auto BI Governance Gate",
+    "claim_number_placeholder": "SYN-CLM-000008",
+    "matter_type": "auto_bi_minor_impact",
+    "venue_placeholder": "venue_gamma_rural",
+    "litigation_phase": "pre_suit",
+    "injury_severity_band": "minor",
+    "liability_clarity": "clear",
+    "medical_specials_band": "low",
+    "claimant_attorney_involvement": "none",
+    "uninsured_or_coverage_complication_indicator": "none",
+    "seatbelt_restraint_factor": "not_material",
+    "fact_witness_count_band": "1_2",
+    "expert_need": "none",
+    "written_discovery_burden": "light",
+    "deposition_burden": "none",
+    "dispositive_motion_likelihood": "low",
+    "mediation_likelihood": "low",
+    "trial_likelihood": "low",
+    "appeal_likelihood": "low",
+    "carrier_guideline_placeholder_constraint": "alpha"
+  },
+  "budget_profile": {
+    "budget_phase": "initial_budget",
+    "staffing_assumption": "associate_led_paralegal_supported",
+    "budget_variance_signal": "within_range",
+    "required_budget_drivers": [
+      "injury_severity_band"
+    ],
+    "provided_budget_drivers": [
+      "injury_severity_band"
+    ],
+    "guideline_lookup_status": "hit",
+    "phase_budget_present": true,
+    "staffing_pattern_expected": "associate_led_paralegal_supported",
+    "staffing_pattern_actual": "associate_led_paralegal_supported",
+    "exceeds_synthetic_threshold": false,
+    "supported_budget_assumptions": true,
+    "synthetic_gap_refs": [],
+    "synthetic_original_total": 12000.0,
+    "synthetic_update_adjustment_total": 0.0,
+    "synthetic_update_priority_refs": [],
+    "billed_remaining_incompatible": false
+  },
+  "governance": {
+    "review_owner": null,
+    "allowed_use_basis": null,
+    "sensitivity_level": "synthetic_policy_simulated",
+    "canon_influence_boundary": "exception_candidate_only"
+  },
+  "readiness_request": {
+    "source_name": "synthetic-budget-workbook-export",
+    "source_system_type": "workbook_metadata_export",
+    "source_ingestion_manifest_id": "SIM-970008",
+    "source_ingestion_manifest_ref": "sim.synthetic.970008",
+    "data_classification": "synthetic_internal",
+    "sensitivity_level": "synthetic_policy_simulated",
+    "retention_rule": "synthetic_short_lived_sandbox",
+    "access_owner": "synthetic-access-owner",
+    "business_owner": "synthetic-business-owner",
+    "validation_owner": "",
+    "approval_status": "approved_for_dry_run",
+    "rollback_or_quarantine_plan": "quarantine_and_delete_synthetic_runtime_data",
+    "evidence_provenance_available": true,
+    "dry_run_only": true
+  },
+  "runtime_expectations": {
+    "expected_classifications": {
+      "matter_type": "auto_bi_minor_impact",
+      "venue_placeholder": "venue_gamma_rural",
+      "litigation_phase": "pre_suit",
+      "injury_severity_band": "minor",
+      "liability_clarity": "clear",
+      "medical_specials_band": "low",
+      "claimant_attorney_involvement": "none",
+      "uninsured_or_coverage_complication_indicator": "none",
+      "seatbelt_restraint_factor": "not_material",
+      "fact_witness_count_band": "1_2",
+      "expert_need": "none",
+      "written_discovery_burden": "light",
+      "deposition_burden": "none",
+      "dispositive_motion_likelihood": "low",
+      "mediation_likelihood": "low",
+      "trial_likelihood": "low",
+      "appeal_likelihood": "low",
+      "budget_phase": "initial_budget",
+      "staffing_assumption": "associate_led_paralegal_supported",
+      "budget_variance_signal": "within_range",
+      "carrier_guideline_placeholder_constraint": "alpha",
+      "row_emphasis": [
+        "L110",
+        "L120",
+        "L150"
+      ],
+      "review_owner": null,
+      "allowed_use_basis": null,
+      "sensitivity_level": "synthetic_policy_simulated",
+      "risk_class": "governance_blocker",
+      "canon_influence_boundary": "exception_candidate_only"
+    },
+    "expected_exception_triggers": [
+      "allowed_use_basis_missing"
+    ],
+    "expected_pressure_vector_class": null,
+    "expected_review_path": "dry_run_preflight_rejection",
+    "expected_refusal_behavior": "fail_closed_without_event_append",
+    "expected_preflight_missing": [
+      "allowed_use_basis",
+      "validation_owner"
+    ],
+    "expected_budget_draft_present": false
+  }
+}

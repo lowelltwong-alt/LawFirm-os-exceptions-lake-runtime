@@ -1,0 +1,125 @@
+{
+  "case_id": "case_05_deposition_and_trial_drift",
+  "synthetic_case_family": "insurance_defense_budget_template_poc",
+  "flow_mode": "synthetic_event",
+  "non_production": true,
+  "synthetic_time": "2026-04-27T18:00:00Z",
+  "matter_profile": {
+    "matter_label_placeholder": "Synthetic Auto BI Defense Matter 005",
+    "client_name_placeholder": "Synthetic Carrier Epsilon",
+    "client_matter_number_placeholder": "SYN-MAT-000005",
+    "matter_name_placeholder": "Synthetic Auto BI Deposition and Trial Drift",
+    "claim_number_placeholder": "SYN-CLM-000005",
+    "matter_type": "auto_bi_multi_claimant",
+    "venue_placeholder": "venue_alpha_urban",
+    "litigation_phase": "trial_prep",
+    "injury_severity_band": "moderate",
+    "liability_clarity": "mixed",
+    "medical_specials_band": "high",
+    "claimant_attorney_involvement": "active_litigation_counsel",
+    "uninsured_or_coverage_complication_indicator": "present",
+    "seatbelt_restraint_factor": "unclear",
+    "fact_witness_count_band": "6_plus",
+    "expert_need": "possible",
+    "written_discovery_burden": "heavy",
+    "deposition_burden": "heavy",
+    "dispositive_motion_likelihood": "low",
+    "mediation_likelihood": "medium",
+    "trial_likelihood": "high",
+    "appeal_likelihood": "low",
+    "carrier_guideline_placeholder_constraint": "beta"
+  },
+  "budget_profile": {
+    "budget_phase": "trial_refresh",
+    "staffing_assumption": "partner_deposition_heavy",
+    "budget_variance_signal": "phase_overrun_25",
+    "required_budget_drivers": [
+      "deposition_burden",
+      "trial_likelihood",
+      "fact_witness_count_band"
+    ],
+    "provided_budget_drivers": [
+      "deposition_burden",
+      "trial_likelihood",
+      "fact_witness_count_band"
+    ],
+    "guideline_lookup_status": "hit",
+    "phase_budget_present": true,
+    "staffing_pattern_expected": "partner_deposition_heavy",
+    "staffing_pattern_actual": "partner_deposition_heavy",
+    "exceeds_synthetic_threshold": false,
+    "supported_budget_assumptions": true,
+    "synthetic_gap_refs": [
+      "L330",
+      "E115",
+      "L400"
+    ],
+    "synthetic_original_total": 40250.0,
+    "synthetic_update_adjustment_total": 2200.0,
+    "synthetic_update_priority_refs": [
+      "L330",
+      "E115",
+      "L400"
+    ],
+    "billed_remaining_incompatible": true
+  },
+  "governance": {
+    "review_owner": "synthetic_billing_integrity_owner",
+    "allowed_use_basis": "synthetic_budget_learning_eval",
+    "sensitivity_level": "synthetic_restricted_budget",
+    "canon_influence_boundary": "exception_candidate_only"
+  },
+  "runtime_expectations": {
+    "expected_classifications": {
+      "matter_type": "auto_bi_multi_claimant",
+      "venue_placeholder": "venue_alpha_urban",
+      "litigation_phase": "trial_prep",
+      "injury_severity_band": "moderate",
+      "liability_clarity": "mixed",
+      "medical_specials_band": "high",
+      "claimant_attorney_involvement": "active_litigation_counsel",
+      "uninsured_or_coverage_complication_indicator": "present",
+      "seatbelt_restraint_factor": "unclear",
+      "fact_witness_count_band": "6_plus",
+      "expert_need": "possible",
+      "written_discovery_burden": "heavy",
+      "deposition_burden": "heavy",
+      "dispositive_motion_likelihood": "low",
+      "mediation_likelihood": "medium",
+      "trial_likelihood": "high",
+      "appeal_likelihood": "low",
+      "budget_phase": "trial_refresh",
+      "staffing_assumption": "partner_deposition_heavy",
+      "budget_variance_signal": "phase_overrun_25",
+      "carrier_guideline_placeholder_constraint": "beta",
+      "row_emphasis": [
+        "L110",
+        "L120",
+        "L150",
+        "L310",
+        "L320",
+        "L330",
+        "E115",
+        "L130",
+        "L340",
+        "E119",
+        "L400",
+        "L160"
+      ],
+      "review_owner": "synthetic_billing_integrity_owner",
+      "allowed_use_basis": "synthetic_budget_learning_eval",
+      "sensitivity_level": "synthetic_restricted_budget",
+      "risk_class": "budget_integrity_high",
+      "canon_influence_boundary": "exception_candidate_only"
+    },
+    "expected_exception_triggers": [
+      "deposition_burden_not_reflected_in_L330_E115",
+      "trial_likelihood_not_reflected_in_L400",
+      "amount_billed_to_date_incompatible_with_remaining_budget"
+    ],
+    "expected_pressure_vector_class": "workflow_friction_pressure",
+    "expected_review_path": "billing_integrity_and_workflow_review",
+    "expected_refusal_behavior": "ingest_event_no_refusal",
+    "expected_budget_draft_present": true
+  }
+}

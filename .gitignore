@@ -1,0 +1,6 @@
+.pytest-tmp/
+.pytest_cache/
+runtime_data/
+__pycache__/
+*.py[cod]
+*.egg-info/

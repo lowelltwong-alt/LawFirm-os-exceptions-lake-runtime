@@ -1,0 +1,31 @@
+{
+  "exception_id": "EXC-900001",
+  "schema_type": "exception-event",
+  "schema_version": "v1",
+  "event_class": "retrieval_miss",
+  "severity": "moderate",
+  "event_time": "2026-04-24T16:00:00Z",
+  "summary": "Synthetic retrieval miss for MVP runtime validation and append-only audit testing.",
+  "details": "Synthetic test-only record. No real client, matter, employee, policy, or incident content is included.",
+  "origin": {
+    "layer": "retrieval",
+    "component": "synthetic-runtime-mvp",
+    "run_id": "synthetic-run-0001"
+  },
+  "route": {
+    "route_id": "route.retrieval_miss.v1",
+    "destination_loop": "retrieval_tuning",
+    "promotion_gate_required": true
+  },
+  "trust_metadata": {
+    "authority_zone": "synthetic-lab",
+    "trust_level": "high",
+    "confidence": 0.82,
+    "reviewer_required": true
+  },
+  "canonical_mutation_control": {
+    "direct_mutation_attempted": false,
+    "allowed_action": "route_for_review",
+    "boundary_note": "promotion_decision_required_for_canonical_change"
+  }
+}

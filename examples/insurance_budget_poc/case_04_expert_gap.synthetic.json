@@ -1,0 +1,122 @@
+{
+  "case_id": "case_04_expert_gap",
+  "synthetic_case_family": "insurance_defense_budget_template_poc",
+  "flow_mode": "synthetic_event",
+  "non_production": true,
+  "synthetic_time": "2026-04-27T17:00:00Z",
+  "matter_profile": {
+    "matter_label_placeholder": "Synthetic Auto BI Defense Matter 004",
+    "client_name_placeholder": "Synthetic Carrier Delta",
+    "client_matter_number_placeholder": "SYN-MAT-000004",
+    "matter_name_placeholder": "Synthetic Auto BI Severe Injury Defense",
+    "claim_number_placeholder": "SYN-CLM-000004",
+    "matter_type": "auto_bi_multi_claimant",
+    "venue_placeholder": "venue_alpha_urban",
+    "litigation_phase": "expert",
+    "injury_severity_band": "severe",
+    "liability_clarity": "mixed",
+    "medical_specials_band": "high",
+    "claimant_attorney_involvement": "active_litigation_counsel",
+    "uninsured_or_coverage_complication_indicator": "none",
+    "seatbelt_restraint_factor": "unclear",
+    "fact_witness_count_band": "3_5",
+    "expert_need": "required",
+    "written_discovery_burden": "heavy",
+    "deposition_burden": "limited",
+    "dispositive_motion_likelihood": "low",
+    "mediation_likelihood": "medium",
+    "trial_likelihood": "low",
+    "appeal_likelihood": "low",
+    "carrier_guideline_placeholder_constraint": "gamma"
+  },
+  "budget_profile": {
+    "budget_phase": "adr_refresh",
+    "staffing_assumption": "expert_managed",
+    "budget_variance_signal": "reflection_gap",
+    "required_budget_drivers": [
+      "expert_need",
+      "injury_severity_band",
+      "medical_specials_band"
+    ],
+    "provided_budget_drivers": [
+      "expert_need",
+      "injury_severity_band",
+      "medical_specials_band"
+    ],
+    "guideline_lookup_status": "hit",
+    "phase_budget_present": true,
+    "staffing_pattern_expected": "expert_managed",
+    "staffing_pattern_actual": "expert_managed",
+    "exceeds_synthetic_threshold": false,
+    "supported_budget_assumptions": true,
+    "synthetic_gap_refs": [
+      "L130",
+      "L340",
+      "E119"
+    ],
+    "synthetic_original_total": 35850.0,
+    "synthetic_update_adjustment_total": 1500.0,
+    "synthetic_update_priority_refs": [
+      "L130",
+      "L340",
+      "E119"
+    ],
+    "billed_remaining_incompatible": false
+  },
+  "governance": {
+    "review_owner": "synthetic_billing_integrity_owner",
+    "allowed_use_basis": "synthetic_budget_learning_eval",
+    "sensitivity_level": "synthetic_restricted_budget",
+    "canon_influence_boundary": "exception_candidate_only"
+  },
+  "runtime_expectations": {
+    "expected_classifications": {
+      "matter_type": "auto_bi_multi_claimant",
+      "venue_placeholder": "venue_alpha_urban",
+      "litigation_phase": "expert",
+      "injury_severity_band": "severe",
+      "liability_clarity": "mixed",
+      "medical_specials_band": "high",
+      "claimant_attorney_involvement": "active_litigation_counsel",
+      "uninsured_or_coverage_complication_indicator": "none",
+      "seatbelt_restraint_factor": "unclear",
+      "fact_witness_count_band": "3_5",
+      "expert_need": "required",
+      "written_discovery_burden": "heavy",
+      "deposition_burden": "limited",
+      "dispositive_motion_likelihood": "low",
+      "mediation_likelihood": "medium",
+      "trial_likelihood": "low",
+      "appeal_likelihood": "low",
+      "budget_phase": "adr_refresh",
+      "staffing_assumption": "expert_managed",
+      "budget_variance_signal": "reflection_gap",
+      "carrier_guideline_placeholder_constraint": "gamma",
+      "row_emphasis": [
+        "L110",
+        "L120",
+        "L150",
+        "L310",
+        "L320",
+        "L330",
+        "E115",
+        "L130",
+        "L340",
+        "E119",
+        "L160"
+      ],
+      "review_owner": "synthetic_billing_integrity_owner",
+      "allowed_use_basis": "synthetic_budget_learning_eval",
+      "sensitivity_level": "synthetic_restricted_budget",
+      "risk_class": "budget_integrity_high",
+      "canon_influence_boundary": "exception_candidate_only"
+    },
+    "expected_exception_triggers": [
+      "expert_need_not_reflected_in_L130_L340_E119"
+    ],
+    "expected_pressure_vector_class": "workflow_friction_pressure",
+    "expected_review_path": "billing_integrity_review",
+    "expected_refusal_behavior": "ingest_event_no_refusal",
+    "expected_budget_draft_present": true
+  }
+}

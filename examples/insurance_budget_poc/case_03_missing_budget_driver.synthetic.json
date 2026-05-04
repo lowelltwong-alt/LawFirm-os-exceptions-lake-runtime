@@ -1,0 +1,114 @@
+{
+  "case_id": "case_03_missing_budget_driver",
+  "synthetic_case_family": "insurance_defense_budget_template_poc",
+  "flow_mode": "synthetic_event",
+  "non_production": true,
+  "synthetic_time": "2026-04-27T16:00:00Z",
+  "matter_profile": {
+    "matter_label_placeholder": "Synthetic Auto BI Defense Matter 003",
+    "client_name_placeholder": "Synthetic Carrier Gamma",
+    "client_matter_number_placeholder": "SYN-MAT-000003",
+    "matter_name_placeholder": "Synthetic Auto BI Lane-Change Defense",
+    "claim_number_placeholder": "SYN-CLM-000003",
+    "matter_type": "auto_bi_lane_change",
+    "venue_placeholder": "venue_beta_suburban",
+    "litigation_phase": "written_discovery",
+    "injury_severity_band": "moderate",
+    "liability_clarity": "mixed",
+    "medical_specials_band": "high",
+    "claimant_attorney_involvement": "active_litigation_counsel",
+    "uninsured_or_coverage_complication_indicator": "none",
+    "seatbelt_restraint_factor": "alleged_nonuse",
+    "fact_witness_count_band": "3_5",
+    "expert_need": "none",
+    "written_discovery_burden": "moderate",
+    "deposition_burden": "limited",
+    "dispositive_motion_likelihood": "low",
+    "mediation_likelihood": "medium",
+    "trial_likelihood": "low",
+    "appeal_likelihood": "low",
+    "carrier_guideline_placeholder_constraint": "alpha"
+  },
+  "budget_profile": {
+    "budget_phase": "discovery_refresh",
+    "staffing_assumption": "associate_led_paralegal_supported",
+    "budget_variance_signal": "missing_driver",
+    "required_budget_drivers": [
+      "medical_specials_band",
+      "fact_witness_count_band",
+      "claimant_attorney_involvement"
+    ],
+    "provided_budget_drivers": [
+      "medical_specials_band",
+      "claimant_attorney_involvement"
+    ],
+    "guideline_lookup_status": "hit",
+    "phase_budget_present": true,
+    "staffing_pattern_expected": "associate_led_paralegal_supported",
+    "staffing_pattern_actual": "associate_led_paralegal_supported",
+    "exceeds_synthetic_threshold": false,
+    "supported_budget_assumptions": true,
+    "synthetic_gap_refs": [],
+    "synthetic_original_total": 30100.0,
+    "synthetic_update_adjustment_total": 650.0,
+    "synthetic_update_priority_refs": [
+      "L310",
+      "L330",
+      "E115"
+    ],
+    "billed_remaining_incompatible": false
+  },
+  "governance": {
+    "review_owner": "synthetic_budget_ops_owner",
+    "allowed_use_basis": "synthetic_budget_learning_eval",
+    "sensitivity_level": "synthetic_restricted_budget",
+    "canon_influence_boundary": "exception_candidate_only"
+  },
+  "runtime_expectations": {
+    "expected_classifications": {
+      "matter_type": "auto_bi_lane_change",
+      "venue_placeholder": "venue_beta_suburban",
+      "litigation_phase": "written_discovery",
+      "injury_severity_band": "moderate",
+      "liability_clarity": "mixed",
+      "medical_specials_band": "high",
+      "claimant_attorney_involvement": "active_litigation_counsel",
+      "uninsured_or_coverage_complication_indicator": "none",
+      "seatbelt_restraint_factor": "alleged_nonuse",
+      "fact_witness_count_band": "3_5",
+      "expert_need": "none",
+      "written_discovery_burden": "moderate",
+      "deposition_burden": "limited",
+      "dispositive_motion_likelihood": "low",
+      "mediation_likelihood": "medium",
+      "trial_likelihood": "low",
+      "appeal_likelihood": "low",
+      "budget_phase": "discovery_refresh",
+      "staffing_assumption": "associate_led_paralegal_supported",
+      "budget_variance_signal": "missing_driver",
+      "carrier_guideline_placeholder_constraint": "alpha",
+      "row_emphasis": [
+        "L110",
+        "L120",
+        "L150",
+        "L310",
+        "L320",
+        "L330",
+        "E115",
+        "L160"
+      ],
+      "review_owner": "synthetic_budget_ops_owner",
+      "allowed_use_basis": "synthetic_budget_learning_eval",
+      "sensitivity_level": "synthetic_restricted_budget",
+      "risk_class": "budget_integrity_medium",
+      "canon_influence_boundary": "exception_candidate_only"
+    },
+    "expected_exception_triggers": [
+      "missing_required_budget_driver"
+    ],
+    "expected_pressure_vector_class": "workflow_friction_pressure",
+    "expected_review_path": "budget_ops_review_and_workflow_redesign_candidate",
+    "expected_refusal_behavior": "ingest_event_no_refusal",
+    "expected_budget_draft_present": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "source_name": "synthetic-km-slice",
+  "source_system_type": "document_repository_export",
+  "source_ingestion_manifest_id": "SIM-900001",
+  "source_ingestion_manifest_ref": "sim.synthetic.900001",
+  "data_classification": "internal_restricted",
+  "sensitivity_level": "high",
+  "allowed_use_basis": "metadata_only_governed_dry_run",
+  "retention_rule": "short_lived_sandbox",
+  "access_owner": "synthetic-access-owner",
+  "business_owner": "synthetic-business-owner",
+  "validation_owner": "synthetic-validation-owner",
+  "approval_status": "approved_for_dry_run",
+  "rollback_or_quarantine_plan": "quarantine_and_delete_local_runtime_data",
+  "evidence_provenance_available": true,
+  "contract_sha": "replace_with_current_contract_sha",
+  "dry_run_only": true
+}

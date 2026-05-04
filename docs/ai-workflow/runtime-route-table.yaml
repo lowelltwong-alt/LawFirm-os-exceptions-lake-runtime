@@ -1,0 +1,132 @@
+router_version: 0.1.0
+last_updated: "2026-05-01"
+owner_surface: docs/ai-workflow/
+contract_authority:
+  repository: lowelltwong-alt/fmg-fractal-capability-ontology
+  boundary: consume_contracts_only
+  canonical_mapping_doc: docs/CANONICAL_ROUTE_MAPPING.md
+  canonical_route_registry: registry/exception-route-registry.json
+  canonical_route_note: runtime route labels are local operational labels; FMG route_id and event_class remain canonical authority.
+
+routes:
+  health_check:
+    description: Inspect runtime health surfaces and local validation readiness.
+    default_mode: Explore
+    allowed_paths:
+      - docs/**
+      - tests/**
+      - src/**
+    forbidden:
+      - schema_redefinition
+      - production_data
+    validation:
+      - pytest
+
+  synthetic_exception_ingest:
+    description: Work on synthetic exception ingest behavior only.
+    default_mode: Edit
+    allowed_paths:
+      - src/**
+      - tests/**
+      - examples/**
+      - docs/**
+    forbidden:
+      - real_fmg_data
+      - production_connectors
+      - canon_mutation
+    validation:
+      - pytest
+
+  contract_lock_refresh:
+    description: Refresh or document contract lock behavior against FMG contract repo SHA.
+    default_mode: Edit
+    allowed_paths:
+      - contracts.lock.json
+      - scripts/**
+      - tests/**
+      - docs/**
+    forbidden:
+      - bypassing_contract_drift
+      - redefining_fmg_contracts
+    validation:
+      - pytest
+
+  non_synthetic_dry_run_preflight:
+    description: Metadata-only dry-run readiness checks; no event persistence.
+    default_mode: Plan/Edit
+    allowed_paths:
+      - src/**
+      - tests/**
+      - examples/**
+      - docs/**
+    forbidden:
+      - production_event_persistence
+      - raw_records
+      - live_connectors
+    validation:
+      - pytest
+
+  audit_event_review:
+    description: Review or plan audit event metadata capture.
+    default_mode: Plan/Edit
+    allowed_paths:
+      - docs/**
+      - src/**
+      - tests/**
+    forbidden:
+      - raw_production_conversation_content
+      - production_audit_lake
+    validation:
+      - pytest
+
+  event_store_review:
+    description: Review append-only local JSONL event store behavior.
+    default_mode: Explore/Edit
+    allowed_paths:
+      - src/**
+      - tests/**
+      - docs/**
+    forbidden:
+      - production_storage_claims
+      - real_fmg_data
+    validation:
+      - pytest
+
+  pressure_candidate_build:
+    description: Work on in-memory synthetic pressure-vector candidate builder.
+    default_mode: Edit
+    allowed_paths:
+      - src/**
+      - tests/**
+      - docs/**
+    forbidden:
+      - adaptation_proposal_creation
+      - promotion_decision_creation
+      - canon_mutation
+    validation:
+      - pytest
+
+  future_connector_planning:
+    description: Plan future connectors without implementing live connectors.
+    default_mode: Plan
+    allowed_paths:
+      - docs/**
+    forbidden:
+      - connector_code
+      - credentials
+      - live_system_access
+    validation:
+      - docs_review
+
+  future_ai_interaction_audit_planning:
+    description: Plan future AI input/output audit capture without production storage.
+    default_mode: Plan
+    allowed_paths:
+      - docs/ai-workflow/**
+      - docs/**
+    forbidden:
+      - raw_transcript_storage
+      - production_conversation_capture
+      - production_audit_lake
+    validation:
+      - docs_review

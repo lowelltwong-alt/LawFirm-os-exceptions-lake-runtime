@@ -1,0 +1,113 @@
+{
+  "case_id": "case_02_guideline_lookup_miss",
+  "synthetic_case_family": "insurance_defense_budget_template_poc",
+  "flow_mode": "synthetic_event",
+  "non_production": true,
+  "synthetic_time": "2026-04-27T15:00:00Z",
+  "matter_profile": {
+    "matter_label_placeholder": "Synthetic Auto BI Defense Matter 002",
+    "client_name_placeholder": "Synthetic Carrier Beta",
+    "client_matter_number_placeholder": "SYN-MAT-000002",
+    "matter_name_placeholder": "Synthetic Auto BI Intersection Defense",
+    "claim_number_placeholder": "SYN-CLM-000002",
+    "matter_type": "auto_bi_intersection",
+    "venue_placeholder": "venue_alpha_urban",
+    "litigation_phase": "written_discovery",
+    "injury_severity_band": "moderate",
+    "liability_clarity": "disputed",
+    "medical_specials_band": "medium",
+    "claimant_attorney_involvement": "active_litigation_counsel",
+    "uninsured_or_coverage_complication_indicator": "none",
+    "seatbelt_restraint_factor": "unclear",
+    "fact_witness_count_band": "3_5",
+    "expert_need": "none",
+    "written_discovery_burden": "moderate",
+    "deposition_burden": "limited",
+    "dispositive_motion_likelihood": "low",
+    "mediation_likelihood": "low",
+    "trial_likelihood": "low",
+    "appeal_likelihood": "low",
+    "carrier_guideline_placeholder_constraint": "beta"
+  },
+  "budget_profile": {
+    "budget_phase": "discovery_refresh",
+    "staffing_assumption": "partner_light_associate_heavy",
+    "budget_variance_signal": "within_range",
+    "required_budget_drivers": [
+      "liability_clarity",
+      "claimant_attorney_involvement",
+      "written_discovery_burden"
+    ],
+    "provided_budget_drivers": [
+      "liability_clarity",
+      "claimant_attorney_involvement",
+      "written_discovery_burden"
+    ],
+    "guideline_lookup_status": "miss",
+    "phase_budget_present": true,
+    "staffing_pattern_expected": "partner_light_associate_heavy",
+    "staffing_pattern_actual": "partner_light_associate_heavy",
+    "exceeds_synthetic_threshold": false,
+    "supported_budget_assumptions": true,
+    "synthetic_gap_refs": [],
+    "synthetic_original_total": 28250.0,
+    "synthetic_update_adjustment_total": 500.0,
+    "synthetic_update_priority_refs": [
+      "L120",
+      "L150"
+    ],
+    "billed_remaining_incompatible": false
+  },
+  "governance": {
+    "review_owner": "synthetic_knowledge_owner",
+    "allowed_use_basis": "synthetic_budget_learning_eval",
+    "sensitivity_level": "synthetic_restricted_budget",
+    "canon_influence_boundary": "exception_candidate_only"
+  },
+  "runtime_expectations": {
+    "expected_classifications": {
+      "matter_type": "auto_bi_intersection",
+      "venue_placeholder": "venue_alpha_urban",
+      "litigation_phase": "written_discovery",
+      "injury_severity_band": "moderate",
+      "liability_clarity": "disputed",
+      "medical_specials_band": "medium",
+      "claimant_attorney_involvement": "active_litigation_counsel",
+      "uninsured_or_coverage_complication_indicator": "none",
+      "seatbelt_restraint_factor": "unclear",
+      "fact_witness_count_band": "3_5",
+      "expert_need": "none",
+      "written_discovery_burden": "moderate",
+      "deposition_burden": "limited",
+      "dispositive_motion_likelihood": "low",
+      "mediation_likelihood": "low",
+      "trial_likelihood": "low",
+      "appeal_likelihood": "low",
+      "budget_phase": "discovery_refresh",
+      "staffing_assumption": "partner_light_associate_heavy",
+      "budget_variance_signal": "within_range",
+      "carrier_guideline_placeholder_constraint": "beta",
+      "row_emphasis": [
+        "L110",
+        "L120",
+        "L150",
+        "L310",
+        "L320",
+        "L330",
+        "E115"
+      ],
+      "review_owner": "synthetic_knowledge_owner",
+      "allowed_use_basis": "synthetic_budget_learning_eval",
+      "sensitivity_level": "synthetic_restricted_budget",
+      "risk_class": "budget_integrity_medium",
+      "canon_influence_boundary": "exception_candidate_only"
+    },
+    "expected_exception_triggers": [
+      "synthetic_guideline_lookup_miss"
+    ],
+    "expected_pressure_vector_class": "retrieval_quality_pressure",
+    "expected_review_path": "knowledge_owner_review_and_retrieval_tuning_opportunity_candidate",
+    "expected_refusal_behavior": "ingest_event_no_refusal",
+    "expected_budget_draft_present": true
+  }
+}
