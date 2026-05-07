@@ -33,8 +33,8 @@ Runtime work must fail closed when:
 - the contract SHA is ambiguous
 - audit persistence behavior is unclear
 - the task would store production conversation content
-- the task would bypass Law Firm contract authority
+- the task would bypass Law Firm OS Semantic Substrate contract authority
 
 ## Authority
 
-The Law Firm ontology contract repository owns canonical audit contracts. This runtime may consume those contracts after they are published and pinned.
+The Law Firm OS Semantic Substrate contract repository owns canonical audit contracts. This runtime may consume those contracts after they are published and pinned.

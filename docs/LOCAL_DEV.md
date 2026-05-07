@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Python 3.11+
-- a local checkout of your **Law Firm ontology** contract repository (example GitHub slug: `your-org/law-firm-ontology`)
+- a local checkout of your **Law Firm OS Semantic Substrate** contract repository (example GitHub slug: `your-org/LawFirm-os-semantic-substrate`)
 
 ## CI-equivalent command sequence (local-first)
 
@@ -15,7 +15,7 @@ Run these in order from the **runtime repo root** so your machine matches `.gith
 python -m pip install --upgrade pip
 python -m pip install -e ".[dev]"
 python scripts/ci_check_contract_lock.py
-$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\law-firm-ontology-contracts'
+$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\LawFirm-os-semantic-substrate'
 python -m pytest
 ```
 
@@ -25,18 +25,18 @@ python -m pytest
 python -m pip install --upgrade pip
 python -m pip install -e ".[dev]"
 python scripts/ci_check_contract_lock.py
-export EXCEPTIONS_LAKE_CONTRACT_REPO_PATH="/path/to/law-firm-ontology-contracts"
+export EXCEPTIONS_LAKE_CONTRACT_REPO_PATH="/path/to/LawFirm-os-semantic-substrate"
 python -m pytest
 ```
 
-Tests copy contract files from your checkout into a temporary git-backed fixture and temporarily repin `contracts.lock.json` to that fixture’s `HEAD` SHA, so your ontology checkout only needs to be a complete tree at a commit that includes the required contract files. CI checks out the public Law Firm ontology contract repository at the `contract_sha` pinned in this repo’s lock file (clone source: `CONTRACT_ONTOLOGY_REPOSITORY` in the workflow file) for reproducible fixtures (no firm data).
+Tests copy contract files from your checkout into a temporary git-backed fixture and temporarily repin `contracts.lock.json` to that fixture’s `HEAD` SHA, so your ontology checkout only needs to be a complete tree at a commit that includes the required contract files. CI checks out the public Law Firm OS Semantic Substrate contract repository at the `contract_sha` pinned in this repo’s lock file (clone source: `CONTRACT_ONTOLOGY_REPOSITORY` in the workflow file) for reproducible fixtures (no firm data).
 
 ## Setup
 
 Set the contract repo path:
 
 ```powershell
-$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\law-firm-ontology-contracts'
+$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\LawFirm-os-semantic-substrate'
 ```
 
 Install the runtime repo:

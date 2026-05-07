@@ -1,6 +1,8 @@
 # Runtime Boundary
 
-`exceptions-lake-runtime` is a separate runtime repository that consumes contracts from the **Law Firm ontology** contract repository (clone source configured locally or via `CONTRACT_ONTOLOGY_REPOSITORY` in CI).
+Canonical machine name: `exceptions-lake-runtime-main`. Plane: evidence. Sibling repos: `LawFirm-os-semantic-substrate` (control plane) and `LawFirm-os-orchestrator` (execution plane). For full sibling-repo names and authority order across repos, see substrate `governance/CROSS_REPO_MAP.md`.
+
+`exceptions-lake-runtime-main` is a separate runtime repository that consumes contracts from the **Law Firm OS Semantic Substrate** (canonical machine name `LawFirm-os-semantic-substrate`) contract repository (clone source configured locally or via `CONTRACT_ONTOLOGY_REPOSITORY` in CI).
 
 ## Contract repo vs runtime repo
 
@@ -37,7 +39,7 @@ Contract loading policy is manifest-first:
 
 Exception validation policy is fail-closed against canonical route authority:
 
-- unknown `event_class` values are rejected against the Law Firm canonical route registry
+- unknown `event_class` values are rejected against the substrate canonical route registry
 - `route.route_id` and `event_class` mismatches are rejected with explicit validation reasons
 - validation metadata (including `schema_id` and validation errors) is preserved in runtime audit/evidence records
 - runtime records remain observational evidence only and do not mutate canon

@@ -1,14 +1,32 @@
 {
-  "contract_repo": "your-org/law-firm-ontology",
+  "contract_repo": "LawFirm-os-semantic-substrate",
   "contract_ref_type": "git_sha",
-  "contract_sha": "cd9e3bbfe5bbfcfa776c976c92b8e67e06fec69f",
-  "generated_at": "2026-05-04T16:17:28.781914Z",
-  "generated_by": "exceptions-lake-runtime",
+  "contract_sha": "d2ac7f504e67aa00985fbe53aa5350f940e8b529",
+  "generated_at": "2026-05-06T00:00:00Z",
+  "generated_by": "exceptions-lake-runtime-main",
+  "contract_repo_human_label": "Law Firm OS Semantic Substrate",
+  "manifest_first_loading": {
+    "preferred_path": "registry/exceptions-lake-contract-export.json",
+    "fallback_allowed_when_export_absent": true,
+    "fallback_paths": [
+      "registry/schema-registry.json",
+      "registry/exceptions-schema-registry.json",
+      "registry/governed-learning-schema-registry.json",
+      "registry/exception-route-registry.json"
+    ]
+  },
   "non_claims": [
     "no production runtime",
     "no real events",
     "no real connectors",
     "no dashboards",
-    "no canon mutation"
+    "no canon mutation",
+    "no promotion to canon",
+    "no live model calls",
+    "no scheduled jobs",
+    "no live research crawling",
+    "no external APIs",
+    "no external writes",
+    "no invented route_id or event_class"
   ]
 }

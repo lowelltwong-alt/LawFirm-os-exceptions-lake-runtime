@@ -1,9 +1,11 @@
-router_version: 0.1.0
-last_updated: "2026-05-01"
+router_version: 0.1.1
+last_updated: "2026-05-06"
 owner_surface: docs/ai-workflow/
 contract_authority:
-  repository: law-firm-ontology-contracts
+  repository: LawFirm-os-semantic-substrate
+  repository_human_label: Law Firm OS Semantic Substrate
   boundary: consume_contracts_only
+  cross_repo_map: governance/CROSS_REPO_MAP.md
   canonical_mapping_doc: docs/CANONICAL_ROUTE_MAPPING.md
   canonical_route_registry: registry/exception-route-registry.json
   canonical_route_note: runtime route labels are local operational labels; canonical route_id and event_class remain authoritative.

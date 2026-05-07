@@ -4,7 +4,7 @@
 
 This runtime repo currently implements:
 
-- contract loading from the Law Firm ontology contract repository (local path via `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH`)
+- contract loading from the Law Firm OS Semantic Substrate contract repository (local path via `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH`)
 - contract version pinning through `contracts.lock.json`
 - synthetic `exception-event` validation
 - deny-by-default runtime policy enforcement
@@ -32,7 +32,7 @@ This runtime repo currently implements:
 Set the contract repo path before local validation:
 
 ```powershell
-$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\law-firm-ontology-contracts'
+$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\LawFirm-os-semantic-substrate'
 ```
 
 Refresh the lock file when intentionally moving to a new reviewed contract SHA:
