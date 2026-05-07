@@ -1,5 +1,29 @@
 # Recent Work
 
+## 2026-05-06 - Phase 2 Front-Door Documentation Completion
+
+Codex task / PR: Final verification gap cleanup for root AI front-door docs.
+
+Files changed:
+- Added `AGENTS.md` with evidence-plane authority boundaries, required read order, current contract pin, data-flow pointer, and stop conditions.
+- Added `AI_TABLE_OF_CONTENTS.md` with pointers to runtime boundary docs, current command surfaces, contract authority, data-flow map, and Phase 2 planned/current status.
+- Added `ENDPOINTS_AND_COMMANDS.md` documenting the local CLI, local scripts, library facade, environment requirement, and no-production/no-external-write boundaries.
+
+Schemas changed:
+- None.
+
+Contracts changed:
+- None. `contracts.lock.json` unchanged.
+
+Runtime behavior changed:
+- None.
+
+Risk color:
+- Green. Documentation-only front-door completion.
+
+Harness level:
+- H0 documentation alignment plus existing validation.
+
 ## 2026-05-06 — Cross-Repo Coherence Patch 4: Substrate Identity Alignment
 
 Codex task / PR: Cross-repo coherence fix train Patch 4 (evidence-lake side).
