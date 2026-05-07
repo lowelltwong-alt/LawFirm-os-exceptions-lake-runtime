@@ -33,7 +33,7 @@ This repo owns append-only runtime/audit evidence support. It consumes contracts
 `contracts.lock.json` currently pins:
 
 - `contract_repo: LawFirm-os-semantic-substrate`
-- `contract_sha: d2ac7f504e67aa00985fbe53aa5350f940e8b529`
+- `contract_sha: 43991155f0286e6d8bc5ba0bfe6b42407b1b3f12`
 - `generated_by: exceptions-lake-runtime-main`
 
 The runtime consumes substrate contracts read-only. Canonical `route_id` and `event_class` authority belongs to the substrate.

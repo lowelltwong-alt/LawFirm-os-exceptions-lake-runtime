@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Python 3.11+
-- a local checkout of your **Law Firm OS Semantic Substrate** contract repository (example GitHub slug: `your-org/LawFirm-os-semantic-substrate`)
+- a local git checkout of your **Law Firm OS Semantic Substrate** contract repository (example GitHub slug: `your-org/LawFirm-os-semantic-substrate`)
 
 ## CI-equivalent command sequence (local-first)
 
@@ -31,9 +31,11 @@ python -m pytest
 
 Tests copy contract files from your checkout into a temporary git-backed fixture and temporarily repin `contracts.lock.json` to that fixture’s `HEAD` SHA, so your ontology checkout only needs to be a complete tree at a commit that includes the required contract files. CI checks out the public Law Firm OS Semantic Substrate contract repository at the `contract_sha` pinned in this repo’s lock file (clone source: `CONTRACT_ONTOLOGY_REPOSITORY` in the workflow file) for reproducible fixtures (no firm data).
 
+Plain ZIP/archive extractions of the substrate are useful for review, but they are not runtime contract sources for this repo because they do not carry `.git` metadata. Runtime health and ingest use `git rev-parse HEAD` to prove the checkout matches `contracts.lock.json`. Until a governed archive-lock format exists, set `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` to an actual git checkout at the pinned commit.
+
 ## Setup
 
-Set the contract repo path:
+Set the contract repo path to a git checkout, not a plain ZIP extraction:
 
 ```powershell
 $env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\LawFirm-os-semantic-substrate'
@@ -84,6 +86,8 @@ does not permit real ingestion.
 `contracts.lock.json` pins this runtime repo to a specific contract repo git SHA.
 
 The loader reads the live contract repo SHA and fail-closes if it does not match the pinned `contract_sha`. This keeps local development aligned to one reviewed contract version instead of silently drifting.
+
+If the path points to a ZIP-extracted folder without `.git`, loading fails closed. That is intentional: an archive-mode lock would need explicit exported commit/hash metadata from the control plane and is not inferred by this runtime.
 
 This pin is a governance and reproducibility aid only. It does not make the runtime production-ready and it does not weaken any non-claims around synthetic scope, lack of connectors, or lack of canon mutation.
 

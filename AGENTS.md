@@ -39,7 +39,7 @@ It must not:
 `contracts.lock.json` points to:
 
 - `contract_repo: LawFirm-os-semantic-substrate`
-- `contract_sha: d2ac7f504e67aa00985fbe53aa5350f940e8b529`
+- `contract_sha: 43991155f0286e6d8bc5ba0bfe6b42407b1b3f12`
 - `generated_by: exceptions-lake-runtime-main`
 
 Tests that load contracts require `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` to point at a local sibling checkout of `LawFirm-os-semantic-substrate`.

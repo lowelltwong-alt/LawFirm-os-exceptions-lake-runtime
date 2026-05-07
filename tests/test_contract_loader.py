@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -172,6 +173,21 @@ def test_fails_closed_when_live_contract_sha_mismatches_lock(
             json.dumps(original_lock, indent=2) + "\n",
             encoding="utf-8",
         )
+
+
+def test_fails_closed_with_clear_message_for_plain_zip_contract_tree(
+    contract_repo_copy: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    archive_root = tmp_path / "zip-extracted-substrate"
+    for relative_dir in ("registry", "schemas", "governance", "docs"):
+        shutil.copytree(contract_repo_copy / relative_dir, archive_root / relative_dir)
+    monkeypatch.setenv("EXCEPTIONS_LAKE_CONTRACT_REPO_PATH", str(archive_root))
+    config = RuntimeConfig.from_env(runtime_data_dir=tmp_path / "runtime_data")
+
+    with pytest.raises(ContractLoadError, match="plain ZIP/archive extraction"):
+        ContractLoader().load(config)
 
 
 def test_fails_closed_when_lock_missing_required_field(

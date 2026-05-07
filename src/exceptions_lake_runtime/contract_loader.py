@@ -296,6 +296,10 @@ class ContractLoader:
             )
         except (OSError, subprocess.CalledProcessError) as exc:
             raise ContractLoadError(
-                "Unable to resolve contract_version from the contract repo git SHA."
+                "Unable to resolve contract_version from the contract repo git SHA. "
+                "EXCEPTIONS_LAKE_CONTRACT_REPO_PATH must point to an actual git "
+                "checkout of LawFirm-os-semantic-substrate at the pinned commit. "
+                "A plain ZIP/archive extraction without .git metadata is not a "
+                "verifiable contract source for runtime execution."
             ) from exc
         return result.stdout.strip()
