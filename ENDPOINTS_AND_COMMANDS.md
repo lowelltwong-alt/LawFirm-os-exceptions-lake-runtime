@@ -12,7 +12,7 @@ Most runtime commands that load contracts require:
 $env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\LawFirm-os-semantic-substrate'
 ```
 
-The current lock points to substrate commit `d2ac7f504e67aa00985fbe53aa5350f940e8b529`.
+The current lock points to substrate commit `43991155f0286e6d8bc5ba0bfe6b42407b1b3f12`.
 
 ## CLI
 

@@ -111,6 +111,6 @@ Lock validation is fail-closed on missing fields, invalid fields, or SHA drift.
 
 - Date: 2026-05-06
 - Changed by: Codex
-- What changed: Replaced placeholder substrate identity (`your-org/law-firm-ontology`, `law-firm-ontology-contracts`, "Law Firm ontology") with the canonical `LawFirm-os-semantic-substrate` machine name and "Law Firm OS Semantic Substrate" human label across `contracts.lock.json`, CI, lock-refresh script, and runtime docs. Refreshed the contract pin to substrate commit `d2ac7f504e67aa00985fbe53aa5350f940e8b529` (substrate Patch 1 + Patch 2). Created this `DATA_FLOW_MAP.md` for evidence-plane orientation.
+- What changed: Replaced placeholder substrate identity (`your-org/law-firm-ontology`, `law-firm-ontology-contracts`, "Law Firm ontology") with the canonical `LawFirm-os-semantic-substrate` machine name and "Law Firm OS Semantic Substrate" human label across `contracts.lock.json`, CI, lock-refresh script, and runtime docs. The current contract pin is substrate commit `43991155f0286e6d8bc5ba0bfe6b42407b1b3f12`. Created this `DATA_FLOW_MAP.md` for evidence-plane orientation.
 - Risk color: yellow. Identity-alignment change with no behavior change.
 - Harness level: H1 documentation/identity update plus existing validation.
