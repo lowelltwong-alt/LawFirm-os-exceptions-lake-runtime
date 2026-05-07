@@ -1,6 +1,6 @@
 # Runtime Audit Capture Roadmap
 
-This roadmap defines the runtime path for AI interaction audit metadata while preserving the Law Firm contract-authority boundary.
+This roadmap defines the runtime path for AI interaction audit metadata while preserving the Law Firm OS Semantic Substrate contract-authority boundary.
 
 ## Current posture
 
@@ -10,7 +10,7 @@ This repo may support synthetic and dry-run audit metadata. It must not store pr
 
 - Define runtime audit routes.
 - Define transcript and retention boundaries.
-- State that the Law Firm ontology repository owns canonical audit contracts.
+- State that the Law Firm OS Semantic Substrate repository owns canonical audit contracts.
 - Keep all changes docs-only.
 
 ## Phase 1 — Synthetic audit envelope
@@ -19,7 +19,7 @@ Future runtime work may capture synthetic or dry-run audit envelopes with:
 
 - runtime route
 - mode
-- Law Firm contract SHA
+- Law Firm OS Semantic Substrate contract SHA
 - content hashes
 - policy decision
 - tool-call metadata
@@ -29,7 +29,7 @@ No production conversation text is allowed in this repo.
 
 ## Phase 2 — Contract-aligned audit schema consumption
 
-After the Law Firm ontology repository publishes audit-event schemas, this runtime may validate synthetic audit envelopes against pinned Law Firm contracts.
+After the Law Firm OS Semantic Substrate repository publishes audit-event schemas, this runtime may validate synthetic audit envelopes against pinned Law Firm OS Semantic Substrate contracts.
 
 ## Phase 3 — Secure transcript-store integration planning
 

@@ -38,17 +38,35 @@ def build_lock_document(
 ) -> dict[str, object]:
     timestamp = generated_at or datetime.now(tz=UTC).isoformat().replace("+00:00", "Z")
     return {
-        "contract_repo": "your-org/law-firm-ontology",
+        "contract_repo": "LawFirm-os-semantic-substrate",
         "contract_ref_type": "git_sha",
         "contract_sha": contract_sha,
         "generated_at": timestamp,
-        "generated_by": "exceptions-lake-runtime",
+        "generated_by": "exceptions-lake-runtime-main",
+        "contract_repo_human_label": "Law Firm OS Semantic Substrate",
+        "manifest_first_loading": {
+            "preferred_path": "registry/exceptions-lake-contract-export.json",
+            "fallback_allowed_when_export_absent": True,
+            "fallback_paths": [
+                "registry/schema-registry.json",
+                "registry/exceptions-schema-registry.json",
+                "registry/governed-learning-schema-registry.json",
+                "registry/exception-route-registry.json",
+            ],
+        },
         "non_claims": [
             "no production runtime",
             "no real events",
             "no real connectors",
             "no dashboards",
             "no canon mutation",
+            "no promotion to canon",
+            "no live model calls",
+            "no scheduled jobs",
+            "no live research crawling",
+            "no external APIs",
+            "no external writes",
+            "no invented route_id or event_class",
         ],
     }
 

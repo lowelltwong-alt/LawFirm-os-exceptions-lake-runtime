@@ -1,6 +1,8 @@
 # AI Work Start Here
 
-This is the runtime-specific AI work router for `exceptions-lake-runtime`.
+Canonical machine name: `exceptions-lake-runtime-main`. Plane: evidence. Sibling repos: `LawFirm-os-semantic-substrate` (control plane), `LawFirm-os-orchestrator` (execution plane). For authority order across repos, see substrate `governance/CROSS_REPO_MAP.md`.
+
+This is the runtime-specific AI work router for `exceptions-lake-runtime-main`.
 
 ## Required read order
 
@@ -16,7 +18,7 @@ Before AI-assisted edits, read:
 
 ## Runtime boundary
 
-This repo consumes versioned contracts from the Law Firm ontology contract repository.
+This repo consumes versioned contracts from the Law Firm OS Semantic Substrate contract repository.
 
 It does not redefine schema meaning, lifecycle states, mutation authority, or promotion authority. Runtime observations may become exception candidates only. Canonical change still requires the governed ontology path:
 

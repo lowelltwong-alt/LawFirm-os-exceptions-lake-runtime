@@ -1,11 +1,11 @@
 # Runtime AI Work Cycle
 
-All AI-assisted work in this runtime repo must preserve the contract-consumer boundary with the **Law Firm ontology** contract repository (see `CONTRACT_ONTOLOGY_REPOSITORY` in `.github/workflows/ci.yml` and `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` locally).
+All AI-assisted work in this runtime repo must preserve the contract-consumer boundary with the **Law Firm OS Semantic Substrate** contract repository (see `CONTRACT_ONTOLOGY_REPOSITORY` in `.github/workflows/ci.yml` and `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` locally).
 
 ## Cycle
 
 1. **Orient** — read `README.md`, runtime boundary docs, local dev docs, and `AI_WORK_START_HERE.md`.
-2. **Confirm contract authority** — identify the Law Firm contract repo path and pinned contract SHA when relevant.
+2. **Confirm contract authority** — identify the Law Firm OS Semantic Substrate contract repo path and pinned contract SHA when relevant.
 3. **Classify runtime task** — select a route from `runtime-route-table.yaml`.
 4. **Choose mode** — Explore, Plan, Edit, or Execute.
 5. **Apply stop conditions** — stop on ambiguous schema, contract SHA, persistence, or audit behavior.

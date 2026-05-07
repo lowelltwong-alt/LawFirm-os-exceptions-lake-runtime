@@ -1,8 +1,10 @@
 # exceptions-lake-runtime
 
-`exceptions-lake-runtime` is a library-first, non-production MVP runtime skeleton for governed Exceptions Lake processing.
+Canonical machine name: `exceptions-lake-runtime-main`. Human label: Law Firm OS Exceptions Lake Runtime. Plane: evidence. Sibling repos: `LawFirm-os-semantic-substrate` (control plane), `LawFirm-os-orchestrator` (execution plane). For sibling-repo names and authority order across repos, see substrate `governance/CROSS_REPO_MAP.md`.
 
-It consumes versioned contracts from the authoritative **Law Firm ontology** (contract) repository.
+`exceptions-lake-runtime-main` is a library-first, non-production MVP runtime skeleton for governed Exceptions Lake processing.
+
+It consumes versioned contracts from the authoritative **Law Firm OS Semantic Substrate** (canonical machine name `LawFirm-os-semantic-substrate`) (contract) repository.
 
 - **CI default:** the clone source is the `CONTRACT_ONTOLOGY_REPOSITORY` environment variable in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (set to a public ontology slug for reproducible builds).
 - **Local development:** set `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` to your checkout of that contract repository (any path; see `docs/LOCAL_DEV.md`).
@@ -74,18 +76,18 @@ HTTP is intentionally out of scope for this first implementation so we can keep 
 
 1. `python -m pip install -e ".[dev]"`
 2. `python scripts/ci_check_contract_lock.py`
-3. Point `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` at a local git checkout of the Law Firm ontology contract repository (tests copy contract surfaces into a temporary fixture and temporarily align the lock to that fixture’s SHA; see `docs/LOCAL_DEV.md`).
+3. Point `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` at a local git checkout of the Law Firm OS Semantic Substrate contract repository (tests copy contract surfaces into a temporary fixture and temporarily align the lock to that fixture’s SHA; see `docs/LOCAL_DEV.md`).
 4. `python -m pytest`
 
-GitHub Actions runs the same sequence: lock check, shallow checkout of the public Law Firm ontology contract repository at the pinned SHA, then `pytest`. No production services and no firm data.
+GitHub Actions runs the same sequence: lock check, shallow checkout of the public Law Firm OS Semantic Substrate contract repository at the pinned SHA, then `pytest`. No production services and no firm data.
 
 ## Local setup
 
-1. Clone or otherwise obtain a local checkout of your Law Firm ontology contract repository (example slug: `your-org/law-firm-ontology`) on the branch or SHA you want the runtime to consume.
+1. Clone or otherwise obtain a local checkout of your Law Firm OS Semantic Substrate contract repository (example slug: `your-org/LawFirm-os-semantic-substrate`) on the branch or SHA you want the runtime to consume.
 2. Set the contract repo path:
 
 ```powershell
-$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\law-firm-ontology-contracts'
+$env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\LawFirm-os-semantic-substrate'
 ```
 
 3. Install the runtime repo in editable mode:
@@ -167,11 +169,11 @@ See:
 
 ---
 
-## Relationship to Law Firm ontology repository
+## Relationship to Law Firm OS Semantic Substrate repository
 
-This repo should be understood as a runtime/application layer connected to the **Law Firm ontology** contract repository (for example a checkout named `law-firm-ontology-contracts` on disk).
+This repo should be understood as a runtime/application layer connected to the **Law Firm OS Semantic Substrate** (canonical machine name `LawFirm-os-semantic-substrate`) contract repository (for example a checkout named `LawFirm-os-semantic-substrate` on disk).
 
-The Law Firm ontology repository is the governing source of truth for:
+The Law Firm OS Semantic Substrate repository is the governing source of truth for:
 
 - terminology
 - governance concepts

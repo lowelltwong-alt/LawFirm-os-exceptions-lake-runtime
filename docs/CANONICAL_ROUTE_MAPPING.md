@@ -1,21 +1,21 @@
 # Canonical Route Mapping Contract
 
-This document maps runtime-local route and action labels in this repository to Law Firm canonical route authority.
+This document maps runtime-local route and action labels in this repository to Substrate canonical route authority.
 
-Authoritative Law Firm ontology sources (paths relative to your contract checkout, e.g. `law-firm-ontology-contracts/`):
+Authoritative Law Firm OS Semantic Substrate sources (paths relative to your contract checkout, e.g. `LawFirm-os-semantic-substrate/`):
 
-- `law-firm-ontology-contracts/registry/exception-route-registry.json`
-- `law-firm-ontology-contracts/registry/exceptions-lake-contract-export.json`
-- `law-firm-ontology-contracts/governance/EXCEPTIONS_LAKE_BOUNDARY.md`
-- `law-firm-ontology-contracts/governance/EXCEPTIONS_LAKE_ARCHITECTURE.md`
+- `LawFirm-os-semantic-substrate/registry/exception-route-registry.json`
+- `LawFirm-os-semantic-substrate/registry/exceptions-lake-contract-export.json`
+- `LawFirm-os-semantic-substrate/governance/EXCEPTIONS_LAKE_BOUNDARY.md`
+- `LawFirm-os-semantic-substrate/governance/EXCEPTIONS_LAKE_ARCHITECTURE.md`
 
 ## Boundary rule
 
 Runtime route labels in this repo are operational workflow labels for local development and planning. They are not canonical truth.
 
-Canonical route meaning is defined only by Law Firm ontology `route_id` + `event_class` values. Runtime observations remain evidence and may become exception candidates only; they do not directly mutate canon.
+Canonical route meaning is defined only by Law Firm OS Semantic Substrate `route_id` + `event_class` values. Runtime observations remain evidence and may become exception candidates only; they do not directly mutate canon.
 
-## Law Firm canonical route authority (current)
+## Substrate canonical route authority (current)
 
 - `route.retrieval_miss.v1` -> `event_class: retrieval_miss`
 - `route.workflow_escalation.v1` -> `event_class: workflow_escalation`
@@ -44,9 +44,9 @@ All route labels currently defined in `docs/ai-workflow/runtime-route-table.yaml
 
 ## Runtime Action Label Mapping
 
-This section maps route/action labels used in runtime workflow docs to Law Firm canonical action authority where applicable.
+This section maps route/action labels used in runtime workflow docs to Substrate canonical action authority where applicable.
 
-| Runtime action label | Canonical mapping status | Law Firm canonical action | Notes |
+| Runtime action label | Canonical mapping status | Substrate canonical action | Notes |
 |---|---|---|---|
 | `synthetic_exception_ingest` | Partially mapped | `route_for_review` | Canonical when a valid exception event is routed for review. |
 | `pressure_candidate_build` | Partially mapped | `aggregate_pressure` | Canonical only if built from governed exception evidence. |
@@ -61,6 +61,6 @@ This section maps route/action labels used in runtime workflow docs to Law Firm 
 ## Required Runtime Interpretation
 
 1. Runtime routes are implementation labels.
-2. Law Firm ontology `route_id` and `event_class` are canonical authority.
-3. If runtime emits/handles exception events, the payload must use one of the Law Firm canonical `event_class` values and be validated against the Law Firm route registry.
+2. Law Firm OS Semantic Substrate `route_id` and `event_class` are canonical authority.
+3. If runtime emits/handles exception events, the payload must use one of the Substrate canonical `event_class` values and be validated against the Law Firm route registry.
 4. Unmapped/TBD entries here are intentionally non-canonical runtime operations and must not be treated as canonical route IDs.

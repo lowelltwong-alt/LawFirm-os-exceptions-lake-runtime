@@ -7,10 +7,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    # Default contract repository for CI. Forks may override via repository variables
-    # or by changing this single env default (see README).
+    # Default contract repository for CI. The canonical substrate machine name is
+    # `LawFirm-os-semantic-substrate` (see substrate governance/CROSS_REPO_MAP.md).
+    # The `your-org/` prefix is a placeholder that forks must replace with the
+    # actual GitHub organization that hosts the substrate. Forks may override via
+    # repository variables or by changing this single env default (see README).
     env:
-      CONTRACT_ONTOLOGY_REPOSITORY: your-org/law-firm-ontology
+      CONTRACT_ONTOLOGY_REPOSITORY: your-org/LawFirm-os-semantic-substrate
     steps:
       - name: Checkout runtime repo
         uses: actions/checkout@v4
@@ -34,14 +37,14 @@ jobs:
           SHA=$(python -c "import json; print(json.load(open('contracts.lock.json'))['contract_sha'].strip())")
           echo "contract_sha=${SHA}" >> "${GITHUB_OUTPUT}"
 
-      - name: Checkout Law Firm ontology contract repo at pinned SHA (public, no firm data)
+      - name: Checkout Law Firm OS Semantic Substrate at pinned SHA (public, no firm data)
         uses: actions/checkout@v4
         with:
           repository: ${{ env.CONTRACT_ONTOLOGY_REPOSITORY }}
           ref: ${{ steps.contract_pin.outputs.contract_sha }}
-          path: law-firm-ontology-contracts
+          path: LawFirm-os-semantic-substrate
 
       - name: Run tests
         env:
-          EXCEPTIONS_LAKE_CONTRACT_REPO_PATH: ${{ github.workspace }}/law-firm-ontology-contracts
+          EXCEPTIONS_LAKE_CONTRACT_REPO_PATH: ${{ github.workspace }}/LawFirm-os-semantic-substrate
         run: python -m pytest
