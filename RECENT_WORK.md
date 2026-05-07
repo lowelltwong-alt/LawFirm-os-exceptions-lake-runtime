@@ -4,6 +4,7 @@
 
 - Refreshed `contracts.lock.json` to pin the currently released Semantic Substrate commit `43991155f0286e6d8bc5ba0bfe6b42407b1b3f12`.
 - Updated current front-door references in `AGENTS.md`, `AI_TABLE_OF_CONTENTS.md`, `ENDPOINTS_AND_COMMANDS.md`, and `DATA_FLOW_MAP.md` so runtime lock documentation matches the attached substrate export.
+- Clarified that runtime contract loading requires a real git checkout at the pinned commit. Plain ZIP/archive substrate extractions fail closed unless a future governed archive-lock mechanism is designed.
 - Contract surfaces between the older `d2ac7f504e67aa00985fbe53aa5350f940e8b529` pin and `43991155f0286e6d8bc5ba0bfe6b42407b1b3f12` were checked across manifest, registry, schema, governance, and front-door paths from the substrate repo; no contract-surface content drift was found.
 - No schemas, route IDs, event classes, runtime authority, Research Radar automation, model calls, external APIs, external writes, Substrate writes, or canon promotion behavior were added.
 

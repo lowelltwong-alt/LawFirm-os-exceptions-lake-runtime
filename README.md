@@ -7,7 +7,7 @@ Canonical machine name: `exceptions-lake-runtime-main`. Human label: Law Firm OS
 It consumes versioned contracts from the authoritative **Law Firm OS Semantic Substrate** (canonical machine name `LawFirm-os-semantic-substrate`) (contract) repository.
 
 - **CI default:** the clone source is the `CONTRACT_ONTOLOGY_REPOSITORY` environment variable in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (set to a public ontology slug for reproducible builds).
-- **Local development:** set `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` to your checkout of that contract repository (any path; see `docs/LOCAL_DEV.md`).
+- **Local development:** set `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` to your git checkout of that contract repository (any path; see `docs/LOCAL_DEV.md`). Plain ZIP/archive extractions are review artifacts, not verifiable runtime contract sources.
 
 This repo does not redefine schema meaning, lifecycle states, mutation authority, or promotion authority. Runtime observations may become exception candidates only. Canonical change still requires the governed path:
 
@@ -83,7 +83,7 @@ GitHub Actions runs the same sequence: lock check, shallow checkout of the publi
 
 ## Local setup
 
-1. Clone or otherwise obtain a local checkout of your Law Firm OS Semantic Substrate contract repository (example slug: `your-org/LawFirm-os-semantic-substrate`) on the branch or SHA you want the runtime to consume.
+1. Clone or otherwise obtain a local git checkout of your Law Firm OS Semantic Substrate contract repository (example slug: `your-org/LawFirm-os-semantic-substrate`) on the branch or SHA you want the runtime to consume. A plain ZIP extraction without `.git` metadata will fail closed.
 2. Set the contract repo path:
 
 ```powershell
@@ -142,6 +142,8 @@ The loader prefers `registry/exceptions-lake-contract-export.json` when it exist
 - `governance/AI_CONTROL_PLANE_BOUNDARY.md`
 
 The runtime also reads `contracts.lock.json` when present and fail-closes if the live contract repo SHA does not match the pinned SHA. This pins the synthetic MVP to one reviewed contract version and makes contract drift explicit for local development.
+
+The runtime intentionally does not infer a git SHA from ZIP/archive folders. Archive-mode contract locking would require a separate governed export manifest/hash policy from the control plane.
 
 Runtime route/action labels are mapped to Law Firm canonical route authority in:
 
