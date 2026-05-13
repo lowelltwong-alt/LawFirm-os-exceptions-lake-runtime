@@ -1,0 +1,11 @@
+{
+  "candidate_only": true,
+  "record_type": "skill_quality_review.passed",
+  "requires_human_approval": true,
+  "scores": {
+    "algorithmic_elegance": 80,
+    "overall": 89,
+    "safety": 100
+  },
+  "skill_id": "benign-research-brief"
+}
