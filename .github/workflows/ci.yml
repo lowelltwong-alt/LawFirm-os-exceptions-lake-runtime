@@ -9,11 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     # Default contract repository for CI. The canonical substrate machine name is
     # `LawFirm-os-semantic-substrate` (see substrate governance/CROSS_REPO_MAP.md).
-    # The `your-org/` prefix is a placeholder that forks must replace with the
-    # actual GitHub organization that hosts the substrate. Forks may override via
-    # repository variables or by changing this single env default (see README).
+    # Forks may override this single env default to point at their substrate fork.
     env:
-      CONTRACT_ONTOLOGY_REPOSITORY: your-org/LawFirm-os-semantic-substrate
+      CONTRACT_ONTOLOGY_REPOSITORY: lowelltwong-alt/LawFirm-os-semantic-substrate
     steps:
       - name: Checkout runtime repo
         uses: actions/checkout@v4
