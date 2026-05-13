@@ -1,11 +1,43 @@
 {
-  "candidate_only": true,
-  "record_type": "skill_quality_review.passed",
-  "requires_human_approval": true,
-  "scores": {
-    "algorithmic_elegance": 80,
-    "overall": 89,
-    "safety": 100
+  "exception_id": "EXC-900101",
+  "schema_type": "exception-event",
+  "schema_version": "v1",
+  "event_class": "workflow_escalation",
+  "severity": "low",
+  "event_time": "2026-05-13T20:00:00Z",
+  "summary": "Synthetic skill quality review event routed as workflow evidence only.",
+  "details": "Synthetic test-only record showing that skill quality outcomes may be stored as Exception Lake evidence without approving a skill or mutating Semantic Substrate canon.",
+  "origin": {
+    "layer": "workflow",
+    "component": "skill-quality-review",
+    "run_id": "synthetic-skill-quality-run-0001",
+    "artifact_refs": [
+      "skill:benign-research-brief",
+      "record_type:skill_quality_review.passed"
+    ]
   },
-  "skill_id": "benign-research-brief"
+  "route": {
+    "route_id": "route.workflow_escalation.v1",
+    "destination_loop": "workflow_redesign",
+    "promotion_gate_required": true
+  },
+  "trust_metadata": {
+    "authority_zone": "synthetic-lab",
+    "trust_level": "high",
+    "confidence": 0.89,
+    "reviewer_required": true,
+    "review_role": "skill-governance-reviewer"
+  },
+  "evidence_refs": [
+    "score:algorithmic_elegance=80",
+    "score:overall=89",
+    "score:safety=100",
+    "candidate_only=true",
+    "requires_human_approval=true"
+  ],
+  "canonical_mutation_control": {
+    "direct_mutation_attempted": false,
+    "allowed_action": "attach_evidence_only",
+    "boundary_note": "promotion_decision_required_for_canonical_change"
+  }
 }

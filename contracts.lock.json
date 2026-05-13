@@ -1,8 +1,8 @@
 {
   "contract_repo": "LawFirm-os-semantic-substrate",
   "contract_ref_type": "git_sha",
-  "contract_sha": "43991155f0286e6d8bc5ba0bfe6b42407b1b3f12",
-  "generated_at": "2026-05-07T00:00:00Z",
+  "contract_sha": "35deefb5081b6b8d3ace4ad78ecd58c14965394a",
+  "generated_at": "2026-05-13T20:22:46.741105Z",
   "generated_by": "exceptions-lake-runtime-main",
   "contract_repo_human_label": "Law Firm OS Semantic Substrate",
   "manifest_first_loading": {
