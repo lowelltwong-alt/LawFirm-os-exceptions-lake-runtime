@@ -287,6 +287,22 @@ class ContractLoader:
     @staticmethod
     def _resolve_git_sha(contract_repo_root: Path) -> str:
         try:
+            top_level = subprocess.run(
+                ["git", "rev-parse", "--show-toplevel"],
+                cwd=contract_repo_root,
+                capture_output=True,
+                text=True,
+                check=True,
+            ).stdout.strip()
+            if Path(top_level).resolve() != contract_repo_root.resolve():
+                raise subprocess.CalledProcessError(
+                    returncode=1,
+                    cmd=["git", "rev-parse", "--show-toplevel"],
+                    stderr=(
+                        "contract path is inside another git checkout, "
+                        "not the contract repo root"
+                    ),
+                )
             result = subprocess.run(
                 ["git", "rev-parse", "HEAD"],
                 cwd=contract_repo_root,
