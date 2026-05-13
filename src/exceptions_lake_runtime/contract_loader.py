@@ -73,6 +73,7 @@ class ContractLoader:
         contract_lock = (
             self._read_json(contract_lock_path) if contract_lock_path.exists() else None
         )
+        contract_version = self._resolve_git_sha(contract_repo_root)
 
         export_manifest_path = contract_repo_root / EXPORT_MANIFEST_RELATIVE_PATH
         export_manifest_present = export_manifest_path.exists()
@@ -124,7 +125,6 @@ class ContractLoader:
             elif relative_doc_path.name == "AI_CONTROL_PLANE_BOUNDARY.md":
                 boundary_doc_paths["ai_control_plane_boundary"] = resolved_path
 
-        contract_version = self._resolve_git_sha(contract_repo_root)
         locked_contract_sha = None
         if contract_lock is not None:
             locked_contract_sha = self._validate_and_resolve_locked_contract_sha(
