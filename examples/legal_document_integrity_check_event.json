@@ -1,0 +1,15 @@
+{
+  "event_type": "legal_document_integrity_check_completed",
+  "schema_id": "legal_document_integrity_check.v1",
+  "synthetic": true,
+  "trace_id": "trace_synthetic_research_delta_001",
+  "document_ref": "synthetic://document/redline-001",
+  "baseline_hash": "sha256:baseline_placeholder",
+  "candidate_hash": "sha256:candidate_placeholder",
+  "result_summary": {
+    "status": "warn",
+    "human_review_required": true,
+    "failed_checks": []
+  },
+  "forbidden_payloads_present": false
+}

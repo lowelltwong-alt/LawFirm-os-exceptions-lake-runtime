@@ -45,6 +45,14 @@ def _init_git_repo(path: Path) -> None:
         capture_output=True,
         text=True,
     )
+    # Substrate contract fixtures include deep docs paths; Windows MAX_PATH otherwise breaks `git add`.
+    subprocess.run(
+        ["git", "config", "core.longpaths", "true"],
+        cwd=path,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
     subprocess.run(["git", "add", "."], cwd=path, check=True, capture_output=True, text=True)
     subprocess.run(
         ["git", "commit", "-m", "contract fixture"],

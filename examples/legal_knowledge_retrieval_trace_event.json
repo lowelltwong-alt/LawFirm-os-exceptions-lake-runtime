@@ -1,0 +1,34 @@
+{
+  "schema_type": "exception-event",
+  "schema_version": "v1",
+  "event_id": "EXC-LK-000001",
+  "event_class": "retrieval_miss",
+  "severity": "moderate",
+  "origin": {
+    "layer": "retrieval",
+    "component": "lawfirm-os-legal-knowledge-runtime"
+  },
+  "route": {
+    "route_id": "route.retrieval_miss.v1",
+    "destination_loop": "retrieval_tuning",
+    "promotion_gate_required": true
+  },
+  "summary": "Synthetic legal context bundle declared missing amendment fixture.",
+  "evidence_refs": [
+    "synthetic://contract/msa-001#amendments"
+  ],
+  "runtime_refs": {
+    "run_id": "lkrun-synthetic-0001",
+    "retrieval_trace_id": "lkrt-synthetic-0001",
+    "bundle_id": "lkb-synthetic-0001"
+  },
+  "canonical_mutation_control": {
+    "direct_mutation_attempted": false,
+    "allowed_action": "attach_evidence_only"
+  },
+  "data_boundary": {
+    "contains_real_client_data": false,
+    "contains_real_matter_data": false,
+    "raw_document_payload_embedded": false
+  }
+}
