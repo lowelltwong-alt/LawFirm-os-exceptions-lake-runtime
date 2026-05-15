@@ -13,3 +13,14 @@ __pycache__/
 __pycache__/
 *.py[cod]
 *.egg-info/
+
+# Managed patch / SACP patch backups and noise
+*.skill-agent-control-backup
+*.managed-preservation-backup
+*.research-delta-backup
+*.bak
+*.bak.workflow_atlas
+*.backup
+*.orig
+.cursor/
+_patches/

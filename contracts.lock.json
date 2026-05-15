@@ -1,10 +1,11 @@
 {
   "contract_repo": "LawFirm-os-semantic-substrate",
   "contract_ref_type": "git_sha",
-  "contract_sha": "35deefb5081b6b8d3ace4ad78ecd58c14965394a",
-  "generated_at": "2026-05-13T20:22:46.741105Z",
+  "contract_sha": "dfacbb5e29a85834e37bb393bc45e80ab2e3a204",
+  "generated_at": "2026-05-14T20:00:00Z",
   "generated_by": "exceptions-lake-runtime-main",
   "contract_repo_human_label": "Law Firm OS Semantic Substrate",
+  "pin_rationale": "Bumped from 35deefb to dfacbb5 to align with current Semantic Substrate origin/main HEAD that includes the legal knowledge runtime contracts, the legal knowledge research delta + AI front door integrity gate. Lake tests previously passed against 35deefb but the active substrate surface contains schemas/registries that Lake event docs already reference (e.g., legal_document_integrity_check_event.json). Decision recorded under managed-patch-decisions.",
   "manifest_first_loading": {
     "preferred_path": "registry/exceptions-lake-contract-export.json",
     "fallback_allowed_when_export_absent": true,

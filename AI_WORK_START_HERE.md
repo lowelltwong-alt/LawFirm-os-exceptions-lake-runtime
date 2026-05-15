@@ -1,3 +1,25 @@
+# AI_WORK_START_HERE.md
+
+<!-- BEGIN LAWFIRM_OS_BOOTSTRAP -->
+Managed bootstrap for AI-assisted work in the LawFirm OS multi-repo workspace. Route through the canonical AI front door and Skill-Agent Control Plane, but preserve local repo operating doctrine.
+
+Required bootstrap read order:
+
+1. AGENTS.md
+2. skill-agent-manifest.json
+3. Semantic Substrate registry/ai-front-door-registry.json
+4. Semantic Substrate registry/skill-agent-control-plane-registry.json
+5. Semantic Substrate governance/SKILL_AGENT_CONTROL_PLANE_BOUNDARY.md
+
+Repo: LawFirm-os-exceptions-lake-runtime-main
+Plane: evidence plane
+Repo purpose: Append-only evidence, audit records, defects, retrieval traces, skill-agent events, and learning candidates.
+This repo must not own: Canonical semantics, skill promotion authority, raw legal payload storage.
+
+Run workspace preservation and control-plane validation before reporting success on managed patch work.
+<!-- END LAWFIRM_OS_BOOTSTRAP -->
+
+<!-- BEGIN REPO_SPECIFIC_INSTRUCTIONS -->
 # AI Work Start Here
 
 Canonical machine name: `exceptions-lake-runtime-main`. Plane: evidence. Sibling repos: `LawFirm-os-semantic-substrate` (control plane), `LawFirm-os-orchestrator` (execution plane). For authority order across repos, see substrate `governance/CROSS_REPO_MAP.md`.
@@ -46,3 +68,18 @@ This repo may plan or implement synthetic/dry-run audit events. It must not stor
 ## Hard stop
 
 Stop if contract SHA, schema version, policy boundary, source type, persistence behavior, or audit behavior is ambiguous.
+
+<!-- END REPO_SPECIFIC_INSTRUCTIONS -->
+
+## Skill-Agent Control Plane References
+
+- skill-agent-manifest.json
+- Semantic Substrate registry/skill-agent-control-plane-registry.json
+- Semantic Substrate registry/skill-agent-lifecycle-policy-registry.json
+- Semantic Substrate registry/skill-agent-quality-scoring-registry.json
+- Semantic Substrate scripts/validate_skill_agent_control_plane.py
+
+## Validation Commands
+
+    python -m pytest -q
+    python ../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace ..

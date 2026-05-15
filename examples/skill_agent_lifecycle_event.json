@@ -1,0 +1,12 @@
+{
+  "event_type": "skill_agent.lifecycle_proposal_created",
+  "synthetic": true,
+  "subject_id": "legal-document-integrity-verifier",
+  "proposal_type": "promote_candidate",
+  "raw_legal_payload_embedded": false,
+  "evidence_refs": [
+    "synthetic://eval/legal-document-integrity/001"
+  ],
+  "approval_required": true,
+  "notes": "Synthetic example only. Does not promote skill automatically."
+}

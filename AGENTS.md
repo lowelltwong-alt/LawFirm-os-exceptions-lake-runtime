@@ -1,5 +1,27 @@
 # AGENTS.md
 
+<!-- BEGIN LAWFIRM_OS_BOOTSTRAP -->
+Managed bootstrap for the LawFirm OS Skill-Agent Control Plane. This block adds cross-repo routing context; it must not replace the repo-specific instructions preserved below.
+
+Before making changes in this repository, read:
+
+1. AI_WORK_START_HERE.md
+2. skill-agent-manifest.json
+3. ../LawFirm-os-semantic-substrate/registry/ai-front-door-registry.json, or registry/ai-front-door-registry.json when already in Semantic Substrate
+4. ../LawFirm-os-semantic-substrate/registry/skill-agent-control-plane-registry.json, or registry/skill-agent-control-plane-registry.json when already in Semantic Substrate
+5. ../LawFirm-os-semantic-substrate/governance/SKILL_AGENT_CONTROL_PLANE_BOUNDARY.md, or local governance/SKILL_AGENT_CONTROL_PLANE_BOUNDARY.md in Semantic Substrate
+
+Repo: LawFirm-os-exceptions-lake-runtime-main
+Plane: evidence plane
+Repo purpose: Append-only evidence, audit records, defects, retrieval traces, skill-agent events, and learning candidates.
+This repo must not own: Canonical semantics, skill promotion authority, raw legal payload storage.
+
+Preservation rule: keep the REPO_SPECIFIC_INSTRUCTIONS section intact unless a human explicitly approves removal. New bootstrap text should be merged around repo-specific doctrine, not overwrite it.
+<!-- END LAWFIRM_OS_BOOTSTRAP -->
+
+<!-- BEGIN REPO_SPECIFIC_INSTRUCTIONS -->
+# AGENTS.md
+
 ## Required AI entry behavior
 
 Before making changes in this repository, read:
@@ -81,3 +103,19 @@ Use root `DATA_FLOW_MAP.md` as the evidence-plane map. It shows:
 - a task asks for real client or matter data;
 - a task asks for live crawling, scheduled jobs, model calls, external APIs, or external writes;
 - a task asks to bypass append-only runtime/audit record semantics.
+
+<!-- END REPO_SPECIFIC_INSTRUCTIONS -->
+
+## Skill-Agent Control Plane References
+
+- skill-agent-manifest.json
+- Semantic Substrate registry/skill-agent-control-plane-registry.json
+- Semantic Substrate registry/skill-agent-graph-index.json
+- Semantic Substrate registry/lawfirm-os-repo-registry.json
+- Semantic Substrate governance/SKILL_AGENT_CONTROL_PLANE_BOUNDARY.md
+- Semantic Substrate governance/SKILL_AGENT_LIFECYCLE_AND_RECURSIVE_IMPROVEMENT.md
+
+## Validation Commands
+
+    python -m pytest -q
+    python ../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace ..

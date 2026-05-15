@@ -1,0 +1,18 @@
+{
+  "manifest_id": "lawfirm-os-exceptions-lake-runtime.skill-agent-manifest.v1",
+  "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+  "owning_plane": "exception_lake",
+  "purpose": "Append-only evidence, audit records, defects, retrieval traces, skill-agent events, and learning candidates.",
+  "canonical_front_door": "../LawFirm-os-semantic-substrate/registry/ai-front-door-registry.json",
+  "canonical_skill_agent_control_plane": "../LawFirm-os-semantic-substrate/registry/skill-agent-control-plane-registry.json",
+  "canonical_repo_registry": "../LawFirm-os-semantic-substrate/registry/lawfirm-os-repo-registry.json",
+  "must_not_own": [
+    "canonical semantics",
+    "skill promotion authority",
+    "raw legal payload storage"
+  ],
+  "artifacts": [],
+  "validation": [
+    "../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace .."
+  ]
+}
