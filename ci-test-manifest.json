@@ -1,0 +1,417 @@
+{
+  "schema_version": "repo_ci_test_manifest.v1",
+  "repo": "LawFirm-os-exceptions-lake-runtime",
+  "owning_plane": "exception_lake",
+  "architecture_role": "evidence_plane",
+  "canonical_authority_allowed": false,
+  "central_router_authority": "../LawFirm-os-semantic-substrate/registry/ci-test-route-registry.json",
+  "test_artifacts": [
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_cli.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_cli.py",
+      "runner_command": "python -m pytest tests/test_cli.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "exception_lake_evidence_boundary",
+        "cli_surface"
+      ],
+      "risk_tier": "high",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change",
+        "source_code_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_cli.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "high"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_cli.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_contract_loader.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_contract_loader.py",
+      "runner_command": "python -m pytest tests/test_contract_loader.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "contract_lock",
+        "exception_lake_evidence_boundary"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "contract_lock_change",
+        "evidence_boundary_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_contract_loader.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "contract_lock",
+        "protected",
+        "cross_repo"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_contract_loader.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 10,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_event_ingestion.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_event_ingestion.py",
+      "runner_command": "python -m pytest tests/test_event_ingestion.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "exception_lake_evidence_boundary"
+      ],
+      "risk_tier": "high",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_event_ingestion.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "high"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_event_ingestion.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_event_store.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_event_store.py",
+      "runner_command": "python -m pytest tests/test_event_store.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "exception_lake_evidence_boundary"
+      ],
+      "risk_tier": "high",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_event_store.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "high"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_event_store.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_insurance_budget_poc.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_insurance_budget_poc.py",
+      "runner_command": "python -m pytest tests/test_insurance_budget_poc.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "exception_lake_evidence_boundary"
+      ],
+      "risk_tier": "high",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_insurance_budget_poc.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "high"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_insurance_budget_poc.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_legal_knowledge_event_examples.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_legal_knowledge_event_examples.py",
+      "runner_command": "python -m pytest tests/test_legal_knowledge_event_examples.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "exception_lake_evidence_boundary",
+        "legal_knowledge_context_bundle"
+      ],
+      "risk_tier": "high",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change",
+        "legal_knowledge_runtime_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_legal_knowledge_event_examples.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "high"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_legal_knowledge_event_examples.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_no_canon_mutation.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_no_canon_mutation.py",
+      "runner_command": "python -m pytest tests/test_no_canon_mutation.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "exception_lake_evidence_boundary"
+      ],
+      "risk_tier": "high",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_no_canon_mutation.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "high"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_no_canon_mutation.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_non_synthetic_readiness.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_non_synthetic_readiness.py",
+      "runner_command": "python -m pytest tests/test_non_synthetic_readiness.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "exception_lake_evidence_boundary"
+      ],
+      "risk_tier": "high",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_non_synthetic_readiness.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "high"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_non_synthetic_readiness.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_validation_gateway.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_validation_gateway.py",
+      "runner_command": "python -m pytest tests/test_validation_gateway.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "exception_lake_evidence_boundary"
+      ],
+      "risk_tier": "high",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_validation_gateway.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "high"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-exceptions-lake-runtime tests/test_validation_gateway.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    }
+  ],
+  "explicit_test_artifact_exclusions": [
+    {
+      "path": "tests/conftest.py",
+      "reason": "pytest support file, not standalone test artifact"
+    },
+    {
+      "path": "evals/fixtures/**",
+      "reason": "eval fixture data routed through registered eval tests, not standalone runner"
+    },
+    {
+      "path": "evals/gold/**",
+      "reason": "eval gold-label data routed through registered eval tests, not standalone runner"
+    }
+  ],
+  "must_not_own": [
+    "canonical lifecycle states",
+    "route authority",
+    "promotion authority without governance decision",
+    "AI front-door authority"
+  ],
+  "notes": "Generated by LawFirm OS CI Test Router Governance patch from the current test surface. Update this manifest whenever any test artifact is added, removed, or moved."
+}
