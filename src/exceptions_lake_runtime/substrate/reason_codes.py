@@ -122,7 +122,21 @@ EXCEPTION_LAKE_ADMISSION_REASON_CODES: frozenset[str] = _VOCABS[_ADM]
 
 # ---------- DefectRecord.defect_class constants (PR-06 forward-compat) ----------
 
-DEFECT_CLASSES: frozenset[str] = _VOCABS["defect_record.defect_classes"]
+_DEFECT = "defect_record.defect_classes"
+
+ROUTE_MISMATCH = _require(_DEFECT, "route_mismatch")
+EVIDENCE_GAP = _require(_DEFECT, "evidence_gap")
+UNSUPPORTED_CITATION = _require(_DEFECT, "unsupported_citation")
+PROMPT_INJECTION = _require(_DEFECT, "prompt_injection")
+STALE_LAW = _require(_DEFECT, "stale_law")
+APPROVAL_BYPASS = _require(_DEFECT, "approval_bypass")
+DESTINATION_PRIVILEGE = _require(_DEFECT, "destination_privilege")
+PASSPORT_DENIAL = _require(_DEFECT, "passport_denial")
+HASH_MISMATCH = _require(_DEFECT, "hash_mismatch")
+MISSING_PASSPORT = _require(_DEFECT, "missing_passport")
+DENIED_ACTION_RECORDED = _require(_DEFECT, "denied_action_recorded")
+
+DEFECT_CLASSES: frozenset[str] = _VOCABS[_DEFECT]
 
 
 # ---------- helpers ----------

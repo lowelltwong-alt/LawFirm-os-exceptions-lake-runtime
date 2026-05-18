@@ -8,6 +8,8 @@ from contextlib import contextmanager
 from pathlib import Path
 
 import pytest
+import _pytest.pathlib as pytest_pathlib
+import _pytest.tmpdir as pytest_tmpdir
 
 from exceptions_lake_runtime.config import CONTRACT_REPO_ENV_VAR, RuntimeConfig
 from exceptions_lake_runtime.contract_loader import CONTRACT_LOCK_RELATIVE_PATH, ContractLoader
@@ -15,6 +17,17 @@ from exceptions_lake_runtime.contract_loader import CONTRACT_LOCK_RELATIVE_PATH,
 _PYTEST_DEBUG_TEMPROOT = (Path(__file__).resolve().parents[1] / ".pytest-tmp-root").resolve()
 _PYTEST_DEBUG_TEMPROOT.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("PYTEST_DEBUG_TEMPROOT", str(_PYTEST_DEBUG_TEMPROOT))
+
+# Windows can create 0o700 pytest temp dirs that child git processes cannot reopen.
+_original_make_numbered_dir = pytest_pathlib.make_numbered_dir
+
+
+def _windows_readable_make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -> Path:
+    return _original_make_numbered_dir(root, prefix, 0o777)
+
+
+pytest_pathlib.make_numbered_dir = _windows_readable_make_numbered_dir
+pytest_tmpdir.make_numbered_dir = _windows_readable_make_numbered_dir
 
 
 def _source_contract_repo_path() -> Path:
