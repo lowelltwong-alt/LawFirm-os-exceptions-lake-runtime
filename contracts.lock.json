@@ -1,9 +1,9 @@
 {
   "contract_repo": "LawFirm-os-semantic-substrate",
   "contract_ref_type": "git_sha",
-  "contract_sha": "1a56a967c1a747f72a70f9b688f61db3db4493b4",
-  "substrate_repo_commit_sha": "1a56a967c1a747f72a70f9b688f61db3db4493b4",
-  "generated_at": "2026-05-18T18:41:53.170936Z",
+  "contract_sha": "c60942b293240d3c7d38fc0be8e7cacdd6709c31",
+  "substrate_repo_commit_sha": "c60942b293240d3c7d38fc0be8e7cacdd6709c31",
+  "generated_at": "2026-05-18T19:33:36.021473Z",
   "generated_by": "exceptions-lake-runtime-main",
   "contract_repo_human_label": "Law Firm OS Semantic Substrate",
   "pin_rationale": "Pinned by contract surface hash to avoid recursive drift from managed-patch decision/audit commits.",
@@ -33,13 +33,13 @@
   ],
   "contract_surface_lock": {
     "surface_id": "lawfirm_os_semantic_substrate.consumer_contract_surface.v1",
-    "surface_sha256": "13e59a08ca1162c56ac122a5133ee0256ddfc32deb45f2d201bf121daccf4615",
+    "surface_sha256": "8bd20599d49fe29b2570be1e43c665399d90536d22126a1408eb22dffb1dcfb5",
     "surface_registry_path": "registry/contract-surface-registry.json",
     "hash_algorithm": "lawfirm_os_contract_surface_sha256.v1",
     "computed_from_repo": "LawFirm-os-semantic-substrate",
-    "computed_from_commit": "1a56a967c1a747f72a70f9b688f61db3db4493b4",
-    "included_file_count": 158,
-    "included_files_manifest_sha256": "8a45739204ed2adfada98d728101703c8af609cf7714d09a6501ac8fa17cb45b",
+    "computed_from_commit": "c60942b293240d3c7d38fc0be8e7cacdd6709c31",
+    "included_file_count": 159,
+    "included_files_manifest_sha256": "5d9b3076b49212ad692b0f78c078531092c6346cf07914d58db5fe5cc5cf8a3b",
     "notes": [
       "Consumer validates contract_surface_lock.surface_sha256 to avoid recursive drift from managed-patch decision/audit commits.",
       "contract_sha remains provenance for the Substrate commit used to compute this surface lock."
