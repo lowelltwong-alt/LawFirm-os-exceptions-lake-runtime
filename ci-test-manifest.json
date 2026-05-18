@@ -391,6 +391,110 @@
       ],
       "expected_runtime_seconds": 5,
       "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_contract_surface_locking.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_contract_surface_locking.py",
+      "runner_command": "python -m pytest tests/test_contract_surface_locking.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "contract_lock",
+        "contract_surface_locking",
+        "semantic_substrate_readonly_boundary"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "source_code_change",
+        "contract_lock_change",
+        "cross_repo_integration_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_contract_surface_locking.py",
+        "src/exceptions_lake_runtime/contract_loader.py",
+        "scripts/update_contract_lock.py",
+        "contracts.lock.json",
+        "../LawFirm-os-semantic-substrate/registry/contract-surface-registry.json"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "contract_surface_locking",
+        "contract_lock",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate",
+        "LawFirm-os-orchestrator"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "exception lake contract loader changes",
+        "contract surface lock changes"
+      ],
+      "must_not_validate": [
+        "canonical schema ownership",
+        "route authority mutation"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_contract_surface_git_validation.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_contract_surface_git_validation.py",
+      "runner_command": "python -m pytest tests/test_contract_surface_git_validation.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "contract_lock",
+        "contract_surface_locking",
+        "semantic_substrate_readonly_boundary"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "source_code_change",
+        "contract_lock_change",
+        "cross_repo_integration_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_contract_surface_git_validation.py",
+        "src/exceptions_lake_runtime/contract_loader.py",
+        "contracts.lock.json",
+        "../LawFirm-os-semantic-substrate/registry/contract-surface-registry.json",
+        "../LawFirm-os-semantic-substrate/scripts/compute_contract_surface_hash.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "contract_surface_locking",
+        "contract_lock",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "exception lake contract loader changes",
+        "Windows CRLF / committed Git tree validation invariant changes",
+        "canonical compute_contract_surface_hash.py changes"
+      ],
+      "must_not_validate": [
+        "canonical schema ownership",
+        "route authority mutation"
+      ],
+      "expected_runtime_seconds": 120,
+      "full_regression_required": false
     }
   ],
   "explicit_test_artifact_exclusions": [

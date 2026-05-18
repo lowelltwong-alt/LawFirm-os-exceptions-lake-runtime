@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 from exceptions_lake_runtime.config import CONTRACT_REPO_ENV_VAR, RuntimeConfig
-from exceptions_lake_runtime.contract_loader import CONTRACT_LOCK_RELATIVE_PATH
+from exceptions_lake_runtime.contract_loader import CONTRACT_LOCK_RELATIVE_PATH, ContractLoader
 
 _PYTEST_DEBUG_TEMPROOT = (Path(__file__).resolve().parents[1] / ".pytest-tmp-root").resolve()
 _PYTEST_DEBUG_TEMPROOT.mkdir(parents=True, exist_ok=True)
@@ -30,7 +30,7 @@ def _source_contract_repo_path() -> Path:
 
 
 def _init_git_repo(path: Path) -> None:
-    subprocess.run(["git", "init"], cwd=path, check=True, capture_output=True, text=True)
+    subprocess.run(["git", "init"], cwd=path, check=True, stdin=subprocess.DEVNULL, capture_output=True, text=True)
     subprocess.run(
         ["git", "config", "user.name", "Synthetic Test"],
         cwd=path,
@@ -68,15 +68,36 @@ def _git_sha(path: Path) -> str:
         ["git", "rev-parse", "HEAD"],
         cwd=path,
         check=True,
+        stdin=subprocess.DEVNULL,
         capture_output=True,
         text=True,
     ).stdout.strip()
 
 
 @contextmanager
-def _pinned_contract_lock(lock_path: Path, contract_sha: str):
+def _pinned_contract_lock(lock_path: Path, contract_sha: str, contract_repo_root: Path):
     original_lock = json.loads(lock_path.read_text(encoding="utf-8"))
-    updated_lock = {**original_lock, "contract_sha": contract_sha}
+    updated_lock = {
+        **original_lock,
+        "contract_sha": contract_sha,
+        "substrate_repo_commit_sha": contract_sha,
+    }
+    surf = original_lock.get("contract_surface_lock")
+    if isinstance(surf, dict):
+        surface_id = str(surf.get("surface_id") or "lawfirm_os_semantic_substrate.consumer_contract_surface.v1")
+        registry_rel = str(surf.get("surface_registry_path") or "registry/contract-surface-registry.json")
+        digest = ContractLoader._compute_contract_surface_hash(
+            contract_repo_root,
+            surface_id=surface_id,
+            registry_path=registry_rel,
+            commit_ref=contract_sha,
+        )
+        updated_lock["contract_surface_lock"] = {
+            **surf,
+            "surface_sha256": digest,
+            "computed_from_commit": contract_sha,
+            "computed_from_repo": surf.get("computed_from_repo", "LawFirm-os-semantic-substrate"),
+        }
     lock_path.write_text(json.dumps(updated_lock, indent=2) + "\n", encoding="utf-8")
     try:
         yield
@@ -119,7 +140,7 @@ def runtime_config(
 ) -> RuntimeConfig:
     monkeypatch.setenv(CONTRACT_REPO_ENV_VAR, str(contract_repo_copy))
     contract_sha = _git_sha(contract_repo_copy)
-    with _pinned_contract_lock(contract_lock_path, contract_sha):
+    with _pinned_contract_lock(contract_lock_path, contract_sha, contract_repo_copy):
         yield RuntimeConfig.from_env(runtime_data_dir=tmp_path / "runtime_data")
 
 

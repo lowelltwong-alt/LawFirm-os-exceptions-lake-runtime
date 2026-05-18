@@ -242,10 +242,32 @@ def test_update_contract_lock_build_document_is_deterministic() -> None:
     )
 
     assert lock_a == lock_b
-    assert list(lock_a.keys())[:5] == [
+    base_key_order = [
         "contract_repo",
         "contract_ref_type",
         "contract_sha",
+        "substrate_repo_commit_sha",
         "generated_at",
         "generated_by",
+        "contract_repo_human_label",
+        "pin_rationale",
+        "manifest_first_loading",
+        "non_claims",
     ]
+    assert list(lock_a.keys()) == base_key_order
+
+    surface_lock = {
+        "surface_id": "lawfirm_os_semantic_substrate.consumer_contract_surface.v1",
+        "surface_sha256": "a" * 64,
+        "surface_registry_path": "registry/contract-surface-registry.json",
+        "hash_algorithm": module.HASH_ALGORITHM,
+        "computed_from_repo": "LawFirm-os-semantic-substrate",
+        "computed_from_commit": "abc123",
+        "included_file_count": 1,
+        "included_files_manifest_sha256": "b" * 64,
+    }
+    lock_with_surface = module.build_lock_document(
+        "abc123", generated_at=fixed_timestamp, surface_lock=surface_lock
+    )
+    assert list(lock_with_surface.keys()) == base_key_order + ["contract_surface_lock"]
+    assert lock_with_surface["contract_surface_lock"] == surface_lock
