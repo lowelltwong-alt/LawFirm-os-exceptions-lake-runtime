@@ -1,4 +1,4 @@
-"""Dry-run EvidencePacket v2 admission adapter (PR-05).
+"""Dry-run EvidencePacket v2 admission adapter (PR-05, hardened in PR-05.5).
 
 Lake-side counterpart to the orchestrator's build_evidence_packet_v2.
 Validates structure and the inner packet_hash, then returns an
@@ -8,6 +8,11 @@ This is a dry-run adapter: it does NOT persist. PR-06 will add the
 durable storage adapter alongside this. Keeping admission validation
 separate from storage lets the orchestrator dry-run packets in CI
 without writing to the lake.
+
+Admission reason codes are imported from
+``exceptions_lake_runtime.substrate.reason_codes`` which loads them
+fail-closed from substrate's runtime-reason-codes-registry.json. No
+string literals for admission_reason_code appear in this module.
 
 Substrate schemas:
   - evidence-packet.v2
@@ -20,6 +25,16 @@ import json
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
+
+from exceptions_lake_runtime.substrate.reason_codes import (
+    CONTRACT_SURFACE_MISMATCH,
+    MISSING_CONTEXT_BUNDLE_REF,
+    MISSING_CONTRACT_SURFACE,
+    MISSING_EXECUTION_AUTHORITY,
+    PACKET_HASH_MISMATCH,
+    PASSED_DRY_RUN_ADMISSION,
+    WRONG_PACKET_SCHEMA,
+)
 
 
 SCHEMA_VERSION = "exception_lake_admission_record.v1"
@@ -93,7 +108,7 @@ def admit_dry_run(packet: dict[str, Any], *, config: AdmissionConfig, admitted_a
     if packet.get("schema_version") != "evidence_packet.v2":
         return _record(
             admission_status="rejected",
-            admission_reason_code="wrong_packet_schema",
+            admission_reason_code=WRONG_PACKET_SCHEMA,
             evidence_packet_hash=declared_hash,
             contract_surface_sha256=contract_surface or "",
             context_bundle_hash=context_bundle_hash,
@@ -103,7 +118,7 @@ def admit_dry_run(packet: dict[str, Any], *, config: AdmissionConfig, admitted_a
     if not contract_surface:
         return _record(
             admission_status="rejected",
-            admission_reason_code="missing_contract_surface",
+            admission_reason_code=MISSING_CONTRACT_SURFACE,
             evidence_packet_hash=declared_hash,
             contract_surface_sha256="",
             context_bundle_hash=context_bundle_hash,
@@ -113,7 +128,7 @@ def admit_dry_run(packet: dict[str, Any], *, config: AdmissionConfig, admitted_a
     if contract_surface != config.expected_contract_surface_sha256:
         return _record(
             admission_status="quarantined",
-            admission_reason_code="contract_surface_mismatch",
+            admission_reason_code=CONTRACT_SURFACE_MISMATCH,
             evidence_packet_hash=declared_hash,
             contract_surface_sha256=contract_surface,
             context_bundle_hash=context_bundle_hash,
@@ -123,7 +138,7 @@ def admit_dry_run(packet: dict[str, Any], *, config: AdmissionConfig, admitted_a
     if not isinstance(context_bundle_ref, dict) or not context_bundle_hash:
         return _record(
             admission_status="rejected",
-            admission_reason_code="missing_context_bundle_ref",
+            admission_reason_code=MISSING_CONTEXT_BUNDLE_REF,
             evidence_packet_hash=declared_hash,
             contract_surface_sha256=contract_surface,
             context_bundle_hash=context_bundle_hash,
@@ -134,7 +149,7 @@ def admit_dry_run(packet: dict[str, Any], *, config: AdmissionConfig, admitted_a
     if not isinstance(eauth, list) or not eauth:
         return _record(
             admission_status="rejected",
-            admission_reason_code="missing_execution_authority",
+            admission_reason_code=MISSING_EXECUTION_AUTHORITY,
             evidence_packet_hash=declared_hash,
             contract_surface_sha256=contract_surface,
             context_bundle_hash=context_bundle_hash,
@@ -145,7 +160,7 @@ def admit_dry_run(packet: dict[str, Any], *, config: AdmissionConfig, admitted_a
     if observed_hash != declared_hash:
         return _record(
             admission_status="quarantined",
-            admission_reason_code="packet_hash_mismatch",
+            admission_reason_code=PACKET_HASH_MISMATCH,
             evidence_packet_hash=declared_hash,
             contract_surface_sha256=contract_surface,
             context_bundle_hash=context_bundle_hash,
@@ -154,7 +169,7 @@ def admit_dry_run(packet: dict[str, Any], *, config: AdmissionConfig, admitted_a
         )
     return _record(
         admission_status="admitted",
-        admission_reason_code="passed_dry_run_admission",
+        admission_reason_code=PASSED_DRY_RUN_ADMISSION,
         evidence_packet_hash=declared_hash,
         contract_surface_sha256=contract_surface,
         context_bundle_hash=context_bundle_hash,
