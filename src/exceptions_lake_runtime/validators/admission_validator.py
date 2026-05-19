@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -32,12 +33,23 @@ class CentralAdmissionConfig:
     expected_contract_surface_sha256: str
     storage_root: str | Path
     source_repo: str = "LawFirm-os-exceptions-lake-runtime-main"
+    substrate_root: str | Path | None = None
 
     @classmethod
-    def from_contract_lock(cls, *, contract_lock_path: str | Path, storage_root: str | Path) -> "CentralAdmissionConfig":
+    def from_contract_lock(
+        cls,
+        *,
+        contract_lock_path: str | Path,
+        storage_root: str | Path,
+        substrate_root: str | Path | None = None,
+    ) -> "CentralAdmissionConfig":
         lock = json.loads(Path(contract_lock_path).read_text(encoding="utf-8"))
         surface = lock["contract_surface_lock"]["surface_sha256"]
-        return cls(expected_contract_surface_sha256=surface, storage_root=storage_root)
+        return cls(
+            expected_contract_surface_sha256=surface,
+            storage_root=storage_root,
+            substrate_root=substrate_root,
+        )
 
     def dry_run_config(self) -> AdmissionConfig:
         return AdmissionConfig(
@@ -77,9 +89,15 @@ def admit_packet(
     defect_store = DefectStore(config.storage_root)
     eval_store = EvalCandidateStore(config.storage_root)
     eval_candidates: list[dict[str, Any]] = []
+    substrate_root = _substrate_root_for_guard(config)
     for raw_defect in defects:
         defect = enrich_defect_from_packet(raw_defect, packet)
-        candidate = mint_eval_candidate(defect, packet=packet, generated_at=admitted_at)
+        candidate = mint_eval_candidate(
+            defect,
+            packet=packet,
+            generated_at=admitted_at,
+            substrate_root=substrate_root,
+        )
         if candidate:
             defect["eval_candidate_id"] = candidate["eval_candidate_id"]
             eval_store.put(candidate)
@@ -108,6 +126,14 @@ def admit_packet(
         defects=defects,
         eval_candidates=eval_candidates,
         quarantine_record=quarantine_record,
+    )
+
+
+def _substrate_root_for_guard(config: CentralAdmissionConfig) -> str | Path | None:
+    return (
+        config.substrate_root
+        or os.environ.get("EXCEPTIONS_LAKE_CONTRACT_REPO_PATH")
+        or os.environ.get("LFOS_SUBSTRATE_PATH")
     )
 
 
@@ -151,4 +177,3 @@ def _is_executed_action(record: dict[str, Any]) -> bool:
         or record.get("status") in {"succeeded", "failed", "executed"}
         or record.get("execution_status") in {"succeeded", "failed", "executed"}
     )
-

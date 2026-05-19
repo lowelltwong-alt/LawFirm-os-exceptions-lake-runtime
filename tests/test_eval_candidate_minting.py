@@ -28,6 +28,35 @@ SURFACE = json.loads((REPO_ROOT / "contracts.lock.json").read_text(encoding="utf
 ]["surface_sha256"]
 
 
+def _guarded_substrate(tmp_path: Path) -> Path:
+    root = tmp_path / "substrate"
+    (root / "registry").mkdir(parents=True)
+    (root / "registry" / "runtime-reason-codes-registry.json").write_text(
+        json.dumps({"schema_version": "runtime_reason_codes_registry.v1"}),
+        encoding="utf-8",
+    )
+    (root / "registry" / "contract-surface-registry.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "contract_surface_registry.v1",
+                "default_surface_id": "test.surface",
+                "surfaces": [
+                    {
+                        "surface_id": "test.surface",
+                        "include_patterns": [
+                            "registry/contract-surface-registry.json",
+                            "registry/runtime-reason-codes-registry.json",
+                        ],
+                        "exclude_patterns": [],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    return root
+
+
 def _packet(**overrides) -> dict:
     packet = {
         "schema_version": "evidence_packet.v2",
@@ -106,6 +135,24 @@ def test_minting_does_not_mutate_substrate() -> None:
         substrate_root=SUBSTRATE,
     )
     assert candidate is not None
+
+
+def test_minting_fails_if_contract_surface_included_file_mutates(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import exceptions_lake_runtime.generators.eval_candidate_generator as generator
+
+    substrate = _guarded_substrate(tmp_path)
+    target = substrate / "registry" / "runtime-reason-codes-registry.json"
+
+    def mutate_surface(*args, **kwargs):
+        target.write_text(target.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+        return []
+
+    monkeypatch.setattr(generator, "generate_acceptance_test_steps", mutate_surface)
+    defect = _defect(defect_class=rc.ROUTE_MISMATCH, severity="high")
+    with pytest.raises(RuntimeError, match="mutated Semantic Substrate"):
+        mint_eval_candidate(defect, packet=_packet(), generated_at=FIXED_AT, substrate_root=substrate)
 
 
 def test_generated_candidates_use_registry_defect_classes_only() -> None:

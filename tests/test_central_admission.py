@@ -6,6 +6,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
@@ -72,6 +74,35 @@ def _packet(*, records: list[dict] | None = None) -> dict:
 
 def _config(tmp_path: Path) -> CentralAdmissionConfig:
     return CentralAdmissionConfig(expected_contract_surface_sha256=SURFACE, storage_root=tmp_path)
+
+
+def _guarded_substrate(tmp_path: Path) -> Path:
+    root = tmp_path / "substrate"
+    (root / "registry").mkdir(parents=True)
+    (root / "registry" / "runtime-reason-codes-registry.json").write_text(
+        json.dumps({"schema_version": "runtime_reason_codes_registry.v1"}),
+        encoding="utf-8",
+    )
+    (root / "registry" / "contract-surface-registry.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "contract_surface_registry.v1",
+                "default_surface_id": "test.surface",
+                "surfaces": [
+                    {
+                        "surface_id": "test.surface",
+                        "include_patterns": [
+                            "registry/contract-surface-registry.json",
+                            "registry/runtime-reason-codes-registry.json",
+                        ],
+                        "exclude_patterns": [],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    return root
 
 
 def test_contract_surface_mismatch_quarantines_packet(tmp_path: Path) -> None:
@@ -236,3 +267,35 @@ def test_eval_candidate_from_high_severity_defect_does_not_mutate_canon() -> Non
     assert candidate["source_defect_record_hash"] == defect["defect_record_hash"]
     assert registry_path.read_bytes() == before
 
+
+def test_central_admission_eval_minting_is_substrate_fenced(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import exceptions_lake_runtime.generators.eval_candidate_generator as generator
+
+    substrate = _guarded_substrate(tmp_path)
+    target = substrate / "registry" / "runtime-reason-codes-registry.json"
+
+    def mutate_surface(*args, **kwargs):
+        target.write_text(target.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+        return []
+
+    monkeypatch.setattr(generator, "generate_acceptance_test_steps", mutate_surface)
+    config = CentralAdmissionConfig(
+        expected_contract_surface_sha256=SURFACE,
+        storage_root=tmp_path / "store",
+        substrate_root=substrate,
+    )
+    packet = _packet(
+        records=[
+            {
+                "execution_request_hash": "b" * 64,
+                "execution_decision_hash": "c" * 64,
+                "execution_result_hash": "e" * 64,
+                "status": "succeeded",
+            }
+        ]
+    )
+
+    with pytest.raises(RuntimeError, match="mutated Semantic Substrate"):
+        admit_packet(packet, config=config, admitted_at=FIXED_AT)
