@@ -4,8 +4,10 @@ from datetime import UTC, datetime
 from typing import Any
 
 from exceptions_lake_runtime.storage._json_store import content_hash
+from exceptions_lake_runtime.storage.execution_record_store import is_denied_action
 from exceptions_lake_runtime.substrate.reason_codes import (
     CONTRACT_SURFACE_MISMATCH,
+    DENIED_ACTION_RECORDED,
     EVIDENCE_GAP,
     HASH_MISMATCH,
     MISSING_CONTEXT_BUNDLE_REF,
@@ -132,6 +134,62 @@ def missing_passport_defect(
         detected_at=detected_at,
         execution_request_hash=authority_record.get("execution_request_hash"),
     )
+
+
+def denied_action_recorded_defect(
+    *,
+    packet: dict[str, Any],
+    authority_record: dict[str, Any],
+    detected_at: str | None = None,
+) -> dict[str, Any]:
+    return build_defect_record(
+        packet=packet,
+        defect_class=DENIED_ACTION_RECORDED,
+        severity="high",
+        description="Denied bounded action preserved as execution evidence for regression.",
+        detected_at=detected_at,
+        execution_request_hash=authority_record.get("execution_request_hash"),
+    )
+
+
+def defects_from_denied_actions(
+    packet: dict[str, Any],
+    *,
+    detected_at: str | None = None,
+) -> list[dict[str, Any]]:
+    defects: list[dict[str, Any]] = []
+    for record in packet.get("execution_authority_records") or []:
+        if is_denied_action(record):
+            defects.append(
+                denied_action_recorded_defect(
+                    packet=packet,
+                    authority_record=record,
+                    detected_at=detected_at,
+                )
+            )
+    return defects
+
+
+def enrich_defect_from_packet(defect: dict[str, Any], packet: dict[str, Any]) -> dict[str, Any]:
+    """Attach evidence ref stubs from the packet (ids only; no raw payloads)."""
+    updated = dict(defect)
+    source_refs = packet.get("source_refs") or []
+    if source_refs:
+        updated["source_refs"] = [
+            {"source_ref_id": str(ref["source_ref_id"])}
+            for ref in source_refs
+            if ref.get("source_ref_id")
+        ]
+    passage_ids: list[dict[str, str]] = []
+    for claim in packet.get("claim_refs") or []:
+        for passage in claim.get("passage_refs") or []:
+            if passage.get("passage_ref_id"):
+                passage_ids.append({"passage_ref_id": str(passage["passage_ref_id"])})
+    if passage_ids:
+        updated["passage_refs"] = passage_ids
+    updated.pop("defect_record_hash", None)
+    updated["defect_record_hash"] = content_hash(updated)
+    return updated
 
 
 def _surface_for_defect(packet: dict[str, Any]) -> str:

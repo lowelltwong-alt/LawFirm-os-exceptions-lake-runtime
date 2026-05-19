@@ -9,11 +9,10 @@ from exceptions_lake_runtime.evidence_packet_admission import (
     AdmissionConfig,
     admit_dry_run,
 )
-from exceptions_lake_runtime.generators.eval_candidate_generator import (
-    generate_eval_candidate_from_defect,
-)
+from exceptions_lake_runtime.generators.eval_candidate_from_defect import mint_eval_candidate
 from exceptions_lake_runtime.storage._json_store import content_hash
 from exceptions_lake_runtime.storage.defect_store import DefectStore
+from exceptions_lake_runtime.storage.eval_candidate_store import EvalCandidateStore
 from exceptions_lake_runtime.storage.execution_record_store import (
     ExecutionRecordStore,
     is_denied_action,
@@ -21,6 +20,8 @@ from exceptions_lake_runtime.storage.execution_record_store import (
 from exceptions_lake_runtime.storage.quarantine_store import QuarantineStore
 from exceptions_lake_runtime.validators.defect_generator import (
     defects_for_admission_record,
+    defects_from_denied_actions,
+    enrich_defect_from_packet,
     missing_authority_record_defect,
     missing_passport_defect,
 )
@@ -71,16 +72,19 @@ def admit_packet(
 
     if base_record["admission_status"] == "admitted":
         defects.extend(_execution_authority_defects(packet, detected_at=admitted_at))
+        defects.extend(defects_from_denied_actions(packet, detected_at=admitted_at))
 
     defect_store = DefectStore(config.storage_root)
-    for defect in defects:
+    eval_store = EvalCandidateStore(config.storage_root)
+    eval_candidates: list[dict[str, Any]] = []
+    for raw_defect in defects:
+        defect = enrich_defect_from_packet(raw_defect, packet)
+        candidate = mint_eval_candidate(defect, packet=packet, generated_at=admitted_at)
+        if candidate:
+            defect["eval_candidate_id"] = candidate["eval_candidate_id"]
+            eval_store.put(candidate)
+            eval_candidates.append(candidate)
         defect_store.put(defect)
-
-    eval_candidates = [
-        candidate
-        for defect in defects
-        if (candidate := generate_eval_candidate_from_defect(defect, generated_at=admitted_at)) is not None
-    ]
 
     admission_record = _with_defect_refs(
         base_record,

@@ -153,9 +153,10 @@ def test_denied_action_is_stored_as_execution_evidence(tmp_path: Path) -> None:
     outcome = admit_packet(packet, config=_config(tmp_path), admitted_at=FIXED_AT)
 
     assert outcome.admission_record["admission_status"] == "admitted"
-    assert outcome.defects == []
     assert outcome.execution_record is not None
     assert outcome.execution_record["denied_action_evidence"] == [denied_record]
+    assert any(d["defect_class"] == rc.DENIED_ACTION_RECORDED for d in outcome.defects)
+    assert outcome.eval_candidates
 
 
 def test_allowed_packet_produces_admitted_execution_record(tmp_path: Path) -> None:

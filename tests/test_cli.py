@@ -77,7 +77,16 @@ def test_cli_list_events_returns_stored_events(
 
     exit_code = main(["list-events"])
 
-    captured = json.loads(capsys.readouterr().out)
+    captured_out = capsys.readouterr().out
+    if exit_code != 0:
+        raise AssertionError(
+            "list-events failed unexpectedly: exit_code="
+            + str(exit_code)
+            + " stdout="
+            + captured_out
+        )
+
+    captured = json.loads(captured_out)
     assert exit_code == 0
     assert len(captured) == 1
     assert captured[0]["event_id"] == "EXC-900001"
