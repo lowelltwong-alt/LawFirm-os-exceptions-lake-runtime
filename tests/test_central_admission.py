@@ -12,6 +12,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
+if str(REPO_ROOT / "tests") not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT / "tests"))
 
 from exceptions_lake_runtime.generators.eval_candidate_generator import (  # noqa: E402
     generate_eval_candidate_from_defect,
@@ -22,6 +24,7 @@ from exceptions_lake_runtime.validators.admission_validator import (  # noqa: E4
     admit_packet,
 )
 from exceptions_lake_runtime.validators.defect_generator import build_defect_record  # noqa: E402
+from _substrate_path import resolve_substrate_root  # noqa: E402
 
 
 FIXED_AT = "2026-05-18T00:00:00Z"
@@ -245,12 +248,7 @@ def test_generated_admission_reasons_use_only_registry_defined_codes(tmp_path: P
 
 
 def test_eval_candidate_from_high_severity_defect_does_not_mutate_canon() -> None:
-    registry_path = (
-        REPO_ROOT.parent
-        / "LawFirm-os-semantic-substrate"
-        / "registry"
-        / "runtime-reason-codes-registry.json"
-    )
+    registry_path = resolve_substrate_root(REPO_ROOT) / "registry" / "runtime-reason-codes-registry.json"
     before = registry_path.read_bytes()
     defect = build_defect_record(
         packet=_packet(),

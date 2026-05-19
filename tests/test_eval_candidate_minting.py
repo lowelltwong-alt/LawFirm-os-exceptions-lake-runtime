@@ -10,9 +10,10 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SRC = REPO_ROOT / "src"
-SUBSTRATE = REPO_ROOT.parent / "LawFirm-os-semantic-substrate"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
+if str(REPO_ROOT / "tests") not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT / "tests"))
 
 from exceptions_lake_runtime.generators.eval_candidate_from_defect import mint_eval_candidate  # noqa: E402
 from exceptions_lake_runtime.generators.eval_candidate_generator import (  # noqa: E402
@@ -21,6 +22,9 @@ from exceptions_lake_runtime.generators.eval_candidate_generator import (  # noq
 from exceptions_lake_runtime.storage._json_store import content_hash  # noqa: E402
 from exceptions_lake_runtime.substrate import reason_codes as rc  # noqa: E402
 from exceptions_lake_runtime.validators.defect_generator import build_defect_record  # noqa: E402
+from _substrate_path import resolve_substrate_root  # noqa: E402
+
+SUBSTRATE = resolve_substrate_root(REPO_ROOT)
 
 FIXED_AT = "2026-05-18T18:00:00Z"
 SURFACE = json.loads((REPO_ROOT / "contracts.lock.json").read_text(encoding="utf-8"))[

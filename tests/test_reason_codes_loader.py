@@ -11,10 +11,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
+if str(REPO_ROOT / "tests") not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT / "tests"))
 
 from exceptions_lake_runtime.substrate import reason_codes as rc  # noqa: E402
+from _substrate_path import resolve_substrate_root  # noqa: E402
 
-SUBSTRATE = REPO_ROOT.parent / "LawFirm-os-semantic-substrate"
+SUBSTRATE = resolve_substrate_root(REPO_ROOT)
 REGISTRY = SUBSTRATE / "registry" / "runtime-reason-codes-registry.json"
 
 
