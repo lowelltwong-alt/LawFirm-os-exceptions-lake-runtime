@@ -21,3 +21,11 @@ Start with `AI_WORK_START_HERE.md` at the repository root.
 ## Current posture
 
 Docs-only. No live connectors, no production audit lake, no raw transcript storage, no real firm operational data, and no schema authority changes.
+
+## AI Strategy and Context Quality Runtime Evidence
+
+- Exception Lake records context defects, reviewer corrections, calibration evidence, drift evidence, and pressure vectors as runtime evidence only.
+- It does not mutate Semantic Substrate canon.
+- Legal Context Bundle outcomes and context-quality events are evidence, not authority.
+- Shannon/entropy metrics must be treated as measurement evidence, not legal truth.
+- Future richer context-quality event surfaces must wait for Semantic Substrate schemas and Exception Lake adoption.
