@@ -83,3 +83,11 @@ Stop if contract SHA, schema version, policy boundary, source type, persistence 
 
     python -m pytest -q
     python ../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace ..
+
+## AI Strategy and Context Quality Runtime Evidence
+
+- Exception Lake records context defects, reviewer corrections, calibration evidence, drift evidence, and pressure vectors as runtime evidence only.
+- It does not mutate Semantic Substrate canon.
+- Legal Context Bundle outcomes and context-quality events are evidence, not authority.
+- Shannon/entropy metrics must be treated as measurement evidence, not legal truth.
+- Future richer context-quality event surfaces must wait for Semantic Substrate schemas and Exception Lake adoption.
