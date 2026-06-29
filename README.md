@@ -160,6 +160,12 @@ Runtime route/action labels are mapped to Law Firm canonical route authority in:
 
 Contract pinning does not create production readiness. It only makes the synthetic MVP more explicit about which reviewed contract version it is consuming.
 
+## Governance Dependency-Map Mirror
+
+This repo carries `.ai/control/governance-dependency-map-mirror.json` as a local mirror of the upstream governance dependency map in `LawFirm-os-semantic-substrate/registry/governance-dependency-map.json`.
+
+If governance-facing evidence-plane files change, check the upstream governance dependency map and update the local mirror, AI work router, AI table of contents, README, validator, and tests when affected. The mirror is downstream enforcement only; it cannot override Semantic Substrate governance, mutate canon, promote runtime evidence to authority, store raw legal payloads, or authorize production automation.
+
 See:
 
 - `docs/RUNTIME_BOUNDARY.md`
