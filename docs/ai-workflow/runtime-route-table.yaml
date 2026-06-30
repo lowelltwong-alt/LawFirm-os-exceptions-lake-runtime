@@ -22,7 +22,7 @@ routes:
       - schema_redefinition
       - production_data
     validation:
-      - pytest
+      - python scripts/run_full_pytest.py
 
   synthetic_exception_ingest:
     description: Work on synthetic exception ingest behavior only.
@@ -37,7 +37,7 @@ routes:
       - production_connectors
       - canon_mutation
     validation:
-      - pytest
+      - python scripts/run_full_pytest.py
 
   contract_lock_refresh:
     description: Refresh or document contract lock behavior against the pinned contract repo SHA.
@@ -51,7 +51,7 @@ routes:
       - bypassing_contract_drift
       - redefining_contract_authority
     validation:
-      - pytest
+      - python scripts/run_full_pytest.py
 
   non_synthetic_dry_run_preflight:
     description: Metadata-only dry-run readiness checks; no event persistence.
@@ -66,7 +66,7 @@ routes:
       - raw_records
       - live_connectors
     validation:
-      - pytest
+      - python scripts/run_full_pytest.py
 
   audit_event_review:
     description: Review or plan audit event metadata capture.
@@ -79,7 +79,7 @@ routes:
       - raw_production_conversation_content
       - production_audit_lake
     validation:
-      - pytest
+      - python scripts/run_full_pytest.py
 
   event_store_review:
     description: Review append-only local JSONL event store behavior.
@@ -92,7 +92,7 @@ routes:
       - production_storage_claims
       - real_contract_data
     validation:
-      - pytest
+      - python scripts/run_full_pytest.py
 
   pressure_candidate_build:
     description: Work on in-memory synthetic pressure-vector candidate builder.
@@ -106,7 +106,7 @@ routes:
       - promotion_decision_creation
       - canon_mutation
     validation:
-      - pytest
+      - python scripts/run_full_pytest.py
 
   future_connector_planning:
     description: Plan future connectors without implementing live connectors.

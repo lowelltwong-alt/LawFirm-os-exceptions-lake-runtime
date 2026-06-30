@@ -2,7 +2,7 @@
   "object_type": "governance_dependency_map_mirror",
   "trust_zone": "downstream_control",
   "lifecycle_status": "active",
-  "provenance_note": "Created 2026-06-29 to mirror the upstream LawFirm OS governance dependency-map update gate inside LawFirm-os-exceptions-lake-runtime.",
+  "provenance_note": "Created 2026-06-29 to mirror the upstream LawFirm OS governance dependency-map update gate inside LawFirm-os-exceptions-lake-runtime. Updated 2026-06-30 for the intake Lake admission review docket and deterministic pytest runtime policy.",
   "reason_for_inclusion": "Force evidence-plane governance changes to check the upstream governance dependency map and local mirror surfaces instead of relying on runtime convenience.",
   "schema_version": "governance_dependency_map_mirror.v1",
   "mirror_id": "lawfirm_os_exceptions_lake_runtime_governance_dependency_map_mirror",
@@ -21,7 +21,13 @@
     "pr_description_workflow": ".github/workflows/pr-description-governance-checks.yml",
     "front_door": "AI_WORK_START_HERE.md",
     "table_of_contents": "AI_TABLE_OF_CONTENTS.md",
-    "readme": "README.md"
+    "readme": "README.md",
+    "validation_runtime_policy": "config/validation-runtime-policy.yaml",
+    "pytest_policy_wrapper": "scripts/run_full_pytest.py",
+    "intake_lake_admission_registry": "registry/intake-lake-admission-review-registry.json",
+    "intake_lake_admission_validator": "scripts/validate_intake_lake_admission_review.py",
+    "intake_lake_admission_test": "tests/test_intake_lake_admission_review.py",
+    "validation_runtime_policy_test": "tests/test_validation_runtime_policy.py"
   },
   "authority": {
     "local_repo_may_override_upstream_dependency_map": false,
@@ -40,14 +46,22 @@
     "AI_TABLE_OF_CONTENTS.md",
     "AI_WORK_START_HERE.md",
     "DATA_FLOW_MAP.md",
+    "config/",
+    "config/validation-runtime-policy.yaml",
     "README.md",
     "contracts.lock.json",
     "docs/",
+    "registry/",
+    "registry/intake-lake-admission-review-registry.json",
+    "scripts/run_full_pytest.py",
     "scripts/validate_",
     "scripts/check_",
     "scripts/validate_governance_dependency_map_mirror.py",
+    "scripts/validate_intake_lake_admission_review.py",
     "skill-agent-manifest.json",
-    "tests/test_governance_dependency_map_mirror.py"
+    "tests/test_governance_dependency_map_mirror.py",
+    "tests/test_intake_lake_admission_review.py",
+    "tests/test_validation_runtime_policy.py"
   ],
   "required_behavior": [
     "check_upstream_governance_dependency_map_when_governance_files_change",

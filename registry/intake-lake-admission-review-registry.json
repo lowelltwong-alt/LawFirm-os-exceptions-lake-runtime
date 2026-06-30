@@ -1,0 +1,289 @@
+{
+  "schema_version": "intake_lake_admission_review_registry.v0_1",
+  "object_type": "intake_lake_admission_review_registry",
+  "registry_id": "exceptions_lake.intake_admission_review.v0_1",
+  "status": "candidate_review_only",
+  "owner_repo": "LawFirm-os-exceptions-lake-runtime",
+  "source_repo": "LawFirm-os-intake",
+  "source_package_ref": "LawFirm-os-intake:promotion/cross_repo_promotion_package.json",
+  "contains_real_firm_data": false,
+  "non_authoritative": true,
+  "direct_promotion_performed": false,
+  "external_writes_performed": false,
+  "canonical_route_ids_assigned": false,
+  "canonical_event_classes_assigned": false,
+  "sqlite_migrations_authorized": false,
+  "runtime_connector_authorized": false,
+  "raw_legal_payload_storage_authorized": false,
+  "real_data_pilot_authorized": false,
+  "generated_from_proposal_ids": [
+    "lake.intake-budget-evidence-mapping.v0_1",
+    "lake.carrier-rejection-admission.v0_1"
+  ],
+  "review_items": [
+    {
+      "review_item_id": "lake.review.intake-budget-evidence-mapping.v0_1",
+      "source_proposal_id": "lake.intake-budget-evidence-mapping.v0_1",
+      "target_repo": "LawFirm-os-exceptions-lake-runtime",
+      "authority_plane": "evidence",
+      "proposal_type": "lake_evidence_mapping",
+      "local_admission_label": "exception_lake.local.intake_budget_evidence_mapping_review",
+      "label_authority": "local_operational_label_only",
+      "adoption_status": "owner_review_required",
+      "summary": "Review future append-only admission record families for intake proposals, human corrections, budget template mapping, human budget changes, budget revisions, budget actual comparisons, and variance-driver learning candidates.",
+      "candidate_artifact_refs": [
+        "LawFirm-os-intake:schemas/exception-lake-candidate.schema.json",
+        "LawFirm-os-intake:schemas/exception-lake-readiness-report.schema.json",
+        "LawFirm-os-intake:schemas/exception-lake-handoff-manifest.schema.json",
+        "LawFirm-os-intake:schemas/exception-lake-mapping-package.schema.json",
+        "LawFirm-os-intake:schemas/exception-lake-mapping-rule.schema.json",
+        "LawFirm-os-intake:schemas/budget-review-change-record.schema.json",
+        "LawFirm-os-intake:schemas/budget-revision-report.schema.json",
+        "LawFirm-os-intake:schemas/budget-actual-comparison-report.schema.json",
+        "LawFirm-os-intake:schemas/budget-actual-variance-driver-candidate.schema.json",
+        "LawFirm-os-intake:schemas/learning-owner-handoff-package.schema.json",
+        "LawFirm-os-intake:schemas/intake-vertical-readiness-audit-report.schema.json",
+        "LawFirm-os-intake:DATA_FLOW_MAP.md"
+      ],
+      "proposed_contract_refs": [
+        "exception-lake://candidate/evidence/intake-proposal-correction-escalation.v0_1",
+        "exception-lake://candidate/evidence/budget-template-change-actual-variance.v0_1"
+      ],
+      "candidate_record_families": [
+        "intake_proposal_packet",
+        "intake_human_correction",
+        "intake_escalation_or_blocker",
+        "budget_template_mapping_report",
+        "human_budget_change_record",
+        "budget_revision_delta",
+        "budget_actual_comparison",
+        "budget_actual_variance_driver_candidate",
+        "reviewed_learning_gate_candidate"
+      ],
+      "required_handoff_fields": [
+        "orchestrator_evidence_packet_hash",
+        "source_repo",
+        "source_artifact_ref",
+        "source_hash",
+        "source_ref_ids",
+        "segment_or_passage_refs",
+        "human_review_outcome_ref",
+        "record_hash",
+        "previous_record_hash_or_null",
+        "contract_surface_sha256"
+      ],
+      "budget_actuals_comparison_fields": [
+        "budget_phase",
+        "budget_task_code",
+        "proposed_budget_amount",
+        "carrier_compliant_projection_amount",
+        "approved_budget_amount_if_known",
+        "actual_billed_amount",
+        "write_down_or_disallowed_amount",
+        "variance_driver_candidate"
+      ],
+      "required_admission_controls": {
+        "append_only": true,
+        "supersession_instead_of_update": true,
+        "idempotency_key_required": true,
+        "source_hash_required": true,
+        "record_hash_required": true,
+        "orchestrator_packet_required": true,
+        "human_review_ref_required_for_corrections": true,
+        "raw_payload_storage_allowed": false,
+        "sqlite_migration_authorized_now": false,
+        "real_data_authorized_now": false,
+        "external_write_authorized_now": false
+      },
+      "event_mapping_policy": {
+        "canonical_route_id_assignment": "none",
+        "canonical_event_class_assignment": "none",
+        "allowed_existing_route_refs_for_future_mapping_review": [
+          "route.workflow_escalation.v1"
+        ],
+        "candidate_mapping_only": true
+      },
+      "prohibited_actions": [
+        "canonical_route_id_creation",
+        "canonical_event_class_creation",
+        "semantic_substrate_write",
+        "production_connector_write",
+        "raw_legal_payload_storage",
+        "real_data_ingestion",
+        "sqlite_migration",
+        "budget_approval",
+        "budget_submission",
+        "matter_opening"
+      ],
+      "acceptance_criteria": [
+        "every admitted candidate record has a source hash, record hash, and idempotency key",
+        "human corrections append superseding records and never mutate original records",
+        "budget actuals compare proposed, compliant, approved-if-known, actual, and disallowed amounts",
+        "learning candidates remain candidate-only until owner review and promotion",
+        "no Lake write path is enabled for intake records in this slice"
+      ],
+      "non_authoritative": true,
+      "direct_promotion_performed": false,
+      "external_writes_performed": false
+    },
+    {
+      "review_item_id": "lake.review.carrier-rejection-admission.v0_1",
+      "source_proposal_id": "lake.carrier-rejection-admission.v0_1",
+      "target_repo": "LawFirm-os-exceptions-lake-runtime",
+      "authority_plane": "evidence",
+      "proposal_type": "lake_evidence_mapping",
+      "local_admission_label": "exception_lake.local.carrier_rejection_admission_review",
+      "label_authority": "local_operational_label_only",
+      "adoption_status": "owner_review_required",
+      "summary": "Review future append-only admission record families for carrier rejection notices, reconciliation, human review, appeal submission, appeal results, financial outcomes, and learning candidates.",
+      "candidate_artifact_refs": [
+        "LawFirm-os-intake:schemas/carrier-rejection-lake-admission-proposal.schema.json",
+        "LawFirm-os-intake:schemas/carrier-rejection-lake-admission-record-spec.schema.json",
+        "LawFirm-os-intake:schemas/carrier-rejection-lake-admission-check.schema.json",
+        "LawFirm-os-intake:schemas/carrier-rejection-notice.schema.json",
+        "LawFirm-os-intake:schemas/carrier-appeal-result.schema.json",
+        "LawFirm-os-intake:schemas/carrier-response-reconciliation-report.schema.json",
+        "LawFirm-os-intake:schemas/carrier-rejection-review-packet.schema.json",
+        "LawFirm-os-intake:schemas/carrier-rejection-learning-report.schema.json",
+        "LawFirm-os-intake:schemas/carrier-rejection-roadmap-audit-report.schema.json",
+        "LawFirm-os-intake:docs/carrier-rejection-learning-loop-roadmap.md"
+      ],
+      "proposed_contract_refs": [
+        "exception-lake://candidate/admission/carrier-rejection-notice.v0_1",
+        "exception-lake://candidate/admission/carrier-rejection-reconciliation.v0_1",
+        "exception-lake://candidate/admission/carrier-rejection-review-outcome.v0_1",
+        "exception-lake://candidate/admission/carrier-appeal-submission.v0_1",
+        "exception-lake://candidate/admission/carrier-appeal-result.v0_1",
+        "exception-lake://candidate/admission/carrier-financial-outcome.v0_1",
+        "exception-lake://candidate/admission/carrier-rejection-learning.v0_1"
+      ],
+      "candidate_record_families": [
+        "carrier_rejection_notice",
+        "carrier_rejection_reconciliation",
+        "carrier_rejection_review_outcome",
+        "carrier_fix_or_appeal_action",
+        "carrier_appeal_submission",
+        "carrier_appeal_result",
+        "carrier_financial_outcome",
+        "carrier_rejection_learning_candidate"
+      ],
+      "future_capture_sources": [
+        {
+          "source": "email",
+          "enabled_now": false,
+          "required_metadata": [
+            "message_id",
+            "thread_id",
+            "received_at",
+            "sender_identity_claim",
+            "attachment_hashes",
+            "source_hash"
+          ]
+        },
+        {
+          "source": "carrier_portal",
+          "enabled_now": false,
+          "required_metadata": [
+            "portal_name",
+            "portal_transaction_id",
+            "notice_id",
+            "downloaded_at",
+            "source_hash",
+            "attachment_hashes"
+          ]
+        }
+      ],
+      "candidate_rejection_buckets": [
+        "rate_or_cap_rejection",
+        "staffing_or_leverage_rejection",
+        "task_scope_rejection",
+        "expense_documentation_rejection",
+        "preapproval_missing",
+        "duplicate_or_format_rejection",
+        "timing_or_deadline_rejection",
+        "portal_technical_rejection",
+        "identity_or_matter_mismatch",
+        "actuals_or_invoice_variance",
+        "unknown_or_new_rejection_pattern"
+      ],
+      "required_state_chain": [
+        "received_candidate",
+        "reconciled_to_budget_or_invoice",
+        "human_review_required",
+        "fix_or_appeal_strategy_selected",
+        "appeal_authorized_by_human",
+        "appeal_submitted_by_authorized_channel",
+        "appeal_result_received",
+        "closed_financial_outcome_recorded",
+        "learning_candidate_prepared"
+      ],
+      "required_handoff_fields": [
+        "orchestrator_evidence_packet_hash",
+        "source_channel",
+        "source_identifier",
+        "source_hash",
+        "attachment_hashes",
+        "matter_or_budget_reconciliation_ref",
+        "human_review_outcome_ref",
+        "appeal_authorization_ref",
+        "record_hash",
+        "previous_record_hash_or_null",
+        "contract_surface_sha256"
+      ],
+      "required_admission_controls": {
+        "append_only": true,
+        "supersession_instead_of_update": true,
+        "idempotency_key_required": true,
+        "source_hash_required": true,
+        "record_hash_required": true,
+        "orchestrator_packet_required": true,
+        "human_review_ref_required_for_appeals": true,
+        "unknown_bucket_required": true,
+        "raw_payload_storage_allowed": false,
+        "sqlite_migration_authorized_now": false,
+        "real_data_authorized_now": false,
+        "external_write_authorized_now": false
+      },
+      "event_mapping_policy": {
+        "canonical_route_id_assignment": "none",
+        "canonical_event_class_assignment": "none",
+        "allowed_existing_route_refs_for_future_mapping_review": [
+          "route.workflow_escalation.v1"
+        ],
+        "candidate_mapping_only": true
+      },
+      "learning_loop_inputs": [
+        "carrier_rejection_notice",
+        "human_rejection_review_outcome",
+        "fix_or_appeal_action",
+        "appeal_submission_record",
+        "appeal_result",
+        "financial_outcome",
+        "budget_actual_variance",
+        "new_rejection_pattern_candidate"
+      ],
+      "prohibited_actions": [
+        "canonical_route_id_creation",
+        "canonical_event_class_creation",
+        "semantic_substrate_write",
+        "production_connector_write",
+        "raw_legal_payload_storage",
+        "real_data_ingestion",
+        "sqlite_migration",
+        "appeal_submission_without_human_authorization",
+        "budget_submission",
+        "matter_opening"
+      ],
+      "acceptance_criteria": [
+        "every carrier rejection notice is capturable as a known bucket or unknown_or_new_rejection_pattern",
+        "every appeal submission record has a human authorization ref",
+        "appeal results append outcome records and never overwrite rejection notices",
+        "financial outcomes and actual-cost variance become evidence-only learning inputs",
+        "no email or portal connector is enabled in this slice"
+      ],
+      "non_authoritative": true,
+      "direct_promotion_performed": false,
+      "external_writes_performed": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+policy_id: exceptions-lake-validation-runtime-policy
+version: "0.1"
+status: candidate
+contains_real_firm_data: false
+
+# Local pytest can exceed a short/default 300 second tool ceiling on Windows and
+# in multi-repo validation work. Agents and humans must use this policy-backed
+# wrapper instead of raw pytest so slow suites do not create false failures.
+commands:
+  full_pytest:
+    command: python -m pytest -q
+    minimum_timeout_seconds: 1800
+    reason: Full suite copies contract surfaces into git-backed fixtures and exceeded a 900 second local ceiling on Windows.
+    wrapper: python scripts/run_full_pytest.py
+  focused_pytest:
+    command: python -m pytest <paths> -q
+    minimum_timeout_seconds: 1800
+    reason: Focused tests may initialize substrate fixture repos and should not inherit a short or stale ceiling.
+    wrapper: python scripts/run_full_pytest.py <paths> -q
+
+agent_instruction: Use the configured minimum timeout or higher for pytest commands; full and focused pytest must run through scripts/run_full_pytest.py and direct pytest invocation is blocked.

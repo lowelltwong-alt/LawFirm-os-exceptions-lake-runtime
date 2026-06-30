@@ -18,6 +18,7 @@ This repo owns append-only runtime/audit evidence support. It consumes contracts
 - `docs/RUNTIME_HANDOFF.md` - orchestrator/runtime handoff notes.
 - `docs/CANONICAL_ROUTE_MAPPING.md` - maps local runtime labels to substrate canonical route authority.
 - `docs/NON_SYNTHETIC_DATA_READINESS_CHECKLIST.md` - metadata-only readiness guardrails.
+- `docs/INTAKE_LAKE_ADMISSION_REVIEW.md` - candidate-only intake budget, carrier rejection, appeal, and actuals evidence admission review docket.
 - `docs/LOCAL_DEV.md` - local development and contract path setup.
 - `.ai/control/governance-dependency-map-mirror.json` - local mirror of the upstream governance dependency map; it cannot override `LawFirm-os-semantic-substrate`.
 - `scripts/validate_governance_dependency_map_mirror.py` - fail-closed check for mirror shape and watched governance paths.
@@ -29,6 +30,10 @@ This repo owns append-only runtime/audit evidence support. It consumes contracts
 - `src/exceptions_lake_runtime/api.py` - library facade.
 - `scripts/ci_check_contract_lock.py` - read-only lock-shape guardrail.
 - `scripts/update_contract_lock.py` - explicit local lock refresh tool; writes only this repo's `contracts.lock.json` when intentionally run.
+- `config/validation-runtime-policy.yaml` - minimum runtime ceiling policy for full and focused pytest validation.
+- `scripts/run_full_pytest.py` - required pytest wrapper that applies the validation runtime policy marker and long timeout.
+- `scripts/validate_intake_lake_admission_review.py` - deterministic validator for the candidate intake Lake admission docket.
+- `registry/intake-lake-admission-review-registry.json` - local candidate-only registry for budget evidence mapping and carrier rejection admission planning.
 
 ## Contract Authority
 
@@ -59,9 +64,14 @@ Current:
 - route/event-class fail-closed validation against substrate contracts
 - synthetic pressure-vector candidate builder
 - non-synthetic dry-run preflight metadata check
+- candidate-only intake Lake admission docket for budget changes, carrier rejections, appeals, outcomes, and actuals comparison
+- deterministic pytest runtime policy requiring `python scripts/run_full_pytest.py`
 
 Planned or not implemented here:
 
+- default intake/carrier writes to the Lake are not implemented.
+- SQLite migrations for intake/carrier records are not implemented.
+- carrier portal or email connector capture is not implemented.
 - Phase 2 opportunity, autonomy, harness, research, and decision records are not production runtime surfaces in this repo unless separately implemented and validated.
 - Research Radar automation is not implemented.
 - Promotion to canon is not implemented and is not allowed in this repo.

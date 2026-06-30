@@ -16,7 +16,7 @@ This runtime repo currently implements:
 ## What is safe to run
 
 - `python -m pip install -e ".[dev]"`
-- `pytest`
+- `python scripts/run_full_pytest.py`
 - `python scripts/update_contract_lock.py`
 - `exceptions-lake health`
 - `exceptions-lake ingest-synthetic examples/synthetic_exception_event.json`

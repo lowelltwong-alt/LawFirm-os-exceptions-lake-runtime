@@ -12,7 +12,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_cli.py",
-      "runner_command": "python -m pytest tests/test_cli.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_cli.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -56,7 +56,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_contract_loader.py",
-      "runner_command": "python -m pytest tests/test_contract_loader.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_contract_loader.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -102,7 +102,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_event_ingestion.py",
-      "runner_command": "python -m pytest tests/test_event_ingestion.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_event_ingestion.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -144,7 +144,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_event_store.py",
-      "runner_command": "python -m pytest tests/test_event_store.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_event_store.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -186,7 +186,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_insurance_budget_poc.py",
-      "runner_command": "python -m pytest tests/test_insurance_budget_poc.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_insurance_budget_poc.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -228,7 +228,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_legal_knowledge_event_examples.py",
-      "runner_command": "python -m pytest tests/test_legal_knowledge_event_examples.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_legal_knowledge_event_examples.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -272,7 +272,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_no_canon_mutation.py",
-      "runner_command": "python -m pytest tests/test_no_canon_mutation.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_no_canon_mutation.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -314,7 +314,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_non_synthetic_readiness.py",
-      "runner_command": "python -m pytest tests/test_non_synthetic_readiness.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_non_synthetic_readiness.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -356,7 +356,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_validation_gateway.py",
-      "runner_command": "python -m pytest tests/test_validation_gateway.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_validation_gateway.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -398,7 +398,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_contract_surface_locking.py",
-      "runner_command": "python -m pytest tests/test_contract_surface_locking.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_contract_surface_locking.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -450,7 +450,7 @@
       "framework": "pytest",
       "artifact_type": "pytest_file",
       "path": "tests/test_contract_surface_git_validation.py",
-      "runner_command": "python -m pytest tests/test_contract_surface_git_validation.py -q",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_contract_surface_git_validation.py -q",
       "owning_repo": "LawFirm-os-exceptions-lake-runtime",
       "owning_plane": "exception_lake",
       "architecture_surface": [
@@ -494,6 +494,110 @@
         "route authority mutation"
       ],
       "expected_runtime_seconds": 120,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_intake_lake_admission_review.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_intake_lake_admission_review.py",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_intake_lake_admission_review.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "intake_budget_evidence_admission",
+        "carrier_rejection_evidence_admission",
+        "candidate_only_governance"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change",
+        "cross_repo_integration_change",
+        "governance_metadata_change"
+      ],
+      "trigger_patterns": [
+        "registry/intake-lake-admission-review-registry.json",
+        "docs/INTAKE_LAKE_ADMISSION_REVIEW.md",
+        "scripts/validate_intake_lake_admission_review.py",
+        "tests/test_intake_lake_admission_review.py"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "intake",
+        "budget",
+        "carrier_rejection",
+        "candidate_only",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate",
+        "LawFirm-os-orchestrator",
+        "LawFirm-os-intake"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "intake-to-exception-lake admission review surfaces change",
+        "budget actuals or carrier rejection learning-loop evidence policy changes"
+      ],
+      "must_not_validate": [
+        "canonical route or event-class creation",
+        "SQLite migration authority",
+        "production connector authority",
+        "real-data ingestion approval"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_validation_runtime_policy.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_validation_runtime_policy.py",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_validation_runtime_policy.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "validation_runtime_policy",
+        "ci_test_manifest",
+        "agent_validation_surface"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "ci_change",
+        "validation_policy_change",
+        "agent_instruction_change"
+      ],
+      "trigger_patterns": [
+        "config/validation-runtime-policy.yaml",
+        "scripts/run_full_pytest.py",
+        "tests/conftest.py",
+        "tests/test_validation_runtime_policy.py",
+        "ci-test-manifest.json",
+        ".github/workflows/ci.yml"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "validation_runtime_policy",
+        "protected"
+      ],
+      "upstream_dependencies": [],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "pytest validation command surfaces change",
+        "CI test manifest or agent pytest instructions change"
+      ],
+      "must_not_validate": [
+        "short default pytest timeout as a successful full regression",
+        "direct pytest invocation without the policy marker"
+      ],
+      "expected_runtime_seconds": 5,
       "full_regression_required": false
     }
   ],
