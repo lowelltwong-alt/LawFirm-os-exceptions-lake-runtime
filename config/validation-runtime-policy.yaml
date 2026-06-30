@@ -9,12 +9,12 @@ contains_real_firm_data: false
 commands:
   full_pytest:
     command: python -m pytest -q
-    minimum_timeout_seconds: 1800
-    reason: Full suite copies contract surfaces into git-backed fixtures and exceeded a 900 second local ceiling on Windows.
+    minimum_timeout_seconds: 3600
+    reason: Full suite copies contract surfaces into git-backed fixtures and exceeded a 1800 second local ceiling on Windows/OneDrive during multi-repo validation.
     wrapper: python scripts/run_full_pytest.py
   focused_pytest:
     command: python -m pytest <paths> -q
-    minimum_timeout_seconds: 1800
+    minimum_timeout_seconds: 3600
     reason: Focused tests may initialize substrate fixture repos and should not inherit a short or stale ceiling.
     wrapper: python scripts/run_full_pytest.py <paths> -q
 

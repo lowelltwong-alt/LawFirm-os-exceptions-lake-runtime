@@ -39,6 +39,7 @@ flowchart LR
     OR["Orchestrator / execution plane\nLawFirm-os-orchestrator\nproposes evidence packets"]
     INTAKE["Intake vertical / candidate workflow\nLawFirm-os-intake\nbudget proposals + carrier response evidence"]
     REVIEW["Intake Lake admission review\ncandidate-only docket\nno route/event canon"]
+    ORPKT["Orchestrator intake Lake review packet\nhash-checked candidate evidence\nno admission"]
     EL["Exception Lake / evidence plane\nexceptions-lake-runtime-main\nappend-only events + audit"]
     HUM["Human Governance\nadaptation review + promotion approval"]
 
@@ -46,6 +47,8 @@ flowchart LR
     SS -->|"orchestrator manifest + schemas"| OR
     INTAKE -->|"candidate budget changes + carrier rejections + actuals comparisons"| REVIEW
     REVIEW -->|"validated admission proposal only\nno default storage write"| OR
+    OR -->|"local intake Lake review packet"| ORPKT
+    ORPKT -->|"validate packet + optional local report\nno append/admit/write"| REVIEW
     OR -->|"contract-locked synthetic evidence packet"| EL
     EL -->|"append-only events + audit + pressure candidates"| EL
     EL -->|"learning candidates only"| HUM
@@ -86,7 +89,7 @@ sequenceDiagram
 
 ## Intake Lake Admission Review (candidate-only)
 
-`registry/intake-lake-admission-review-registry.json` and `docs/INTAKE_LAKE_ADMISSION_REVIEW.md` define the local candidate review docket for future intake-to-Lake evidence. The docket covers:
+`registry/intake-lake-admission-review-registry.json` and `docs/INTAKE_LAKE_ADMISSION_REVIEW.md` define the local candidate review docket for future intake-to-Lake evidence. `scripts/validate_intake_lake_admission_review_packet.py` validates Orchestrator-produced review packets against that docket without admitting or storing records. The docket covers:
 
 - budget proposal, human correction, carrier-compliant projection, approved amount if known, actual billed amount, write-down or disallowance, and variance-driver candidates;
 - carrier rejection capture from future email or portal sources, with an explicit `unknown_or_new_rejection_pattern` bucket;

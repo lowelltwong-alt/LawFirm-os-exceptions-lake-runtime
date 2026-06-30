@@ -29,6 +29,16 @@ def test_intake_lake_admission_review_registry_validates() -> None:
     assert data["non_authoritative"] is True
     assert data["sqlite_migrations_authorized"] is False
     assert data["raw_legal_payload_storage_authorized"] is False
+    packet_contract = data["orchestrator_review_packet_contract"]
+    assert packet_contract["schema_version"] == (
+        "intake_lake_admission_review_packet.v0_1"
+    )
+    assert packet_contract["validation_script"] == (
+        "scripts/validate_intake_lake_admission_review_packet.py"
+    )
+    assert packet_contract["admission_allowed_now"] is False
+    assert packet_contract["lake_write_authority_now"] is False
+    assert packet_contract["sqlite_write_authorized_now"] is False
 
 
 def test_intake_lake_admission_review_validator_cli_passes() -> None:

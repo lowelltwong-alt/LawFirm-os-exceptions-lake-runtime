@@ -33,6 +33,7 @@ This repo owns append-only runtime/audit evidence support. It consumes contracts
 - `config/validation-runtime-policy.yaml` - minimum runtime ceiling policy for full and focused pytest validation.
 - `scripts/run_full_pytest.py` - required pytest wrapper that applies the validation runtime policy marker and long timeout.
 - `scripts/validate_intake_lake_admission_review.py` - deterministic validator for the candidate intake Lake admission docket.
+- `scripts/validate_intake_lake_admission_review_packet.py` - deterministic validator for Orchestrator-produced intake Lake admission-review packets; report-only and no storage admission.
 - `registry/intake-lake-admission-review-registry.json` - local candidate-only registry for budget evidence mapping and carrier rejection admission planning.
 
 ## Contract Authority
@@ -65,6 +66,7 @@ Current:
 - synthetic pressure-vector candidate builder
 - non-synthetic dry-run preflight metadata check
 - candidate-only intake Lake admission docket for budget changes, carrier rejections, appeals, outcomes, and actuals comparison
+- candidate-only Orchestrator intake Lake admission-review packet validator with hash, source, family, and no-write controls
 - deterministic pytest runtime policy requiring `python scripts/run_full_pytest.py`
 
 Planned or not implemented here:

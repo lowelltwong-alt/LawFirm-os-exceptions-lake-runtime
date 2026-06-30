@@ -8,6 +8,18 @@ The docket is candidate-only. It does not create canonical route IDs, event clas
 
 The local registry is `registry/intake-lake-admission-review-registry.json`.
 
+## Orchestrator Review Packet Validation
+
+`LawFirm-os-orchestrator` may produce an `intake_lake_admission_review_packet.v0_1` artifact after its local intake owner-review packet is built. Exception Lake validates that artifact with:
+
+```powershell
+python scripts/validate_intake_lake_admission_review_packet.py --packet path/to/intake_lake_admission_review_packet.json --report-out path/to/validation_report.json
+```
+
+The validator recomputes packet and candidate-record hashes, checks source-hash shape, verifies candidate record families against this docket, and rejects any packet that claims Lake write authority, SQLite write authority, raw-payload storage, real-data admission, external writes, canonical route/event assignment, budget submission authority, appeal submission authority, or admitted records.
+
+The optional report is local review evidence only. It is not an Exception Lake admission record and does not append to runtime storage.
+
 ## Source Package
 
 Read-only source: `LawFirm-os-intake:promotion/cross_repo_promotion_package.json`.
@@ -66,5 +78,7 @@ Run:
 
 ```powershell
 python scripts/validate_intake_lake_admission_review.py
+python scripts/validate_intake_lake_admission_review_packet.py --packet path/to/intake_lake_admission_review_packet.json --report-out path/to/validation_report.json
 python scripts/run_full_pytest.py tests/test_intake_lake_admission_review.py -q
+python scripts/run_full_pytest.py tests/test_intake_lake_admission_review_packet.py -q
 ```

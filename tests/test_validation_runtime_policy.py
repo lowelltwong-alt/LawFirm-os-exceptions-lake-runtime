@@ -24,16 +24,16 @@ def _load_policy() -> dict:
 def test_validation_runtime_policy_requires_long_python_test_ceilings() -> None:
     commands = _load_policy()["commands"]
 
-    assert commands["full_pytest"]["minimum_timeout_seconds"] >= 1800
-    assert commands["focused_pytest"]["minimum_timeout_seconds"] >= 1800
+    assert commands["full_pytest"]["minimum_timeout_seconds"] >= 3600
+    assert commands["focused_pytest"]["minimum_timeout_seconds"] >= 3600
     assert "scripts/run_full_pytest.py" in commands["full_pytest"]["wrapper"]
     assert "scripts/run_full_pytest.py" in commands["focused_pytest"]["wrapper"]
 
 
 def test_pytest_wrapper_reads_validation_runtime_policy() -> None:
     assert run_full_pytest.POLICY_PATH == POLICY_PATH
-    assert run_full_pytest.pytest_timeout_seconds() >= 1800
-    assert run_full_pytest.pytest_timeout_seconds("focused_pytest") >= 1800
+    assert run_full_pytest.pytest_timeout_seconds() >= 3600
+    assert run_full_pytest.pytest_timeout_seconds("focused_pytest") >= 3600
 
 
 def test_pytest_wrapper_sets_policy_marker() -> None:

@@ -20,6 +20,23 @@
     "lake.intake-budget-evidence-mapping.v0_1",
     "lake.carrier-rejection-admission.v0_1"
   ],
+  "orchestrator_review_packet_contract": {
+    "schema_version": "intake_lake_admission_review_packet.v0_1",
+    "source_repo": "LawFirm-os-orchestrator",
+    "target_repo": "LawFirm-os-exceptions-lake-runtime",
+    "workflow_label": "orchestrator.local.intake_lake_admission_review_packet",
+    "validation_script": "scripts/validate_intake_lake_admission_review_packet.py",
+    "validation_report_schema_version": "intake_lake_admission_review_packet_validation_report.v0_1",
+    "admission_allowed_now": false,
+    "lake_write_authority_now": false,
+    "sqlite_write_authorized_now": false,
+    "raw_payload_storage_allowed": false,
+    "real_data_authorized_now": false,
+    "external_write_authorized_now": false,
+    "canonical_route_id_assignment": "none",
+    "canonical_event_class_assignment": "none",
+    "candidate_review_only": true
+  },
   "review_items": [
     {
       "review_item_id": "lake.review.intake-budget-evidence-mapping.v0_1",

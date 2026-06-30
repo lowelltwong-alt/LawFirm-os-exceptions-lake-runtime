@@ -77,6 +77,23 @@ REQUIRED_CARRIER_STATES = {
     "closed_financial_outcome_recorded",
     "learning_candidate_prepared",
 }
+REQUIRED_ORCHESTRATOR_REVIEW_PACKET_CONTRACT = {
+    "schema_version": "intake_lake_admission_review_packet.v0_1",
+    "source_repo": "LawFirm-os-orchestrator",
+    "target_repo": "LawFirm-os-exceptions-lake-runtime",
+    "workflow_label": "orchestrator.local.intake_lake_admission_review_packet",
+    "validation_script": "scripts/validate_intake_lake_admission_review_packet.py",
+    "validation_report_schema_version": "intake_lake_admission_review_packet_validation_report.v0_1",
+    "admission_allowed_now": False,
+    "lake_write_authority_now": False,
+    "sqlite_write_authorized_now": False,
+    "raw_payload_storage_allowed": False,
+    "real_data_authorized_now": False,
+    "external_write_authorized_now": False,
+    "canonical_route_id_assignment": "none",
+    "canonical_event_class_assignment": "none",
+    "candidate_review_only": True,
+}
 
 
 class IntakeLakeAdmissionReviewError(ValueError):
@@ -309,10 +326,29 @@ def _validate_carrier_item(item: dict[str, Any], label: str) -> None:
         )
 
 
+def _validate_orchestrator_packet_contract(data: dict[str, Any], label: str) -> None:
+    contract = data.get("orchestrator_review_packet_contract")
+    if not isinstance(contract, dict):
+        raise IntakeLakeAdmissionReviewError(
+            f"{label}.orchestrator_review_packet_contract must be an object"
+        )
+    for key, expected in REQUIRED_ORCHESTRATOR_REVIEW_PACKET_CONTRACT.items():
+        if contract.get(key) != expected:
+            raise IntakeLakeAdmissionReviewError(
+                f"{label}.orchestrator_review_packet_contract.{key} must be {expected!r}"
+            )
+    validation_script = ROOT / contract["validation_script"]
+    if not validation_script.exists():
+        raise IntakeLakeAdmissionReviewError(
+            f"{label}.orchestrator_review_packet_contract.validation_script missing"
+        )
+
+
 def validate_intake_lake_admission_review(path: Path = REGISTRY) -> dict[str, Any]:
     data = _read_json(path)
     label = _rel(path)
     _validate_top_level(data, label)
+    _validate_orchestrator_packet_contract(data, label)
 
     items = data.get("review_items")
     if not isinstance(items, list) or len(items) != len(EXPECTED_SOURCE_PROPOSAL_IDS):

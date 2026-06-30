@@ -2,7 +2,7 @@
   "object_type": "governance_dependency_map_mirror",
   "trust_zone": "downstream_control",
   "lifecycle_status": "active",
-  "provenance_note": "Created 2026-06-29 to mirror the upstream LawFirm OS governance dependency-map update gate inside LawFirm-os-exceptions-lake-runtime. Updated 2026-06-30 for the intake Lake admission review docket and deterministic pytest runtime policy.",
+  "provenance_note": "Created 2026-06-29 to mirror the upstream LawFirm OS governance dependency-map update gate inside LawFirm-os-exceptions-lake-runtime. Updated 2026-06-30 for the intake Lake admission review docket, Orchestrator intake Lake review packet validator, and deterministic pytest runtime policy.",
   "reason_for_inclusion": "Force evidence-plane governance changes to check the upstream governance dependency map and local mirror surfaces instead of relying on runtime convenience.",
   "schema_version": "governance_dependency_map_mirror.v1",
   "mirror_id": "lawfirm_os_exceptions_lake_runtime_governance_dependency_map_mirror",
@@ -27,6 +27,8 @@
     "intake_lake_admission_registry": "registry/intake-lake-admission-review-registry.json",
     "intake_lake_admission_validator": "scripts/validate_intake_lake_admission_review.py",
     "intake_lake_admission_test": "tests/test_intake_lake_admission_review.py",
+    "intake_lake_admission_review_packet_validator": "scripts/validate_intake_lake_admission_review_packet.py",
+    "intake_lake_admission_review_packet_test": "tests/test_intake_lake_admission_review_packet.py",
     "validation_runtime_policy_test": "tests/test_validation_runtime_policy.py"
   },
   "authority": {
@@ -58,9 +60,11 @@
     "scripts/check_",
     "scripts/validate_governance_dependency_map_mirror.py",
     "scripts/validate_intake_lake_admission_review.py",
+    "scripts/validate_intake_lake_admission_review_packet.py",
     "skill-agent-manifest.json",
     "tests/test_governance_dependency_map_mirror.py",
     "tests/test_intake_lake_admission_review.py",
+    "tests/test_intake_lake_admission_review_packet.py",
     "tests/test_validation_runtime_policy.py"
   ],
   "required_behavior": [
