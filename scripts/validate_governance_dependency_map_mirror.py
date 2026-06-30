@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Validate the local mirror of the upstream LawFirm OS governance dependency map."""
+
 from __future__ import annotations
 
 import argparse
@@ -43,12 +44,21 @@ REQUIRED_WATCHED = {
     "AGENTS.md",
     "AI_TABLE_OF_CONTENTS.md",
     "AI_WORK_START_HERE.md",
+    "DATA_FLOW_MAP.md",
     "README.md",
+    "config/",
+    "config/validation-runtime-policy.yaml",
     "contracts.lock.json",
     "docs/",
+    "registry/",
+    "registry/intake-lake-admission-review-registry.json",
+    "scripts/run_full_pytest.py",
     "scripts/validate_governance_dependency_map_mirror.py",
+    "scripts/validate_intake_lake_admission_review.py",
     "skill-agent-manifest.json",
     "tests/test_governance_dependency_map_mirror.py",
+    "tests/test_intake_lake_admission_review.py",
+    "tests/test_validation_runtime_policy.py",
 }
 
 REQUIRED_SURFACE_PHRASES = {
@@ -106,7 +116,9 @@ def _require_strings(data: dict[str, Any], key: str, label: str) -> list[str]:
     if not isinstance(value, list) or not value:
         raise MirrorValidationError(f"{label}.{key} must be a non-empty list")
     if not all(isinstance(item, str) and item.strip() for item in value):
-        raise MirrorValidationError(f"{label}.{key} must contain only non-empty strings")
+        raise MirrorValidationError(
+            f"{label}.{key} must contain only non-empty strings"
+        )
     return value
 
 
@@ -116,18 +128,28 @@ def validate_governance_dependency_map_mirror(path: Path = MIRROR) -> dict[str, 
     if missing:
         raise MirrorValidationError(f"{_rel(path)} missing keys: {missing}")
     if data["object_type"] != "governance_dependency_map_mirror":
-        raise MirrorValidationError(f"{_rel(path)} object_type must be governance_dependency_map_mirror")
+        raise MirrorValidationError(
+            f"{_rel(path)} object_type must be governance_dependency_map_mirror"
+        )
     if data["schema_version"] != "governance_dependency_map_mirror.v1":
-        raise MirrorValidationError(f"{_rel(path)} schema_version must be governance_dependency_map_mirror.v1")
+        raise MirrorValidationError(
+            f"{_rel(path)} schema_version must be governance_dependency_map_mirror.v1"
+        )
     if data["owner_repo"] != EXPECTED_OWNER_REPO:
-        raise MirrorValidationError(f"{_rel(path)} owner_repo must be {EXPECTED_OWNER_REPO}")
+        raise MirrorValidationError(
+            f"{_rel(path)} owner_repo must be {EXPECTED_OWNER_REPO}"
+        )
 
     upstream = data["upstream_dependency_map"]
     if not isinstance(upstream, dict):
-        raise MirrorValidationError(f"{_rel(path)} upstream_dependency_map must be an object")
+        raise MirrorValidationError(
+            f"{_rel(path)} upstream_dependency_map must be an object"
+        )
     for key, expected in REQUIRED_UPSTREAM.items():
         if upstream.get(key) != expected:
-            raise MirrorValidationError(f"{_rel(path)} upstream_dependency_map.{key} must be {expected!r}")
+            raise MirrorValidationError(
+                f"{_rel(path)} upstream_dependency_map.{key} must be {expected!r}"
+            )
 
     authority = data["authority"]
     if not isinstance(authority, dict):
@@ -145,19 +167,31 @@ def validate_governance_dependency_map_mirror(path: Path = MIRROR) -> dict[str, 
         if authority.get(key) is not False:
             raise MirrorValidationError(f"{_rel(path)} authority.{key} must be false")
     if authority.get("local_repo_must_stop_if_upstream_map_conflicts") is not True:
-        raise MirrorValidationError(f"{_rel(path)} authority.local_repo_must_stop_if_upstream_map_conflicts must be true")
+        raise MirrorValidationError(
+            f"{_rel(path)} authority.local_repo_must_stop_if_upstream_map_conflicts must be true"
+        )
 
-    watched = set(_require_strings(data, "watched_local_governance_surfaces", _rel(path)))
+    watched = set(
+        _require_strings(data, "watched_local_governance_surfaces", _rel(path))
+    )
     missing_watched = sorted(REQUIRED_WATCHED - watched)
     if missing_watched:
-        raise MirrorValidationError(f"{_rel(path)} missing watched surfaces: {missing_watched}")
+        raise MirrorValidationError(
+            f"{_rel(path)} missing watched surfaces: {missing_watched}"
+        )
 
     enforcement = data["local_enforcement"]
     if not isinstance(enforcement, dict):
         raise MirrorValidationError(f"{_rel(path)} local_enforcement must be an object")
     for rel in enforcement.values():
-        if isinstance(rel, str) and rel.endswith((".json", ".md", ".py", ".yml", ".yaml")) and not (ROOT / rel).exists():
-            raise MirrorValidationError(f"{_rel(path)} references missing local enforcement surface: {rel}")
+        if (
+            isinstance(rel, str)
+            and rel.endswith((".json", ".md", ".py", ".yml", ".yaml"))
+            and not (ROOT / rel).exists()
+        ):
+            raise MirrorValidationError(
+                f"{_rel(path)} references missing local enforcement surface: {rel}"
+            )
 
     for rel, phrases in REQUIRED_SURFACE_PHRASES.items():
         text = (ROOT / rel).read_text(encoding="utf-8")
@@ -179,7 +213,9 @@ def _git_changed_files(base_ref: str) -> list[str]:
             stderr=subprocess.PIPE,
         )
     except subprocess.CalledProcessError as exc:
-        raise MirrorValidationError(f"could not compute changed files against {base_ref}: {exc.stderr.strip()}") from exc
+        raise MirrorValidationError(
+            f"could not compute changed files against {base_ref}: {exc.stderr.strip()}"
+        ) from exc
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
@@ -193,7 +229,9 @@ def validate_changed_path_gate(
     watched_rules = tuple(data["watched_local_governance_surfaces"])
     normalized = [_normalize_path(path) for path in changed_files]
     watched_changed = [
-        path for path in normalized if any(_matches_path_rule(path, rule) for rule in watched_rules)
+        path
+        for path in normalized
+        if any(_matches_path_rule(path, rule) for rule in watched_rules)
     ]
     if mirror_updated is None:
         mirror_updated = _rel(mirror_path) in normalized
@@ -213,16 +251,23 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         validate_governance_dependency_map_mirror()
-        mirror_updated = None if args.mirror_updated is None else args.mirror_updated == "true"
+        mirror_updated = (
+            None if args.mirror_updated is None else args.mirror_updated == "true"
+        )
         if args.changed_file:
             changed_files = args.changed_file
         elif mirror_updated is True:
             changed_files = [_rel(MIRROR)]
         else:
             changed_files = _git_changed_files(args.base_ref)
-        validate_changed_path_gate(changed_files=changed_files, mirror_updated=mirror_updated)
+        validate_changed_path_gate(
+            changed_files=changed_files, mirror_updated=mirror_updated
+        )
     except MirrorValidationError as exc:
-        print(f"Governance dependency-map mirror validation failed: {exc}", file=sys.stderr)
+        print(
+            f"Governance dependency-map mirror validation failed: {exc}",
+            file=sys.stderr,
+        )
         return 1
     print("Governance dependency-map mirror validation passed.")
     return 0

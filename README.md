@@ -77,9 +77,17 @@ HTTP is intentionally out of scope for this first implementation so we can keep 
 1. `python -m pip install -e ".[dev]"`
 2. `python scripts/ci_check_contract_lock.py`
 3. Point `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` at a local git checkout of the Law Firm OS Semantic Substrate contract repository (tests copy contract surfaces into a temporary fixture and temporarily align the lock to that fixture’s SHA; see `docs/LOCAL_DEV.md`).
-4. `python -m pytest`
+4. `python scripts/run_full_pytest.py`
 
-GitHub Actions runs the same sequence: lock check, shallow checkout of the public Law Firm OS Semantic Substrate contract repository at the pinned SHA, then `pytest`. No production services and no firm data.
+GitHub Actions runs the same sequence: lock check, shallow checkout of the public Law Firm OS Semantic Substrate contract repository at the pinned SHA, then `python scripts/run_full_pytest.py`. No production services and no firm data.
+
+Use `python scripts/run_full_pytest.py` for full or focused pytest runs. Direct pytest invocation is blocked by `config/validation-runtime-policy.yaml` so local and agent validation always gets the required long timeout ceiling.
+
+## Intake Lake Admission Review
+
+`registry/intake-lake-admission-review-registry.json` is a candidate-only owner review docket for intake-to-budget evidence mapping and carrier rejection admission. It is validated by `scripts/validate_intake_lake_admission_review.py`.
+
+The docket keeps all intake/carrier evidence admission future-facing and fail-closed: no SQLite migration is authorized, no email or portal connector is enabled, every future carrier rejection notice must land in a deterministic known bucket or `unknown_or_new_rejection_pattern`, appeal records require human authorization refs, and budget actuals comparisons keep proposed, compliant, approved-if-known, actual, and disallowed amounts separate.
 
 ## Local setup
 
@@ -99,7 +107,7 @@ python -m pip install -e ".[dev]"
 4. Run tests:
 
 ```powershell
-pytest
+python scripts/run_full_pytest.py
 ```
 
 5. Refresh the contract pin when you intentionally move to a new contract-repo SHA:

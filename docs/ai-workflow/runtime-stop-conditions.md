@@ -21,6 +21,6 @@ AI-assisted work in this runtime repo must stop and report when any condition be
 
 ## Validation
 
-- `pytest` fails and the fix is not clearly within the selected route.
+- `python scripts/run_full_pytest.py` fails and the fix is not clearly within the selected route.
 - A failure would need to be converted into a silent skip.
 - The contributor cannot state exact validation commands and results.

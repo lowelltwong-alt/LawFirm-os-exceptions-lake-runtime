@@ -38,7 +38,7 @@ This repository owns append-only runtime evidence, audit records, retrieval trac
 
 ## Required validation
 
-Before reporting success, run `python -m pytest -q` in this repository (set `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` to your sibling substrate checkout when tests require it) and the AI front-door integrity gate: `python ../LawFirm-os-semantic-substrate/scripts/validate_ai_front_door.py --substrate-root ../LawFirm-os-semantic-substrate`.
+Before reporting success, run `python scripts/run_full_pytest.py` in this repository (set `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` to your sibling substrate checkout when tests require it) and the AI front-door integrity gate: `python ../LawFirm-os-semantic-substrate/scripts/validate_ai_front_door.py --substrate-root ../LawFirm-os-semantic-substrate`. The pytest wrapper is required by `config/validation-runtime-policy.yaml`; direct pytest invocation is blocked so validation always gets the long ceiling.
 
 ## Canonical Names
 
@@ -117,7 +117,7 @@ Use root `DATA_FLOW_MAP.md` as the evidence-plane map. It shows:
 
 ## Validation Commands
 
-    python -m pytest -q
+    python scripts/run_full_pytest.py
     python ../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace ..
 
 ## AI Strategy and Context Quality Runtime Evidence

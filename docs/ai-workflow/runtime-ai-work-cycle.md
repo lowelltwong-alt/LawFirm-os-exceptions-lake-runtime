@@ -10,7 +10,7 @@ All AI-assisted work in this runtime repo must preserve the contract-consumer bo
 4. **Choose mode** — Explore, Plan, Edit, or Execute.
 5. **Apply stop conditions** — stop on ambiguous schema, contract SHA, persistence, or audit behavior.
 6. **Execute inside scope** — keep work synthetic/dry-run unless explicitly authorized later.
-7. **Validate** — run `pytest` for code-impacting changes.
+7. **Validate** — run `python scripts/run_full_pytest.py` for code-impacting changes.
 8. **Open PR** — include contract and audit impact sections.
 9. **Report outcome** — list files changed, validation, contract impact, and follow-up work.
 

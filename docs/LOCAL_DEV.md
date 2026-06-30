@@ -16,7 +16,7 @@ python -m pip install --upgrade pip
 python -m pip install -e ".[dev]"
 python scripts/ci_check_contract_lock.py
 $env:EXCEPTIONS_LAKE_CONTRACT_REPO_PATH = 'C:\path\to\LawFirm-os-semantic-substrate'
-python -m pytest
+python scripts/run_full_pytest.py
 ```
 
 **Bash**
@@ -26,7 +26,7 @@ python -m pip install --upgrade pip
 python -m pip install -e ".[dev]"
 python scripts/ci_check_contract_lock.py
 export EXCEPTIONS_LAKE_CONTRACT_REPO_PATH="/path/to/LawFirm-os-semantic-substrate"
-python -m pytest
+python scripts/run_full_pytest.py
 ```
 
 Tests copy contract files from your checkout into a temporary git-backed fixture and temporarily repin `contracts.lock.json` to that fixture’s `HEAD` SHA, so your ontology checkout only needs to be a complete tree at a commit that includes the required contract files. CI checks out the public Law Firm OS Semantic Substrate contract repository at the `contract_sha` pinned in this repo’s lock file (clone source: `CONTRACT_ONTOLOGY_REPOSITORY` in the workflow file) for reproducible fixtures (no firm data).
@@ -62,7 +62,7 @@ Run tests (with `EXCEPTIONS_LAKE_CONTRACT_REPO_PATH` set as above):
 
 ```powershell
 python scripts/ci_check_contract_lock.py
-python -m pytest
+python scripts/run_full_pytest.py
 ```
 
 ## Local CLI

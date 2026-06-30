@@ -57,7 +57,7 @@ exception-event -> pressure-vector -> adaptation-proposal -> promotion-decision
 5. Select route
 6. Apply stop conditions
 7. Execute inside scope
-8. Validate with `pytest`
+8. Validate with `python scripts/run_full_pytest.py`
 9. Open PR
 10. Report outcome and audit impact
 
@@ -87,7 +87,7 @@ Stop if contract SHA, schema version, policy boundary, source type, persistence 
 
 ## Validation Commands
 
-    python -m pytest -q
+    python scripts/run_full_pytest.py
     python ../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace ..
 
 ## AI Strategy and Context Quality Runtime Evidence

@@ -12,17 +12,26 @@ import _pytest.pathlib as pytest_pathlib
 import _pytest.tmpdir as pytest_tmpdir
 
 from exceptions_lake_runtime.config import CONTRACT_REPO_ENV_VAR, RuntimeConfig
-from exceptions_lake_runtime.contract_loader import CONTRACT_LOCK_RELATIVE_PATH, ContractLoader
+from exceptions_lake_runtime.contract_loader import (
+    CONTRACT_LOCK_RELATIVE_PATH,
+    ContractLoader,
+)
 
-_PYTEST_DEBUG_TEMPROOT = (Path(__file__).resolve().parents[1] / ".pytest-tmp-root").resolve()
+_PYTEST_DEBUG_TEMPROOT = (
+    Path(__file__).resolve().parents[1] / ".pytest-tmp-root"
+).resolve()
 _PYTEST_DEBUG_TEMPROOT.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("PYTEST_DEBUG_TEMPROOT", str(_PYTEST_DEBUG_TEMPROOT))
+POLICY_MARKER_ENV_VAR = "LAWFIRM_OS_VALIDATION_RUNTIME_POLICY"
+POLICY_MARKER_VALUE = "exceptions-lake-validation-runtime-policy.v1"
 
 # Windows can create 0o700 pytest temp dirs that child git processes cannot reopen.
 _original_make_numbered_dir = pytest_pathlib.make_numbered_dir
 
 
-def _windows_readable_make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -> Path:
+def _windows_readable_make_numbered_dir(
+    root: Path, prefix: str, mode: int = 0o700
+) -> Path:
     return _original_make_numbered_dir(root, prefix, 0o777)
 
 
@@ -30,12 +39,22 @@ pytest_pathlib.make_numbered_dir = _windows_readable_make_numbered_dir
 pytest_tmpdir.make_numbered_dir = _windows_readable_make_numbered_dir
 
 
+def pytest_sessionstart(session: pytest.Session) -> None:
+    if os.environ.get(POLICY_MARKER_ENV_VAR) == POLICY_MARKER_VALUE:
+        return
+
+    pytest.exit(
+        "Direct pytest invocation is blocked by the validation runtime policy. "
+        "Use `python scripts/run_full_pytest.py` so full and focused tests receive "
+        "the configured long timeout ceiling.",
+        returncode=4,
+    )
+
+
 def _source_contract_repo_path() -> Path:
     contract_path = os.getenv(CONTRACT_REPO_ENV_VAR)
     if not contract_path:
-        raise RuntimeError(
-            f"{CONTRACT_REPO_ENV_VAR} must be set before running tests."
-        )
+        raise RuntimeError(f"{CONTRACT_REPO_ENV_VAR} must be set before running tests.")
     resolved = Path(contract_path).expanduser().resolve()
     if not resolved.exists():
         raise RuntimeError(f"Contract repo path does not exist: {resolved}")
@@ -43,7 +62,14 @@ def _source_contract_repo_path() -> Path:
 
 
 def _init_git_repo(path: Path) -> None:
-    subprocess.run(["git", "init"], cwd=path, check=True, stdin=subprocess.DEVNULL, capture_output=True, text=True)
+    subprocess.run(
+        ["git", "init"],
+        cwd=path,
+        check=True,
+        stdin=subprocess.DEVNULL,
+        capture_output=True,
+        text=True,
+    )
     subprocess.run(
         ["git", "config", "user.name", "Synthetic Test"],
         cwd=path,
@@ -66,7 +92,9 @@ def _init_git_repo(path: Path) -> None:
         capture_output=True,
         text=True,
     )
-    subprocess.run(["git", "add", "."], cwd=path, check=True, capture_output=True, text=True)
+    subprocess.run(
+        ["git", "add", "."], cwd=path, check=True, capture_output=True, text=True
+    )
     subprocess.run(
         ["git", "commit", "-m", "contract fixture"],
         cwd=path,
@@ -97,8 +125,14 @@ def _pinned_contract_lock(lock_path: Path, contract_sha: str, contract_repo_root
     }
     surf = original_lock.get("contract_surface_lock")
     if isinstance(surf, dict):
-        surface_id = str(surf.get("surface_id") or "lawfirm_os_semantic_substrate.consumer_contract_surface.v1")
-        registry_rel = str(surf.get("surface_registry_path") or "registry/contract-surface-registry.json")
+        surface_id = str(
+            surf.get("surface_id")
+            or "lawfirm_os_semantic_substrate.consumer_contract_surface.v1"
+        )
+        registry_rel = str(
+            surf.get("surface_registry_path")
+            or "registry/contract-surface-registry.json"
+        )
         digest = ContractLoader._compute_contract_surface_hash(
             contract_repo_root,
             surface_id=surface_id,
@@ -109,13 +143,17 @@ def _pinned_contract_lock(lock_path: Path, contract_sha: str, contract_repo_root
             **surf,
             "surface_sha256": digest,
             "computed_from_commit": contract_sha,
-            "computed_from_repo": surf.get("computed_from_repo", "LawFirm-os-semantic-substrate"),
+            "computed_from_repo": surf.get(
+                "computed_from_repo", "LawFirm-os-semantic-substrate"
+            ),
         }
     lock_path.write_text(json.dumps(updated_lock, indent=2) + "\n", encoding="utf-8")
     try:
         yield
     finally:
-        lock_path.write_text(json.dumps(original_lock, indent=2) + "\n", encoding="utf-8")
+        lock_path.write_text(
+            json.dumps(original_lock, indent=2) + "\n", encoding="utf-8"
+        )
 
 
 @pytest.fixture
@@ -159,7 +197,11 @@ def runtime_config(
 
 @pytest.fixture
 def synthetic_event() -> dict:
-    example_path = Path(__file__).resolve().parents[1] / "examples" / "synthetic_exception_event.json"
+    example_path = (
+        Path(__file__).resolve().parents[1]
+        / "examples"
+        / "synthetic_exception_event.json"
+    )
     return json.loads(example_path.read_text(encoding="utf-8"))
 
 

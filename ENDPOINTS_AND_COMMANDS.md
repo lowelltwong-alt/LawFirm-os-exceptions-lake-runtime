@@ -84,10 +84,12 @@ Purpose: explicit local maintenance command that runs `scripts/update_contract_l
 ```powershell
 python scripts/ci_check_contract_lock.py
 python scripts/update_contract_lock.py
-python -m pytest
+python scripts/run_full_pytest.py
+python scripts/run_full_pytest.py tests/test_intake_lake_admission_review.py -q
+python scripts/validate_intake_lake_admission_review.py
 ```
 
-`ci_check_contract_lock.py` is read-only. `update_contract_lock.py` writes only this repo's `contracts.lock.json` and must not be used as an implicit runtime behavior.
+`ci_check_contract_lock.py` is read-only. `update_contract_lock.py` writes only this repo's `contracts.lock.json` and must not be used as an implicit runtime behavior. `config/validation-runtime-policy.yaml` requires all pytest runs to use `python scripts/run_full_pytest.py`; direct pytest invocation fails closed so short default ceilings do not create false failures.
 
 ## API Surface
 

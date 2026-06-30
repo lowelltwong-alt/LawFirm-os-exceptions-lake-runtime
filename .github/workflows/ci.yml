@@ -45,4 +45,4 @@ jobs:
       - name: Run tests
         env:
           EXCEPTIONS_LAKE_CONTRACT_REPO_PATH: ${{ github.workspace }}/LawFirm-os-semantic-substrate
-        run: python -m pytest
+        run: python scripts/run_full_pytest.py
