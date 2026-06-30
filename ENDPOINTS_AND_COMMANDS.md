@@ -86,10 +86,14 @@ python scripts/ci_check_contract_lock.py
 python scripts/update_contract_lock.py
 python scripts/run_full_pytest.py
 python scripts/run_full_pytest.py tests/test_intake_lake_admission_review.py -q
+python scripts/run_full_pytest.py tests/test_intake_lake_admission_review_packet.py -q
 python scripts/validate_intake_lake_admission_review.py
+python scripts/validate_intake_lake_admission_review_packet.py --packet path/to/intake_lake_admission_review_packet.json --report-out path/to/validation_report.json
 ```
 
 `ci_check_contract_lock.py` is read-only. `update_contract_lock.py` writes only this repo's `contracts.lock.json` and must not be used as an implicit runtime behavior. `config/validation-runtime-policy.yaml` requires all pytest runs to use `python scripts/run_full_pytest.py`; direct pytest invocation fails closed so short default ceilings do not create false failures.
+
+`validate_intake_lake_admission_review_packet.py` writes only the optional `--report-out` validation report path supplied by the caller. It does not append events, admit records, create SQLite files, store raw payloads, or call connectors.
 
 ## API Surface
 

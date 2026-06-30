@@ -120,6 +120,25 @@ routes:
     validation:
       - docs_review
 
+  intake_lake_admission_review_packet:
+    description: Validate Orchestrator-produced intake Lake admission-review packets as candidate-only evidence.
+    default_mode: Edit
+    allowed_paths:
+      - src/**
+      - scripts/**
+      - tests/**
+      - docs/**
+      - registry/**
+    forbidden:
+      - event_persistence
+      - sqlite_migration
+      - raw_records
+      - real_data_ingestion
+      - canon_mutation
+      - external_writes
+    validation:
+      - python scripts/run_full_pytest.py
+
   future_ai_interaction_audit_planning:
     description: Plan future AI input/output audit capture without production storage.
     default_mode: Plan

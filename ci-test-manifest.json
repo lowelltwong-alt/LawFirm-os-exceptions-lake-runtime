@@ -553,6 +553,65 @@
       "full_regression_required": false
     },
     {
+      "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_intake_lake_admission_review_packet.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_intake_lake_admission_review_packet.py",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_intake_lake_admission_review_packet.py -q",
+      "owning_repo": "LawFirm-os-exceptions-lake-runtime",
+      "owning_plane": "exception_lake",
+      "architecture_surface": [
+        "exception_lake_evidence_plane",
+        "intake_lake_admission_review_packet",
+        "orchestrator_packet_validation",
+        "candidate_only_governance"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "evidence_boundary_change",
+        "cross_repo_integration_change",
+        "governance_metadata_change"
+      ],
+      "trigger_patterns": [
+        "src/exceptions_lake_runtime/intake_lake_admission_review_packet.py",
+        "scripts/validate_intake_lake_admission_review_packet.py",
+        "tests/test_intake_lake_admission_review_packet.py",
+        "registry/intake-lake-admission-review-registry.json",
+        "docs/INTAKE_LAKE_ADMISSION_REVIEW.md",
+        "ENDPOINTS_AND_COMMANDS.md"
+      ],
+      "markers": [
+        "pytest",
+        "exception_lake",
+        "intake",
+        "orchestrator_packet_validation",
+        "candidate_only",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate",
+        "LawFirm-os-orchestrator",
+        "LawFirm-os-intake"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "Orchestrator intake Lake review packet validation changes",
+        "packet no-write or candidate-only controls change"
+      ],
+      "must_not_validate": [
+        "Exception Lake admission authority",
+        "SQLite migration authority",
+        "raw legal payload storage",
+        "production connector authority",
+        "real-data ingestion approval",
+        "canonical route or event-class creation"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
       "test_id": "LawFirm-os-exceptions-lake-runtime.tests.test_validation_runtime_policy.v1",
       "language": "python",
       "framework": "pytest",

@@ -89,6 +89,8 @@ Use `python scripts/run_full_pytest.py` for full or focused pytest runs. Direct 
 
 The docket keeps all intake/carrier evidence admission future-facing and fail-closed: no SQLite migration is authorized, no email or portal connector is enabled, every future carrier rejection notice must land in a deterministic known bucket or `unknown_or_new_rejection_pattern`, appeal records require human authorization refs, and budget actuals comparisons keep proposed, compliant, approved-if-known, actual, and disallowed amounts separate.
 
+`scripts/validate_intake_lake_admission_review_packet.py` validates the Orchestrator-produced `intake_lake_admission_review_packet.v0_1` artifact as local review evidence only. It recomputes hashes and rejects any packet that tries to authorize Lake writes, SQLite writes, raw-payload storage, real-data admission, external writes, canonical route/event assignment, or admitted records.
+
 ## Local setup
 
 1. Clone or otherwise obtain a local git checkout of your Law Firm OS Semantic Substrate contract repository (example slug: `your-org/LawFirm-os-semantic-substrate`) on the branch or SHA you want the runtime to consume. A plain ZIP extraction without `.git` metadata will fail closed.
