@@ -19,6 +19,8 @@ This repo owns append-only runtime/audit evidence support. It consumes contracts
 - `docs/CANONICAL_ROUTE_MAPPING.md` - maps local runtime labels to substrate canonical route authority.
 - `docs/NON_SYNTHETIC_DATA_READINESS_CHECKLIST.md` - metadata-only readiness guardrails.
 - `docs/LOCAL_DEV.md` - local development and contract path setup.
+- `.ai/control/governance-dependency-map-mirror.json` - local mirror of the upstream governance dependency map; it cannot override `LawFirm-os-semantic-substrate`.
+- `scripts/validate_governance_dependency_map_mirror.py` - fail-closed check for mirror shape and watched governance paths.
 
 ## Commands And Local Surfaces
 
@@ -37,6 +39,7 @@ This repo owns append-only runtime/audit evidence support. It consumes contracts
 - `generated_by: exceptions-lake-runtime-main`
 
 The runtime consumes substrate contracts read-only. Canonical `route_id` and `event_class` authority belongs to the substrate.
+The runtime also checks Substrate `registry/governance-dependency-map.json` when governance-facing evidence-plane files change.
 
 ## AI Strategy and Context Quality Runtime Evidence
 

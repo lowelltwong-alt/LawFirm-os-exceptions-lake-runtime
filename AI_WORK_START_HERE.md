@@ -65,6 +65,12 @@ exception-event -> pressure-vector -> adaptation-proposal -> promotion-decision
 
 This repo may plan or implement synthetic/dry-run audit events. It must not store raw production conversation content. Production audit capture requires approved governed contracts and an external secure audit store.
 
+## Governance dependency-map mirror
+
+If this repo changes governance-facing files, check the upstream `../LawFirm-os-semantic-substrate/registry/governance-dependency-map.json` and update `.ai/control/governance-dependency-map-mirror.json`, local discovery surfaces, and `scripts/validate_governance_dependency_map_mirror.py` when affected.
+
+The governance dependency-map mirror is downstream enforcement only. It cannot override Semantic Substrate governance, mutate canon, promote runtime evidence to authority, store raw legal payloads, or authorize production automation.
+
 ## Hard stop
 
 Stop if contract SHA, schema version, policy boundary, source type, persistence behavior, or audit behavior is ambiguous.
