@@ -1,0 +1,24 @@
+version: 0.1.0
+hub_path: C:\Users\lowel\OneDrive\Desktop\Git Projects\04_Digital_Assett_Directory
+source_repo_authority_preserved: true
+lessons_required: true
+handoff_required: true
+enforcement: advisory_no_hooks
+hooks_enabled: false
+rollout:
+  wave: 1
+  source_packet: lowelltwong-alt-repo-map-and-wave-plan-v0.1.0
+  github_full_name: lowelltwong-alt/LawFirm-os-exceptions-lake-runtime
+  family: LawFirm OS
+  authority_tier: evidence_plane
+  policy: managed_pointer_plus_mailbox_append_only_caution
+  profiles:
+  - python-modular-design
+  - append-only-evidence
+  - contract-consumer
+mail:
+  enabled: true
+  mailbox_path: .digital-asset/mail
+  digest_stale_after_hours: 24
+  candidate_only: true
+  agent_review_is_triage_only: true

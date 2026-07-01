@@ -127,3 +127,28 @@ Use root `DATA_FLOW_MAP.md` as the evidence-plane map. It shows:
 - Legal Context Bundle outcomes and context-quality events are evidence, not authority.
 - Shannon/entropy metrics must be treated as measurement evidence, not legal truth.
 - Future richer context-quality event surfaces must wait for Semantic Substrate schemas and Exception Lake adoption.
+
+<!-- BEGIN DIGITAL_ASSET_DIRECTORY_GOVERNANCE -->
+## Digital Asset Directory learning and mail pointer
+
+Central hub: `C:\Users\lowel\OneDrive\Desktop\Git Projects\04_Digital_Assett_Directory`
+Wave: `1`
+Rollout policy: `managed_pointer_plus_mailbox_append_only_caution`
+Authority tier: `evidence_plane`
+Recommended profiles: `python-modular-design, append-only-evidence, contract-consumer`
+
+Before material AI-assisted work:
+1. Read this repository's own front door and authority surfaces first.
+2. Run: `asset-dir agent preflight --repo . --agent <agent> --task "<task>" --hub "C:\Users\lowel\OneDrive\Desktop\Git Projects\04_Digital_Assett_Directory"`
+3. State scope, allowed and forbidden paths, validation plan, and stop conditions.
+4. Preserve this repo's local canon. DAD is advisory evidence and learning transport, not semantic authority.
+
+Before reporting completion or pushing material changes:
+1. Run this repo's required validation.
+2. Run: `asset-dir agent postflight --session <SESSION_ID> --repo . --summary "<summary>" --hub "C:\Users\lowel\OneDrive\Desktop\Git Projects\04_Digital_Assett_Directory"`
+3. Capture lessons, discoveries, failures, reusable patterns, missing capabilities, risks, and unknowns.
+
+DAD mail lives at `.digital-asset/mail/` and is candidate-only inbox/outbox transport. Mail can suggest lessons, workflows, assets, taxonomy, capabilities, or governance notices; local review decides whether anything is adopted. Agent review is triage only, and human review/public-release gates remain separate.
+
+Hooks are not enabled by this Wave 1 install. Do not set `core.hooksPath` or add hook enforcement without separate human approval.
+<!-- END DIGITAL_ASSET_DIRECTORY_GOVERNANCE -->
